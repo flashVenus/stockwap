@@ -1,31 +1,11 @@
 <template>
   <div class="wrapper">
     <mt-navbar class="top-navbar" v-model="selected" fixed>
-      <mt-tab-item
-      class="top-nav-item"
-      v-if="this.$store.state.settingForm.stockDisplay" id="1">沪深账户</mt-tab-item>
-      <mt-tab-item
-      class="top-nav-item"
-      v-if="this.$store.state.settingForm.indexDisplay" id="2">指数账户</mt-tab-item>
-      <!-- <mt-tab-item id="3">科创</mt-tab-item> -->
-      <mt-tab-item
-      class="top-nav-item"
-      v-if="this.$store.state.settingForm.futuresDisplay" id="4">期货账户</mt-tab-item>
+      <mt-tab-item class="top-nav-item" id="1">股票持仓</mt-tab-item>
+      <mt-tab-item class="top-nav-item" id="2">委托交易</mt-tab-item>
+      <mt-tab-item class="top-nav-item" id="3">交易记录</mt-tab-item>
     </mt-navbar>
-    <mt-tab-container class="order-list" v-model="selected">
-      <mt-tab-container-item v-if="this.$store.state.settingForm.stockDisplay" id="1">
-        <List1 :selectedNumber='selected'/>
-      </mt-tab-container-item>
-      <mt-tab-container-item v-if="this.$store.state.settingForm.indexDisplay" id="2">
-        <List2 :selectedNumber='selected'/>
-      </mt-tab-container-item>
-      <!-- <mt-tab-container-item id="3">
-          <List3 :handleOptions='handleOptions2'/>
-      </mt-tab-container-item> -->
-      <mt-tab-container-item v-if="this.$store.state.settingForm.futuresDisplay" id="4">
-        <List4 :selectedNumber='selected'/>
-      </mt-tab-container-item>
-    </mt-tab-container>
+    <List1 :selectedNumber='selected'/>
     <foot></foot>
   </div>
 </template>
@@ -226,7 +206,6 @@ export default {
       }
     }
   }
-
   #app.red-theme {
     .top-navbar {
       background-color: #E9E9E9 !important;

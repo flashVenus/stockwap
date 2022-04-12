@@ -32,26 +32,28 @@
             <div class="order-info">
               <p class="clearfix">
                 <span class="col-xs-4">买入价格:<b class="space">{{item.buyOrderPrice}}</b></span>
-                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
+                <span class="col-xs-4 text-center"></span>
                 <span class="col-xs-4 text-right">市值:<b class="space">{{item.orderTotalPrice}}</b></span>
               </p>
-              <p class="clearfix">
+              <!-- <p class="clearfix">
                 <span class="col-xs-4">手续费:<b class="space">{{item.orderFee}}</b></span>
                 <span class="col-xs-4 text-center">印花税:<b class="space">{{item.orderSpread}}</b></span>
                 <span class="col-xs-4 text-right">留仓费:<b class="space">{{item.orderStayFee}}</b></span>
-              </p>
+              </p> -->
               <p class="clearfix">
-                <span class="col-xs-4">点差费:<b class="space">{{item.spreadRatePrice}}</b></span>
-                        <span class="col-xs-4 text-center">浮动盈亏:
+                <!-- <span class="col-xs-4">点差费:<b class="space">{{item.spreadRatePrice}}</b></span> -->
+                        <span class="col-xs-4">浮动盈亏:
                             <b v-if="item.now_price == 0">-</b>
                             <b v-else
                                :class="item.profitAndLose<0?'space red':item.profitAndLose>=0?'space':'space green'">{{item.profitAndLose}}</b>
                         </span>
-                <span class="col-xs-4 text-right big-font">总盈亏:
+                        <span class="col-xs-4 text-center"></span>
+                <span class="col-xs-4 text-right">数量:<b class="space">{{item.orderNum}}</b></span>
+                <!-- <span class="col-xs-4 text-right big-font">总盈亏:
                     <b v-if="item.now_price == 0">-</b>
                     <b v-else
                        :class="item.allProfitAndLose<0?'space red':item.allProfitAndLose>=0?'space':'space green'">{{item.allProfitAndLose}}</b>
-                </span>
+                </span> -->
               </p>
             </div>
             <div class="order-foot clearfix">

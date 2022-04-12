@@ -71,11 +71,11 @@
                     </span>
                     <span class="col-xs-4 text-right">留仓天数:<b class="space">{{item.orderStayDays}}</b></span>
                 </p> -->
-                <p class="clearfix">
+                <!-- <p class="clearfix">
                   <span class="col-xs-4">手续费:<b class="space">{{item.orderFee}}</b></span>
                   <span class="col-xs-4 text-center">印花税:<b class="space">{{item.orderSpread}}</b></span>
                   <span class="col-xs-4 text-right">留仓费:<b class="space">{{item.orderStayFee}}</b></span>
-                </p>
+                </p> -->
                 <p class="clearfix">
                         <span class="col-xs-6">浮动盈亏:
                             <b v-if="item.now_price == 0">-</b>

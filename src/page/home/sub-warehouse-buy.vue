@@ -1,62 +1,13 @@
 <template>
   <div class="wrapper"> 
-    <div class="detail-part">
-      <div class="index-name">
-        <p>{{detail.name}} <span class="index-name_code">{{detail.code}}</span></p>
-      </div>
-      <div class="clearfix">
-        <div class="pull-left hangqin-left col-xs-4">
-          <p :class="detail.hcrate>0?'price red':detail.hcrate<0?'green price':'price'">
-            {{Number(detail.nowPrice).toFixed(2)}}</p>
-          <p :class="detail.hcrate>0?'gain red':detail.hcrate<0?'green gain':'gain'">
-            <span>{{Number(detail.hcrate).toFixed(2)}}</span>
-            <span style="margin-left: .1rem;">{{Number(detail.hcrate).toFixed(2)}}%</span>
-          </p>
-        </div>
-        <div class="pull-right hangqin-right col-xs-8">
-          <ul class="price-detail text-center">
-            <li>
-              <!-- <p class="title"></p> -->
-              <p :class="detail.hcrate<0?'number green': 'number red'">
-                <span class="title">涨跌</span>
-                {{Number(detail.hcrate).toFixed(2)}} 
-              </p>
-            </li>
-            <li>
-              <p class="number red">
-                <span class="title red">涨停限制</span>
-                {{(Number(detail.nowPrice) * settingIndexInfo.riseLimit + Number(detail.nowPrice)).toFixed(2)}}
-              </p>
-            </li>
-            <li>
-              <p :class="detail.hcrate<0?'number green': 'number red'">
-                <span class="title">涨幅</span>
-                {{Number(detail.hcrate).toFixed(2)}}%
-              </p>
-            </li>
-            <li>
-              <!-- <p class="title">最低</p> -->
-              <p class="green">
-                <span class="title green">跌停限制</span>
-                {{(detail.nowPrice - Number(detail.nowPrice) * settingIndexInfo.downLimit ).toFixed(2)}}
-              </p>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- <div class="clearfix">
-          <div class="col-xs-4 red">涨停限制 </div>
-          <div class="col-xs-4 green">跌停限制 </div>
-      </div> -->
-    </div>
-    <div v-if="false" class="box-tab">
+    <div class="box-tab">
       <div class="tab-title">
         <span class="circle"></span>股票详情
       </div>
       <div class="tab-con">
         <ul class="first clearfix">
           <li class="pull-left">
-            {{detail.indexName}}
+            {{detail.name}}
           </li>
           <li :class="detail.hcrate < 0?'pull-left green':detail.hcrate == 0?'pull-left':'pull-left red'">
             当前价：
@@ -65,7 +16,7 @@
         </ul>
         <ul class="first clearfix">
           <li class="pull-left">
-            {{detail.indexCode}}
+            {{detail.code}}
             <!-- <span>(Scrb1905)</span> -->
           </li>
           <li :class="detail.hcrate < 0?'pull-left green':detail.hcrate == 0?'pull-left':'pull-left red'">
@@ -73,116 +24,67 @@
             <span>{{detail.hcrate}}%</span>
           </li>
         </ul>
-        <!-- <div class='buy-price clearfix'>
-            <div class="col-xs-4">
-                <p>市价买入</p>
-            </div>
-            <div class="col-xs-4">
-                <p class="red">{{detail.nowPrice}}</p>
-            </div>
-            <div class="col-xs-4">
-                <p>说明</p>
-            </div>
-        </div> -->
       </div>
     </div>
     <div class="box-tab">
       <div class="tab-title">
-        <span class="circle"></span>选择手数
+        <span class="circle"></span>买入数量
         <!-- <span class="notify">最小购买股数{{settingInfo.buyMinNum/100}}手，最大可购买数量{{settingInfo.buyMaxNum/100}}手  </span> -->
       </div>
       <div class="tab-con">
         <ul class="radio-group clearfix">
-          <li v-for="item in numberList" :key="item.key"
-          @click="selectNumberFun(item.value)">
-            <div :class="[selectNumber == item.value?'on':'']">
-              {{item.label}}
-            </div>
-          </li>
-          <li v-show="!selectNumber">
+          <li v-show="!selectNumber" style="width: 70%; white-space:nowrap;">
             <input @keyup="changeAutoNumber" v-model="autoNumber" type="text">手
           </li>
         </ul>
-        <p class="clearfix">
+        <!-- <p class="clearfix">
           <span class="pull-left">最小购买股数{{Number(settingInfo.buyMinNum)/100}}手</span>
           <span class="protem pull-right">最大可购买数量{{Number(settingInfo.buyMaxNum)/100}}手</span>
-        </p>
-      </div>
-    </div>
-    <div class="box-tab">
-      <div class="tab-title">
-        <span class="circle"></span>买卖方向
-        <span class="notify">最大购买金额:{{(settingInfo.buyMaxAmtPercent * $store.state.userInfo.enableAmt).toFixed(2)}}</span>
-      </div>
-      <div class="tab-con">
-        <ul class="radio-group clearfix">
-          <li v-for="item in type" :key="item.key" @click="selectTypeFun(item.value)">
-            <div :class="selectType == item.value?'on':''">
-              {{item.label}}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="box-tab">
-      <div class="tab-title">
-        <span class="circle"></span>选择杠杆
-      </div>
-      <div class="tab-con">
-        <ul class="radio-group clearfix">
-          <li v-for="item in siteLeverList" :key="item.key" @click="selectCycleFun(item.value)">
-            <div :class="selectCycle == item.value?'on':''">
-              {{item.label}}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="box-tab">
-      <div class="tab-title">
-        <span class="circle"></span>子账户
-      </div>
-      <select class="set-account" v-model="subaccountNumber" title="点击选择子账户" slot="prepend" placeholder="请选择">
-        <option v-for="i in subaccountList" :key="i.subaccountNumber" :label="i.subaccountNumber" :value="i.subaccountNumber">{{i.subaccountNumber}}</option>
-      </select>
-    </div>
-    <!-- <div class="box-tab">
-      <div class="tab-con">
-        <!-- <p class="text-left page-part">
-            <span class="">{{selectNumber?selectNumber*100:autoNumber*100}}股</span>
-            <span class="pull-right">买入金额:{{price?price:0}}元</span>
         </p> -->
-        <!-- <p class="clearfix">
-          <!-- <span class="pull-right">最小购买金额{{settingInfo.buyMinAmt}}元</span> -->
-          <!-- <span class="pull-right">最大购买金额:{{settingInfo.buyMaxPercent * $store.state.userInfo.enableIndexAmt}}</span>
-        </p>
-
       </div>
-    </div> --> 
+    </div>
+    <div class="box-tab">
+      <div class="tab-title">
+        <span class="circle"></span>快速选择
+        <!-- <span class="notify">最大购买金额:{{(settingInfo.buyMaxAmtPercent * $store.state.userInfo.enableAmt).toFixed(2)}}</span> -->
+      </div>
+      <div class="tab-con">
+        <ul class="radio-group clearfix">
+          <li style="width:18.3%" v-for="item in cw" :key="item.key" @click="selectCwFun(item.value)">
+            <div :class="selectCw == item.value?'on':''">
+              {{item.label}}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="box-tab">
+      <div class="tab-title">
+        <span class="circle"></span>限/市价
+      </div>
+      <div class="tab-con">
+        <ul class="radio-group clearfix">
+          <li v-for="item in buyType" :key="item.key" @click="selectBuyTypeFun(item.value)">
+            <div :class="selectBuyType == item.value?'on':''">
+              {{item.label}}
+            </div>
+          </li>
+          <span v-if="selectBuyType == 2"><input  v-model="triggerPrice" type="text">元</span>
+        </ul>
+      </div>
+    </div>
     <div class="agree">
-      <p style="line-height: 0.4rem;padding: 0 0.2rem;">
-        当该指数涨幅达到<span class="red">涨停限制</span>时,不能买涨；达到<span class="green">跌停限制</span>时，不能买跌.
-      </p>
-      <!-- <p>
-          <i @click="isAgree" :class="agree?'glyphicon glyphicon glyphicon-ok-sign red':'glyphicon glyphicon-ok-circle'"></i>
-          我已阅读并同意
-          <a @click="totrageUrl" >《指数交易交易⻛险揭示书》</a>
-      </p> -->
+      {{autoNumber * 100}}股   
+      市值{{price}}元
+      支付金额说明 ？
     </div>
     <div class="footer-btn">
       <div class="total">
-        <p class="pay">支付保证金<span class="protem">{{total?total:0}}</span></p>
-        <p class="account">(账户余额:{{$store.state.userInfo.enableIndexAmt}}元)</p>
+        <p class="pay">需要支付<span class="protem">{{price?price:0}}</span></p>
+        <p class="account">(账户余额:{{$store.state.userInfo.enableAmt}}元)</p>
       </div>
-      <!-- <mt-button :disabled="buying" class="btn-red" size="small" type="danger" @click="toInquiry">下单</mt-button> -->
-      <div class="right-btn">
-        <div class="btn-buy" @click="toInquiry">
-          <img src="../../../static/img/detail/fencang-icon.png" alt="" srcset="">
-          分仓下单
-        </div>
-      </div>
+      <mt-button :disabled="buying" class="btn-red" size="small" type="danger" @click="toInquiry">下单</mt-button>
     </div>
-   
     <foot></foot>
   </div>
 </template>
@@ -228,7 +130,20 @@ export default {
         { label: '买涨', value: '0' },
         { label: '买跌', value: '1' }
       ],
+      buyType: [
+        { label: '市价', value: '1' },
+        { label: '限价委托', value: '2' }
+      ],
+      cw: [
+        { label: '1/10', value: '10' },
+        { label: '1/4', value: '4' },
+        { label: '1/3', value: '3' },
+        { label: '1/2', value: '2' },
+        { label: '全仓', value: '1' }
+      ],
+      selectCw: '',
       selectType: '',
+      selectBuyType: '1',
       // number:0,// 股
       // price:0,// 股价格
       // total:0, // 总价
@@ -248,7 +163,8 @@ export default {
       focePromptPopup: false, // 总手续费提示框
       settingSpreadRate: {spreadRate: 0},
       subaccountList:[1,2],//子账户列表
-      subaccountNumber:'' //子账户
+      subaccountNumber:'', //子账户
+      triggerPrice: '',
     }
   },
   watch: {},
@@ -294,7 +210,7 @@ export default {
     }
   },
   created () {
-    // this.timer = setInterval(this.getDetail, 5000)
+    this.timer = setInterval(this.getDetail, 5000)
   },
   beforeDestroy () {
     clearInterval(this.timer)
@@ -304,7 +220,7 @@ export default {
     this.selectNumber = 0
     this.getSettingIndexInfo()
     this.getSettingInfo()
-      this.getUserSubaccount()
+    // this.getUserSubaccount()
 
     if (!this.$store.state.userInfo.enableAmt) {
       this.getUserInfo()
@@ -332,28 +248,6 @@ export default {
       let data = await api.getSetting()
       if (data.status === 0) {
         this.settingInfo = data.data
-
-        // 成功
-        // 杠杆倍数
-        this.selectCycle = data.data.siteLever
-        // console.log(this.$store.state.userInfo)
-        if(this.$store.state.userInfo !== undefined && this.$store.state.userInfo !== null && this.$store.state.userInfo.phone !== '' && this.$store.state.userInfo.siteLever !== null){
-            this.selectCycle = data.data.siteLever.split('/')[0]
-            this.siteLeverList = []
-            for (let i = 0; i < data.data.siteLever.split('/').length; i++) {
-              let val = data.data.siteLever.split('/')[i]
-              let item = { label: val + '倍', value: val }
-              this.siteLeverList.push(item)
-            }
-          } else {
-            this.selectCycle = data.data.siteLever.split('/')[0]
-            this.siteLeverList = []
-            for (let i = 0; i < data.data.siteLever.split('/').length; i++) {
-              let val = data.data.siteLever.split('/')[i]
-              let item = { label: val + '倍', value: val }
-              this.siteLeverList.push(item)
-            }
-          }
         this.numberList = []
         for (let i = 0; i < 10; i++) {
           if (i === 0 || i % 2 === 1) {
@@ -395,36 +289,7 @@ export default {
     totrageUrl () {
       this.$router.push('/trade')
     },
-    // async getDetail () {
-    //   let opts = {
-    //     indexCode: this.$route.query.info ? this.$route.query.info.indexGid : ''
-    //   }
-    //   let data = await api.getSingleIndex(opts)
-    //   if (data.status === 0) {
-    //     this.detail = data.data
-    //   } else {
-    //     Toast(data.msg)
-    //   }
-    // },
-       async getUserSubaccount () {
-        // 用户操盘中子账户
-        let result = await api.getUserSubaccount()
-        if (result.status === 0) {
-          if(result.data.list.length>0){
-            this.subaccountList = result.data.list
-            if(this.$route.query.sub != undefined && this.$route.query.sub != ''){
-              this.form.subaccountNumber = this.$route.query.sub
-            } else {
-              this.form.subaccountNumber = this.subaccountList[0].subaccountNumber
-            } 
-          } else {
-            Toast('未获取到子账户！')
-          }
-        } else {
-          Toast(result.msg)
-        }
-      },
-    async getDetail() {
+    async getDetail () {
       let opts = {
         code: this.$route.query.code
       }
@@ -433,8 +298,7 @@ export default {
       this.loading = false
       if (data.status === 0) {
         this.detail = data.data
-        this.findSpreadRateOne()
-
+        // this.findSpreadRateOne()
       } else {
         Toast(data.msg)
       }
@@ -443,7 +307,6 @@ export default {
       this.selectCycle = value
     },
     selectNumberFun (value) {
-      
       this.selectNumber = value
       if (value !== 0) {
         this.autoNumber = ''
@@ -452,6 +315,18 @@ export default {
     },
     selectTypeFun (value) {
       this.selectType = value
+    },
+    selectCwFun (value) {
+      this.selectCw = value
+      // tradingAmount: 251842
+      // userAmt: 645759.22
+      // userFuturesAmt: 10856251.8604
+      // userIndexAmt: 20838.9
+      let {userAmt, enableAmt, tradingAmount} = this.$store.state.userInfo
+      this.autoNumber = Math.floor(userAmt / Number(value) / 100 / this.detail.nowPrice)
+    },
+    selectBuyTypeFun (value) {
+      this.selectBuyType = value
     },
     canBuyStatus () {
       let dataTime = new Date()
@@ -488,33 +363,31 @@ export default {
         this.$router.push('/authentication')
         return
       }
-      if (!this.agree) {
-        Toast('需同意合作协议才能交易!')
-      } else if (isNull(this.selectNumber) && isNull(this.autoNumber)) {
+      if (isNull(this.autoNumber)) {
         Toast('请选择购买手数')
-      } else if (isNull(this.selectType)) {
-        Toast('请选择买卖方向')
-      } else if(isNull(this.subaccountNumber)) {
-        Toast('请选择子账户')
-      } else {
-        this.buying = true
-        let opts = {
-          stockId: this.detail.id,
-          buyNum: this.selectNumber ? this.selectNumber * 100 : 0, // 单位为手
-          buyType: this.selectType,
-          lever: this.selectCycle ? this.selectCycle : 0,
-          subaccountNumber:this.subaccountNumber
-        }
-        let data = await api.buyFunds(opts)
-        this.buying = false
-        if (data.status === 0) {
-          Toast(data.data)
-          this.getUserInfo()
-          this.$router.push('/orderlist?index=2')
-        } else {
-          Toast(data.msg)
-        }
+        return
       }
+      if (this.selectBuyType == 2 && isNull(this.triggerPrice)) {
+        Toast('请输入交易限价')
+        return
+      }
+      this.buying = true
+      let opts = {
+        stockId: this.detail.id, // 保持原有的值
+        buyNum: this.autoNumber * 100,  //保持原有的值
+        buyStatus: this.selectBuyType,  //1.市价，2.限价
+        triggerPrice: this.selectBuyType == 2 ? this.triggerPrice : undefined
+      }
+      let data = await api.buyFunds(opts)
+      this.buying = false
+      if (data.status === 0) {
+        Toast(data.data)
+        this.getUserInfo()
+        this.$router.push('/orderlist?index=1')
+      } else {
+        Toast(data.msg)
+      }
+      
     },
     toDetail () {
       this.$router.push('/listdetail')
@@ -781,7 +654,8 @@ export default {
     background-color: #2D2E3B;
     border-radius: .03rem;
     border: none;
-    width: 1rem;
+    // width: 1rem;
+    width: 100%;
     margin-right: .15rem;
     padding: 0 0.2rem;
   }

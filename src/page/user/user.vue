@@ -62,7 +62,8 @@
           <span class="ti">总资产</span>
           <span class="de">
             <div>
-              <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
+              <p class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt).toFixed(2)}}</p>
+              <!-- <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
                 class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt +
                 $store.state.userInfo.userIndexAmt).toFixed(2)}}</p>
               <p v-else-if="!this.$store.state.settingForm.indexDisplay && this.$store.state.settingForm.futuresDisplay"
@@ -72,18 +73,18 @@
                 class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt).toFixed(2)}}</p>
               <p v-else-if="this.$store.state.settingForm.indexDisplay && this.$store.state.settingForm.futuresDisplay"
                 class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt +
-                $store.state.userInfo.userIndexAmt + $store.state.userInfo.userFuturesAmt).toFixed(2)}}</p>
+                $store.state.userInfo.userIndexAmt + $store.state.userInfo.userFuturesAmt).toFixed(2)}}</p> -->
             </div>
           </span>
         </div>
         <div class="acc-pre-center">
-          <div>沪深账户: <span>￥{{$store.state.hide?'****':$store.state.userInfo.userAmt}}</span></div>
-          <div>指数账户: <span>￥{{$store.state.hide?'****':$store.state.userInfo.userIndexAmt}}</span></div>
-          <div>期货账户: <span>￥{{$store.state.hide?'****':Number($store.state.userInfo.userFuturesAmt).toFixed(2)}}</span></div>
+          <div>余额: <span>￥{{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</span></div>
+          <div>持仓: <span>￥{{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</span></div>
+          <div>新股: <span>￥{{$store.state.hide?'****':Number($store.state.userInfo.newStockWaitIpo).toFixed(2)}}</span></div>
         </div>
         <div class="acc-pre-right">
-          <div class="redbtn btn" @click="toRecharge">充值</div>
-          <div class="bluebtn btn" @click="toCash">提现</div>
+          <div class="redbtn btn" @click="toRecharge">银证转入</div>
+          <div class="bluebtn btn" @click="toCash">银证转出</div>
         </div>
       </div>
       <div v-for="item in account" :key="item.key">
@@ -118,6 +119,18 @@
           <div v-show="item.isShow" class="content">
             <ul class="clearfix">
               <li>
+                <i class="iconfont icon-keyongzijin"></i>
+                <div class="name">可用余额</div>
+                <p class="number yellow">
+                  {{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</p>
+              </li>
+              <li>
+                <i class="iconfont icon-keyongzijin"></i>
+                <div class="name">可用信用额度</div>
+                <p class="number yellow">
+                  {{$store.state.hide?'****':$store.state.userInfo.enableCreditAmount}}</p>
+              </li>
+              <!-- <li>
                 <i class="iconfont icon-zijin1"></i>
                 <div class="name">总资产</div>
                 <p v-if="item.name == '指数'" class="number yellow">
@@ -126,18 +139,50 @@
                   {{$store.state.hide?'****':$store.state.userInfo.userAmt}}</p>
                 <p v-if="item.name == '期货'" class="number yellow">
                   {{$store.state.hide?'****':Number($store.state.userInfo.userFuturesAmt).toFixed(2)}}</p>
+              </li> -->
+              <li>
+                <i class="iconfont icon-keyongzijin"></i>
+                <div class="name">新股申购+待上市</div>
+                <p class="number yellow">
+                  {{$store.state.hide?'****':$store.state.userInfo.newStockWaitIpo}}</p>
               </li>
               <li>
                 <i class="iconfont icon-keyongzijin"></i>
-                <div class="name">可用资金</div>
-                <p v-if="item.name == '指数'" class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.enableIndexAmt}}</p>
-                <p v-if="item.name == '沪深'" class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</p>
-                <p v-if="item.name == '期货'" class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.enableFuturesAmt}}</p>
+                <div class="name">新股申购待缴款</div>
+                <p class="number yellow">
+                  {{$store.state.hide?'****':$store.state.userInfo.newStockWaitPay}}</p>
               </li>
               <li>
+                <i class="iconfont icon-zijin1"></i>
+                <div class="name">股票持仓价值</div>
+                <p class="number yellow">
+                  {{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</p>
+              </li>
+              <li>
+                <i class="iconfont icon-yingkuixuanzhong"></i>
+                <div class="name">股票总盈亏</div>
+                <p class="number yellow">
+                  <span v-if="$store.state.hide">****</span>
+                  <span v-else :class="$store.state.userInfo.allProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allProfitAndLose}}</span>
+                </p>
+              </li>
+              <li>
+                <i class="iconfont icon-jiaoyi"></i>
+                <div class="name">持仓总浮动盈亏</div>
+                <p class="number yellow">
+                  <span v-if="$store.state.hide">****</span>
+                  <span v-else :class="$store.state.userInfo.allFloatProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allFloatProfitAndLose}}</span>
+                </p>
+              </li>
+              <li>
+                <i class="iconfont icon-chicangyingkui"></i>
+                <div class="name">账户总盈亏</div>
+                <p class="number yellow">
+                  <span v-if="$store.state.hide">****</span>
+                  <span v-else :class="$store.state.userInfo.allProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allProfitAndLose}}</span>
+                </p>
+              </li>
+              <!-- <li>
                 <i class="iconfont icon-dongjiezijin"></i>
                 <div class="name">冻结保证金</div>
                 <p v-if="item.name == '指数'" class="number yellow">
@@ -164,56 +209,22 @@
                 <i class="iconfont icon-dongjiezijin"></i>
                 <div class="name">新股冻结保证金</div>
                 <p>{{shengoudj.djzj}}</p>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
-        <div v-show="item.isShow" 
+        <!-- 强制平仓线为 ： 可用资金 + 冻结保证金 * 0.6 -->
+        <!-- <div v-show="item.isShow" 
         class="pcx"
         style="padding: 0.12rem 0.4rem 0.15rem;">
-          <!-- 强制平仓线为 ： 可用资金 + 冻结保证金 * 0.6 -->
           <div style="background:#1A1E29">
             您的{{item.name}}账户强制平仓线为
           <span v-if="item.name == '指数'" style="font-weight:bold;font-size:0.26rem;margin:0 0.1rem;">{{$store.state.hide?'****':Number(($store.state.userInfo.enableIndexAmt + $store.state.userInfo.allIndexFreezAmt) * indexSettingInfo.forceSellPercent).toFixed(2)}} </span>
           <span v-if="item.name == '沪深'" style="font-weight:bold;font-size:0.26rem;margin:0 0.1rem;">{{$store.state.hide?'****':Number(($store.state.userInfo.enableAmt + $store.state.userInfo.allFreezAmt) * settingInfo.forceStopPercent).toFixed(2)}} </span>
           <span v-if="item.name == '期货'" style="font-weight:bold;font-size:0.26rem;margin:0 0.1rem;">{{$store.state.hide?'****':Number(($store.state.userInfo.enableFuturesAmt + $store.state.userInfo.allFuturesFreezAmt) * futuresSettingInfo.forceSellPercent).toFixed(2)}} </span>
-          <!-- 请实时注意账户风险 -->
           <i @click="focePromptPopup = true" ref="button" class="iconfont icon-xinshou"></i>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head">
-        <span class="font-w">分仓配资</span>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div @click="goFunds(3)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            新股申购
-          </div>
-          <div @click="goFunds(1)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            配资主页
-          </div>
-          <div @click="goFunds(2)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            按天配资
-          </div>
-          <div @click="goFundsList(1)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            我的配资
-          </div>
-          <div @click="goFundsList(2)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            配资持仓
-          </div>
-          <div @click="goFundsList(3)" class="col-xs-3">
-            <i class="iconfont icon-rongzi2"></i>
-            配资平仓
-          </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="panel">
@@ -224,27 +235,19 @@
         <div class="row">
           <div @click="goOrderList(1)" class="col-xs-3">
             <i class="iconfont icon-rongzi2"></i>
-            沪深持仓
+            股票持仓
           </div>
-          <div @click="goOrderList(1)" class="col-xs-3">
+          <div @click="goOrderList(2)" class="col-xs-3">
             <i class="iconfont icon-rongzilishi"></i>
-            沪深平仓
+            委托交易
           </div>
-          <div v-if="this.$store.state.settingForm.indexDisplay" @click="goOrderList(2)" class="col-xs-3">
+          <div @click="goOrderList(3)" class="col-xs-3">
             <i class="iconfont icon-zhishuyidong"></i>
-            指数持仓
+            交易记录
           </div>
-          <div v-if="this.$store.state.settingForm.indexDisplay" @click="goOrderList(2)" class="col-xs-3">
+          <div @click="goFunds(3)" class="col-xs-3">
             <i class="iconfont icon-geguyingkui"></i>
-            指数平仓
-          </div>
-          <div v-if="this.$store.state.settingForm.futuresDisplay" @click="goOrderList(4)" class="col-xs-3">
-            <i class="iconfont icon-jiaoyitixing"></i>
-            期货持仓
-          </div>
-          <div v-if="this.$store.state.settingForm.futuresDisplay" @click="goOrderList(4)" class="col-xs-3">
-            <i class="iconfont icon-qihuo1"></i>
-            期货平仓
+            新股申购
           </div>
         </div>
       </div>
@@ -294,7 +297,7 @@
                     <icon name="right66" class="right" slot="icon"></icon>
                 </span>
         </li>
-        <li >
+        <li  @click="changeLogin">
             <span>
                 <!-- <i style="font-size:0.28rem" class="iconfont icon-yinhangqia"></i> -->
                  <img src="../../assets/ico/gaimima.png"
@@ -387,6 +390,20 @@
         <span class="text-center btnok loginout" @click="toRegister">注销登录</span>
       </div>
     </div>
+    
+    <!-- 修改密码 -->
+    <mt-popup v-model="changeLoginPsdBox" position="bottom" class="mint-popup-wrap">
+      <div class="clearfix">
+        <a @click="changeLoginPsdBox = false" class="pull-right"><i class="iconfont icon-weitongguo"></i></a>
+      </div>
+      <div class="form-block">
+        <mt-field label="旧密码" type="password" placeholder="请输入旧密码" v-model="nextPsd"></mt-field>
+        <mt-field label="新密码" placeholder="密码为6~12位，数字、字母或符号" type="password" v-model="newPsd"></mt-field>
+      </div>
+      <div class="text-center">
+        <mt-button class="btn-sure" type="default" @click="changeLoginPsd">确定</mt-button>
+      </div>
+    </mt-popup>
     <foot></foot>
   </div>
 </template>
@@ -396,6 +413,7 @@ import { Toast } from 'mint-ui'
 import foot from '../../components/foot/foot'
 // import { hideNumberTo } from '@/utils/utils'
 import * as api from '@/axios/api'
+import { isNull, pwdReg } from '@/utils/utils'
 
 export default {
   components: {
@@ -417,13 +435,15 @@ export default {
       focePromptPopup: false, // 强制平仓提示框
       buttonBottom: 0,
       account: [
-        { name: '沪深', link: 'stock', isShow: true, isDisplay: false },
-        { name: '指数', link: 'index', isShow: false, isDisplay: false },
-        { name: '期货', link: 'futures', isShow: false, isDisplay: false }
+        { name: '账户资产统计', link: 'stock', isShow: true, isDisplay: false },
+        // { name: '沪深', link: 'stock', isShow: true, isDisplay: false },
+        // { name: '指数', link: 'index', isShow: false, isDisplay: false },
+        // { name: '期货', link: 'futures', isShow: false, isDisplay: false }
       ],
       showChangeBtn: false, // 是否显示资金互转按钮
       styleName: 'black',
-      shengoudj:''
+      shengoudj:'',
+      changeLoginPsdBox: false,
     }
   },
   watch: {
@@ -604,6 +624,29 @@ export default {
         Toast(data.msg)
       }
       this.$store.state.user = this.user
+    },
+    changeLogin () {
+      this.changeLoginPsdBox = true
+    },
+    async changeLoginPsd () {
+      if (isNull(this.nextPsd) || isNull(this.newPsd)) {
+        Toast('请输入新旧密码')
+      } else if (!pwdReg(this.newPsd)) {
+        Toast('密码为6~12位，数字、字母或符号')
+      } else {
+        // 修改密码
+        let opts = {
+          oldPwd: this.nextPsd,
+          newPwd: this.newPsd
+        }
+        let data = await api.changePassword(opts)
+        if (data.status === 0) {
+          this.changeLoginPsdBox = false
+          Toast(data.msg)
+        } else {
+          Toast(data.msg)
+        }
+      }
     }
   }
 }
@@ -1299,5 +1342,28 @@ export default {
       }
      }
    }
+  }
+  
+  .loginout {
+    color: #999;
+    border: 0.015rem solid #606060;
+    font-size: 0.3rem;
+    background: none;
+  }
+
+  .mint-popup-wrap {
+    width: 100%;
+    padding: 0.3rem 0.3rem 0.6rem;
+
+    .btn-sure {
+      margin-top: 0.5rem;
+      width: 80%;
+      color: #fff;
+      border: none;
+    }
+  }
+
+  .btnbox .btnok {
+    background: none;
   }
 </style>

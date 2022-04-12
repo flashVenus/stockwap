@@ -27,20 +27,23 @@
               </p>
               <p class="clearfix">
                 <span class="col-xs-4">卖出价格:<b class="space">{{item.sellOrderPrice}}</b></span>
-                <span class="col-xs-4 text-center"></span>
-                <span class="col-xs-4 text-right">点差费:<b class="space">{{item.orderStayFee}}</b></span>
+                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
+                <span class="col-xs-4 text-right">浮动盈亏:<b
+                  :class="item.profitAndLose<0?'space green':item.profitAndLose==0?'space':'space red'">{{item.profitAndLose}}</b></span>
+                <!-- <span class="col-xs-4 text-right">点差费:<b class="space">{{item.orderStayFee}}</b></span> -->
               </p>
-              <p class="clearfix">
+              <!-- <p class="clearfix">
                 <span class="col-xs-4">手续费:<b class="space">{{item.orderFee}}</b></span>
                 <span class="col-xs-4 text-center">印花税:<b class="space">{{item.orderSpread}}</b></span>
                 <span class="col-xs-4 text-right">留仓费:<b class="space">{{item.orderStayFee}}</b></span>
-              </p>
+              </p> -->
 
-              <p class="clearfix">
+              <!-- <p class="clearfix">
                 <span class="col-xs-5">留仓天数:<b class="space">{{item.orderStayDays}}</b></span>
                 <span class="col-xs-7 text-right">浮动盈亏:<b
                   :class="item.profitAndLose<0?'space green':item.profitAndLose==0?'space':'space red'">{{item.profitAndLose}}</b></span>
-              </p>
+                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
+              </p> -->
               <p class="clearfix">
                         <span class="secondary col-xs-6">买入:
                             <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
@@ -74,7 +77,9 @@ import * as api from '@/axios/api'
 export default {
   components: {},
   props: {
-
+    selectedNumber: {
+      type: String
+    },
     hasChangeSell: {
       type: Boolean,
       default: function () {
@@ -98,6 +103,10 @@ export default {
         this.list = []
         this.getListDetail()
       }
+    },
+    selectedNumber () {
+      this.list = []
+      this.getListDetail()
     }
   },
   computed: {},
@@ -125,7 +134,12 @@ export default {
         pageNum: this.pageNum,
         pageSize: this.pageSize
       }
-      let data = await api.getOrderList(opt)
+      let data
+      if (this.selectedNumber == 3) {
+        data = await api.getOrderList(opt)
+      } else if (this.selectedNumber == 2) {
+        data = await api.getOrderListWt(opt)
+      }
       if (data.status === 0) {
         data.data.list.forEach(element => {
           this.list.push(element)

@@ -7,10 +7,10 @@
     </mt-header> -->
     <mt-navbar class="top-navbar" v-model="selected" :style="selected != '2'?'':''" :fixed="selected != '2'?true:false">
       <!-- <mt-tab-item id="0">全部</mt-tab-item> -->
-      <mt-tab-item v-if="this.$store.state.settingForm.indexDisplay" id="1">指数</mt-tab-item>
+      <!-- <mt-tab-item v-if="this.$store.state.settingForm.indexDisplay" id="1">指数</mt-tab-item>   -->
       <mt-tab-item v-if="this.$store.state.settingForm.stockDisplay" id="2">沪深</mt-tab-item>
       <mt-tab-item v-if="this.$store.state.settingForm.kcStockDisplay" id="3">科创</mt-tab-item>
-      <mt-tab-item v-if="this.$store.state.settingForm.futuresDisplay" id="4">期货</mt-tab-item>
+      <!-- <mt-tab-item v-if="this.$store.state.settingForm.futuresDisplay" id="4">期货</mt-tab-item> -->
     </mt-navbar>
     <mt-tab-container class="order-list" v-model="selected">
       <!-- <mt-tab-container-item id="0">

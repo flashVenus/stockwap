@@ -10,22 +10,22 @@ export function getProductSetting (options) {
 }
 // 申购
 export function xingusg (options) {
-  return get('/new/public/index.php/api/Newlist/index', options)
+  return get('/index.php/api/Newlist/index', options)
 }
 // 申购提交
 export function xingusgs (options) {
-  return post('/new/public/index.php/api/Lists/add', options)
+  return post('/index.php/api/Lists/add', options)
 }
 
 //新股冻结资金
 export function getprice (options) {
-  return get('/new/public/index.php/api/Lists/getprice', options)
+  return get('/index.php/api/Lists/getprice', options)
 }
 
 
 // 申购提交列表
 export function xingusgsList (options) {
-  return get('/new/public/index.php/api/Lists/index', options)
+  return get('/index.php/api/Lists/index', options)
 }
 
 // 登录
@@ -208,6 +208,11 @@ export function getBankCard (options) {
 // 获取我的持仓单
 export function getOrderList (options) {
   return post('/user/position/list.do', options)
+}
+
+// 获取我的持仓单
+export function getOrderListWt (options) {
+  return post('/user/position/entrustList.do', options)
 }
 
 // 获取我的持仓单 - 指数
@@ -411,7 +416,7 @@ export function addFundsApply (options) {
 }
 //分仓下单
 export function buyFunds (options) {
-  return post('/user/funds/buyFunds.do', options)
+  return post('/user/buyStock.do', options)
 }
 
 // 配资申请-用户操盘中子账户

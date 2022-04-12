@@ -11,15 +11,19 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/index.php': {
+        // target: 'https://pc.zsycyy.com',
+        // target: 'http://www.shehua56.com',
+        target:'http://172.21.165.60:9001',
+        secure: false,
+        changeOrigin: true,
+      },
       '/': {
         // target: 'https://pc.zsycyy.com',
         // target: 'http://www.shehua56.com',
-        target:'http://sr.nqsoft.net',
+        target:'http://172.21.165.91:8099',
         secure: false,
         changeOrigin: true,
-        pathRewrite: {
-          '^/': '/'
-        }
       }
     },
 

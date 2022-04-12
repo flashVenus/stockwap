@@ -195,10 +195,10 @@ export default new Router({
       path: '/subWarehouseBuy',
       name: 'SubWarehouseBuy',
       meta: {
-        title: '分仓交易',
+        title: '购买',
         requireAuth: false,
         hasHeader: true,
-        iconRight:'search'
+        // iconRight:'search'
       },
       component: SubWarehouseBuy
     }, {
@@ -461,15 +461,6 @@ export default new Router({
         hasHeader: true,
       },
       component: () => import('../page/user/notify')
-    }, {
-      path: '/fundslist',
-      name: 'fundslist',
-      meta: {
-        title: '分仓配资',
-        requireAuth: false,
-        hasHeader: true,
-      },
-      component: FundsList
     },
     {
       // 会匹配所有路径
