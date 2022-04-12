@@ -5,13 +5,13 @@
         <mt-button slot="left" icon="search" @click="toSearch"></mt-button>
     </mt-header> -->
     <div class="list-table-title">
-      <mt-search
+      <!-- <mt-search
         style="height:auto;"
         fixed
         @click.enter.native="toSearch"
         placeholder="可输入股票代码或简拼"
       >
-      </mt-search>
+      </mt-search> -->
       <ul class="table-list">
         <li class="title">
           <div>

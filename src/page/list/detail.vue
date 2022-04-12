@@ -447,7 +447,7 @@ export default {
   bottom: 0;
   background-color: #16171d;
   .btn{
-    width: 2.4rem;
+    width: 3.4rem;
     height: 0.76rem;
     border-radius: 1rem;
     display: flex;
@@ -462,7 +462,6 @@ export default {
       margin-right: 0.1rem;
     }
     &.btn1{
-      width: 1.85rem;
       background-color: #D63535;
     }
     &.btn2{

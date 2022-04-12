@@ -33,7 +33,7 @@
       </div>
       <div class="tab-con">
         <ul class="radio-group clearfix">
-          <li v-show="!selectNumber" style="width: 70%; white-space:nowrap;">
+          <li v-show="!selectNumber" style="width: 70%; white-space:nowrap;border-bottom:1px solid grey;">
             <input @keyup="changeAutoNumber" v-model="autoNumber" type="text">手
           </li>
         </ul>
@@ -69,18 +69,24 @@
               {{item.label}}
             </div>
           </li>
-          <span v-if="selectBuyType == 2"><input  v-model="triggerPrice" type="text">元</span>
+          <li v-show="selectBuyType == 2" style="width: 2rem; white-space:nowrap;border-bottom:1px solid grey;">
+            <input v-model="triggerPrice" type="text">元
+          </li>
         </ul>
       </div>
     </div>
-    <div class="agree">
-      {{autoNumber * 100}}股   
-      市值{{price}}元
-      支付金额说明 ？
+    <div class="summary">
+      <div>
+        <span>{{autoNumber * 100}}股</span>
+        <span>市值{{price}}元</span>
+      </div>
+      <div>
+        <span @click="showPayAmtDetail">支付金额说明<i class="iconfont icon-xinshou"></i></span>
+      </div>
     </div>
     <div class="footer-btn">
       <div class="total">
-        <p class="pay">需要支付<span class="protem">{{price?price:0}}</span></p>
+        <p class="pay">需要支付<span class="protem">{{payAmt?payAmt:0}}</span></p>
         <p class="account">(账户余额:{{$store.state.userInfo.enableAmt}}元)</p>
       </div>
       <mt-button :disabled="buying" class="btn-red" size="small" type="danger" @click="toInquiry">下单</mt-button>
@@ -91,7 +97,7 @@
 
 <script>
 import foot from '../../components/foot/foot'
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import { isNull } from '@/utils/utils'
 import * as api from '@/axios/api'
 
@@ -203,6 +209,20 @@ export default {
         return (this.detail.nowPrice * this.autoNumber * 100).toFixed(2)
       } else if (this.selectNumber) {
         return (this.detail.nowPrice * this.selectNumber * 100).toFixed(2)
+      } else {
+        return 0
+      }
+      // 市值价 = 现价 * 股（1手 = 100股）
+    },
+    payAmt () {
+      let pc = this.detail.nowPrice
+      if (this.selectBuyType == 2) {
+        pc = this.triggerPrice
+      }
+      if (this.autoNumber) {
+        return (pc * this.autoNumber * 100).toFixed(2)
+      } else if (this.selectNumber) {
+        return (pc * this.selectNumber * 100).toFixed(2)
       } else {
         return 0
       }
@@ -371,6 +391,10 @@ export default {
         Toast('请输入交易限价')
         return
       }
+      if (this.payAmt > this.enableAmt) {
+        Toast('余额不足')
+        return
+      }
       this.buying = true
       let opts = {
         stockId: this.detail.id, // 保持原有的值
@@ -404,6 +428,9 @@ export default {
       } else {
         Toast(data.msg)
       }
+    },
+    showPayAmtDetail () {
+      MessageBox('支付金额说明', '选择市价时，支付金额为市价*买入股数；选择限价时，支付金额为限价*买入股数；');
     }
   }
 }
@@ -651,7 +678,7 @@ export default {
     background-color: #E00101;
   }
   .radio-group li input {
-    background-color: #2D2E3B;
+    // background-color: #2D2E3B;
     border-radius: .03rem;
     border: none;
     // width: 1rem;
@@ -724,6 +751,17 @@ export default {
     }
     .footer-btn .right-btn .btn-buy{
       background-color: #E00101;
+    }
+  }
+  .summary {
+    margin: 0.15rem 0.3rem;
+    width: 6.9rem;
+    border-bottom: none;
+    border-radius: 0.1rem;
+    div {
+      display: flex;
+      justify-content: space-between;
+      line-height: 0.5rem;
     }
   }
 </style>

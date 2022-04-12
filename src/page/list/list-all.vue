@@ -34,7 +34,7 @@
         v-show="$state.theme == 'red'"
         >
         <span style="flex:1">科创板</span>
-        <a class="pull-right" @click="toStockList()">
+        <a class="pull-right" @click="toStockList(3)">
           <img class="gengduo-ico" v-show="$state.theme != 'red'" src="../../assets/ico/gengduo.png" alt="">
           <img class="gengduo-ico" v-show="$state.theme == 'red'" src="../../assets/ico/gengduo-red.png" alt="">
         </a>
@@ -43,7 +43,7 @@
         <div class="box page-part">
           <div class="box-contain clearfix">
             <div :class="i.floatPoint<0?'tab ':'tab '" v-for="(i,index) in stockKechuangList" v-if="index < 6"
-                 :key="i.key">
+                 :key="i.key" @click="toDetail(i)">
               <p :index='index' class="name">{{i.name}}</p>
               <p 
               :class="changeTextClass[index] == true?'price heartBeat':'price'"
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div v-if="this.$store.state.settingForm.futuresDisplay" class="account-box">
+    <div class="account-box">
       <div class="header">
         <img
         class="ico-img"
@@ -74,8 +74,8 @@
         src="../../assets/ico/guani-red.png"
         v-show="$state.theme == 'red'"
         >
-        <span style="flex:1">期货</span>
-        <a class="pull-right" @click="toFuturesList()">
+        <span style="flex:1">创业板</span>
+        <a class="pull-right" @click="toStockList(4)">
           <img class="gengduo-ico" v-show="$state.theme != 'red'" src="../../assets/ico/gengduo.png" alt="">
           <img class="gengduo-ico" v-show="$state.theme == 'red'" src="../../assets/ico/gengduo-red.png" alt="">
         </a>
@@ -83,19 +83,19 @@
       <div class="content">
         <div class="box page-part">
           <div class="box-contain clearfix">
-            <div :class="i.floatPoint<0?'tab greenBg':'tab redBg'" v-for="(i,index) in futuresList" v-if="index < 3"
-                 :key="i.key">
-              <p :index='index' class="name">{{i.futuresName}}</p>
-              <p><span class="futures-code">{{i.futuresCode}}</span></p>
-              <p :class="changeTextClass[index] == true?'price heartBeat':'price'">{{Number(i.nowPrice).toFixed(2)}}</p>
-              <!-- <div class="status">
-                <span :class="i.floatPoint<0?'pifting green':'pifting red'">{{Number(i.nowPrice).toFixed(2)}}</span>
-                <span :class="i.floatRate<0?'Percentage green':'Percentage red'">{{i.coinCode}}%</span>
-              </div> -->
+            <div :class="i.floatPoint<0?'tab ':'tab '" v-for="(i,index) in stockChuangyeList" v-if="index < 6"
+                 :key="i.key" @click="toDetail(i)">
+              <p :index='index' class="name">{{i.name}}</p>
+              <p :class="changeTextClass[index] == true?'price heartBeat':'price'">
+              <span :class="i.hcrate<0?'pifting green':'pifting red'">
+                {{Number(i.nowPrice).toFixed(2)}}
+              </span>
+              </p>
+              <div class="status">
+                <span >{{Number(i.hcrate).toFixed(2)}}</span>
+                <span >{{i.hcrate}}%</span>
+              </div>
             </div>
-            <!-- <div class="more" @click="toIndexList">
-                <i class="iconfont icon-you"></i>
-            </div> -->
           </div>
         </div>
       </div>
@@ -123,7 +123,8 @@ export default {
       pageSize: 15,
       stockList: [],
       futuresList: [],
-      stockKechuangList: []
+      stockKechuangList: [],
+      stockChuangyeList: [],
     }
   },
   watch: {},
@@ -134,7 +135,7 @@ export default {
   mounted () {
     this.getMarket()
     // this.getStock()
-    this.getFutures()
+    this.getChuangYeStock()
     this.getKechuangStock()
   },
   methods: {
@@ -180,6 +181,19 @@ export default {
         Toast(data.msg)
       }
     },
+    async getChuangYeStock () {
+      let opt = {
+        stockPlate: '创业',
+        pageNum: this.pageNum,
+        pageSize: 15
+      }
+      let data = await api.getStock(opt)
+      if (data.status === 0) {
+        this.stockChuangyeList = data.data.list
+      } else {
+        Toast(data.msg)
+      }
+    },
     async getFutures () {
       // 获取期货列表
       let opt = {
@@ -194,11 +208,21 @@ export default {
         Toast(data.msg)
       }
     },
-    toStockList () {
+    toDetail (stock) {
+      console.log(stock)
+      this.$router.push({
+        path: '/listdetail',
+        query: {
+          code: stock.code,
+          stock_type: stock.stock_type
+        }
+      })
+    },
+    toStockList (i) {
       this.$router.push({
         path: '/list',
         query: {
-          index: '3'
+          index: i
         }
       })
       // this.changeNavOptions('3')

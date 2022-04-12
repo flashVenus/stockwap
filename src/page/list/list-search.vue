@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <mt-button slot="right" class="search-btn-list" icon="search" @click="getStock">搜索</mt-button>
+    <mt-button slot="right" style="right:62px" class="search-btn-list" icon="search" @click="getStock">搜索</mt-button>
+    <mt-button slot="right" class="search-btn-list" icon="back" @click="$router.go(-1)">取消</mt-button>
     <mt-search
       fixed
       show

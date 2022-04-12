@@ -20,7 +20,7 @@
             <div class="order-title">
               <span @click="toDetail(item.stockCode)" class="main">{{item.stockName}}</span>
               <span class="secondary">({{item.stockCode}})</span>
-              <span :class="item.orderDirection=='买涨'?'type type-up':'type type-down'">{{item.orderDirection=='买涨'?'买涨':'买跌'}}</span>
+              <!-- <span :class="item.orderDirection=='买涨'?'type type-up':'type type-down'">{{item.orderDirection=='买涨'?'买涨':'买跌'}}</span> -->
               <span v-if="item.stockPlate=='科创'" :class="item.stockPlate=='科创'?'type':''">科创</span>
               <span class="direction pull-right big-font">
                         最新:
