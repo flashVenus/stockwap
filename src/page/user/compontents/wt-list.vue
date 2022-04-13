@@ -44,9 +44,17 @@
                 <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
                 <b v-else></b>
               </div>
-              <div @click="sell(item)" class="foot-btn">
+              <div v-if="item.orderStatus == 0" @click="sell(item)" class="foot-btn">
                 <i class='font-icon'></i>
                 我要撤单
+              </div>
+              <div v-else-if="item.orderStatus == 1">
+                <i class='font-icon'></i>
+                已买入
+              </div>
+              <div v-else>
+                <i class='font-icon'></i>
+                已撤单
               </div>
             </div>
           </div>
