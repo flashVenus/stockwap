@@ -218,9 +218,9 @@ export default {
         this.logo = data.data.siteLogoSm
         this.agreeUrl = data.data.regAgree
         this.siteInfo = data.data
-        if(this.siteInfo.smsDisplay === false){
-            this.code = '6666'
-        }
+        // if(this.siteInfo.smsDisplay === false){
+        //     this.code = '6666'
+        // }
         this.$store.state.siteInfo = this.siteInfo
         // this.invitecode = this.siteInfo.agentCode
       } else {
