@@ -44,7 +44,7 @@
                 <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
                 <b v-else></b>
               </div>
-              <div @click="sell(item.id)" class="foot-btn">
+              <div @click="sell(item)" class="foot-btn">
                 <i class='font-icon'></i>
                 我要撤单
               </div>
@@ -135,9 +135,13 @@ export default {
       //     Toast('不在开盘时间内，暂不能交易！')
       //     return
       // }
+      if (val.orderStatus !== 0) {
+        Toast('已买入，不可撤单')
+        return
+      }
       MessageBox.confirm('您确定要撤单吗?').then(async action => {
         let opt = {
-          id: val
+          id: val.id
         }
         let data = await api.sellWt(opt)
         if (data.status === 0) {
