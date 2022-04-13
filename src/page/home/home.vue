@@ -184,6 +184,7 @@
               class="news-item"
               v-for="item of newsContent1"
               :key="item.id"
+              @click="popNews(item)"
             >
               <p
                 class="news-title"
@@ -202,6 +203,7 @@
               class="news-item"
               v-for="item of newsContent2"
               :key="item.id"
+              @click="popNews(item)"
             >
               <p
                 class="news-title"
@@ -220,6 +222,7 @@
               class="news-item"
               v-for="item of newsContent3"
               :key="item.id"
+              @click="popNews(item)"
             >
               <p
                 class="news-title"
@@ -238,6 +241,7 @@
               class="news-item"
               v-for="item of newsContent4"
               :key="item.id"
+              @click="popNews(item)"
             >
               <p
                 class="news-title"
@@ -256,6 +260,7 @@
               class="news-item"
               v-for="item of newsContent5"
               :key="item.id"
+              @click="popNews(item)"
             >
               <p
                 class="news-title"
@@ -270,6 +275,26 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
+    <mt-popup
+      v-model="newsVisible"
+      position="right"
+      :closeOnClickModal="false">
+      <div class="newsDetail">
+        <div class="topHeader">
+          <span class="close" @click="newsVisible=false">
+            <i class="iconfont icon-weitongguo"></i>
+          </span>
+        </div>
+        <h5> {{currentNews.title}}</h5>
+        <div class="middle">
+          <span>来源: {{currentNews.sourceName}}</span>
+          <span>{{timeFormat(new Date(currentNews.addTime))}}</span>
+        </div>
+        <p>
+          {{currentNews.content}}
+        </p>
+      </div>
+    </mt-popup>
     <!-- tab -->
 
     <foot></foot>
@@ -281,6 +306,7 @@
 import foot from '@/components/foot/foot'
 import AllList from '@/page/list/list-all'
 import HomeList from './components/home-list'
+import {timeFormat} from '@/utils/utils'
 import { Toast } from 'mint-ui'
 import * as api from '@/axios/api'
 import bannerImg from '../../assets/img/banner.png'
@@ -295,6 +321,7 @@ export default {
   props: {},
   data () {
     return {
+      timeFormat,
       news: 'tab_0',
       market: [],
       moveStats: false,
@@ -318,7 +345,9 @@ export default {
       newsContent4: [], // 7*24全球
       newsContent5: [], // 商品资讯,
       b_bg: require('../../../static/img/bg-zhisu.png'),
-      r_bg: require('../../../static/img/bg-zhisu-red.png')
+      r_bg: require('../../../static/img/bg-zhisu-red.png'),
+      currentNews: {},
+      newsVisible: false
     }
   },
   created () {
@@ -490,6 +519,10 @@ export default {
           id: this.artList.id
         }
       })
+    },
+    popNews (news) {
+      this.currentNews = news
+      this.newsVisible = true
     }
   },
   mounted () {
@@ -1069,6 +1102,33 @@ export default {
     background-image: url(../../assets/ico/shadow.png);
     background-size: cover;
     opacity: .5;
+  }
+}
+.newsDetail {
+  height: 100vh;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  h5 {
+    width: 80%;
+    margin: auto;
+    color: #222;
+  }
+  p {
+    color: #333;
+    line-height: 0.4rem;
+    text-indent: 0.6rem;
+    overflow: auto;
+    flex: 1;
+  }
+  .topHeader {
+    margin-top: 0.3rem;
+  }
+  .middle {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
   }
 }
 </style>
