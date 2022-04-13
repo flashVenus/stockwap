@@ -105,16 +105,16 @@
             <img v-else class="iconfont"
             src="../../assets/ico/jia-red.png"
             >
-            <span :style="{color:$state.theme =='red'?'#000':'#fff'}">{{item.name}}账户</span>
+            <span :style="{color:$state.theme =='red'?'#000':'#fff'}">{{item.name}}</span>
             <span v-if="item.name == '指数'">(￥{{$store.state.hide?'****':$store.state.userInfo.userIndexAmt}})</span>
             <span v-if="item.name == '沪深'">(￥{{$store.state.hide?'****':$store.state.userInfo.userAmt}})</span>
             <span
               v-if="item.name == '期货'">(￥{{$store.state.hide?'****':Number($store.state.userInfo.userFuturesAmt).toFixed(2)}})
             </span>
             </div>
-            <a class="pull-right" @click="toTransfer(1)">
+            <!-- <a class="pull-right" @click="toTransfer(1)">
               <span :style="{color:$state.theme == 'red'?'#000':'#fff'}">资金互转<i class="iconfont icon-you"></i></span>
-            </a>
+            </a> -->
           </div>
           <div v-show="item.isShow" class="content">
             <ul class="clearfix">
