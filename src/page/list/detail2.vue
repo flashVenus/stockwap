@@ -63,13 +63,8 @@
                 <!-- 图 -->
                 <imgBox :code="$route.query.code" :imgList='detail'/>
             </div>
-            <div class="page-part">
+            <!-- <div class="page-part">
                 <ul class="stock-price clearfix">
-                    <!-- <li class="text-center pull-left" v-for="item in buyList" :key="item.key">
-                        <p>买①</p>
-                        <p class="red">{{item.price}}</p>
-                        <p>{{item.price2}}</p>
-                    </li> -->
                     <li class="text-center pull-left">
                         <p>买①</p>
                         <p :class="detail.nowPrice - detail.preclose_px <0?'green':'red'">{{detail.buy1}}</p>
@@ -96,8 +91,8 @@
                         <p>{{(Number(detail.buy5_num)/100).toFixed(2)}}</p>
                     </li>
                 </ul>
-            </div>
-            <div class="page-part">
+            </div> -->
+            <!-- <div class="page-part">
                 <ul class="stock-price clearfix">
                     <li class="text-center pull-left">
                         <p>卖①</p>
@@ -125,13 +120,13 @@
                         <p>{{(Number(detail.sell5_num)/100).toFixed(2)}}</p>
                     </li>
                 </ul>
-            </div>
+            </div> -->
             <div class="agree-footer text-center">
                 <div v-if="$store.state.userInfo.phone" class="btn-box clearfix">
-                    <a v-if="!isOptionOpt" class="pull-left bottom-btn" href="javascript:;" @click="addOptions">添加自选</a>
-                    <a v-if="isOptionOpt" class="pull-left bottom-btn" href="javascript:;"
+                    <a style="width:100%" v-if="!isOptionOpt" class="pull-left bottom-btn" href="javascript:;" @click="addOptions">添加自选</a>
+                    <a style="width:100%" v-if="isOptionOpt" class="pull-left bottom-btn" href="javascript:;"
                        @click="deteleOptions">删除自选</a>
-                    <a class="pull-left bottom-btn on" href="javascript:;" @click="toBuy">马上下单</a>
+                    <!-- <a class="pull-left bottom-btn on" href="javascript:;" @click="toBuy">马上下单</a> -->
                     <!-- <mt-button :class="agree?'btn btn-red':'btn btn-default'" size="small" @click="toBuy()">确定</mt-button> -->
                     <!-- <mt-button class="btn btn-cancel" size="small" @click="toBuy">取消</mt-button> -->
                 </div>
