@@ -22,7 +22,7 @@
           <mt-button @click="toSearchName2" type="default">根据股票简拼查询订单</mt-button>
           <mt-button @click="toSearchCode2" type="default">根据股票代码查询订单</mt-button>
         </div> -->
-        <HistoryList :selectedNumber='selectedNumber' :hasChangeSell="hasChangeSell" :handleOptions='handleOptions'/>
+        <wt-list :selectedNumber='selectedNumber' :hasChangeSell="hasChangeSell" :handleOptions='handleOptions'/>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
         <!-- <div class="text-center">
@@ -41,6 +41,7 @@ import foot from '@/components/foot/foot'
 // import '@/assets/style/common.less'
 import holdPosition from './compontents/hold-position'
 import HistoryList from './compontents/history-list'
+import WtList from './compontents/wt-list'
 import indexHoldPosition from './compontents/indexhold-position'
 import indexHistoryList from './compontents/indexhistory-list'
 // import * as api from '@/axios/api'
@@ -51,7 +52,8 @@ export default {
     holdPosition,
     HistoryList,
     indexHoldPosition,
-    indexHistoryList
+    indexHistoryList,
+    WtList
   },
   props: {
     selectedNumber: {
@@ -231,6 +233,6 @@ export default {
         }
       }
     }
-    
+
   }
 </style>

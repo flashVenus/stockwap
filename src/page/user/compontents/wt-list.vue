@@ -14,48 +14,41 @@
             <div class="order-title">
               <span class="main">{{item.stockName}}</span>
               <span class="secondary">({{item.stockCode}})</span>
-              <!-- <span :class="item.orderDirection=='买涨'?'type type-up':'type type-down'">{{item.orderDirection=='买涨'?'买涨':'买跌'}}</span> -->
+              <span :class="item.orderDirection=='买涨'?'type type-up':'type type-down'">委托买入</span>
               <span v-if="item.stockPlate=='科创'" :class="item.stockPlate=='科创'?'type':''">科创</span>
               <span class="pull-right">总盈亏:<b
                 :class="item.allProfitAndLose<0?'space green':item.allProfitAndLose==0?'space':'space red'">{{item.allProfitAndLose}}</b></span>
             </div>
             <div class="order-info">
               <p class="clearfix">
-                <span class="col-xs-4">买入价格:<b class="space">{{item.buyOrderPrice}}</b></span>
-                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
-                <span class="col-xs-4 text-right">市值:<b class="space">{{item.orderTotalPrice}}</b></span>
+                <span class="col-xs-4 lt">
+                  委托价/最新
+                </span>
+                <span class="col-xs-4 lt text-center">
+                  委托数量/已成
+                </span>
+                <span class="col-xs-4 lt text-right">
+                  委托总金额
+                </span>
               </p>
               <p class="clearfix">
-                <span class="col-xs-4">卖出价格:<b class="space">{{item.sellOrderPrice}}</b></span>
-                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
-                <span class="col-xs-4 text-right">浮动盈亏:<b
-                  :class="item.profitAndLose<0?'space green':item.profitAndLose==0?'space':'space red'">{{item.profitAndLose}}</b></span>
+                <span class="col-xs-4"><b class="space">{{item.triggerPrice}}/{{item.nowPrice}}</b></span>
+                <span class="col-xs-4 text-center"><b class="space">{{item.orderNum}}/{{item.finishHandNum}}</b></span>
+                <span class="col-xs-4 text-right"><b>{{item.orderTotalPrice}}</b></span>
                 <!-- <span class="col-xs-4 text-right">点差费:<b class="space">{{item.orderStayFee}}</b></span> -->
-              </p>
-              <!-- <p class="clearfix">
-                <span class="col-xs-4">手续费:<b class="space">{{item.orderFee}}</b></span>
-                <span class="col-xs-4 text-center">印花税:<b class="space">{{item.orderSpread}}</b></span>
-                <span class="col-xs-4 text-right">留仓费:<b class="space">{{item.orderStayFee}}</b></span>
-              </p> -->
-
-              <!-- <p class="clearfix">
-                <span class="col-xs-5">留仓天数:<b class="space">{{item.orderStayDays}}</b></span>
-                <span class="col-xs-7 text-right">浮动盈亏:<b
-                  :class="item.profitAndLose<0?'space green':item.profitAndLose==0?'space':'space red'">{{item.profitAndLose}}</b></span>
-                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
-              </p> -->
-              <p class="clearfix">
-                        <span class="secondary col-xs-6">买入:
-                            <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
-                            <b v-else></b>
-                        </span>
-                <span class="secondary col-xs-6 text-right">卖出:
-                            <b v-if="item.sellOrderTime">{{new Date(item.sellOrderTime) | timeFormat}}</b>
-                            <b v-else></b>
-                        </span>
               </p>
             </div>
 
+            <div class="order-foot clearfix">
+              <div style="text-align: left;color: #666;padding: 0;" class="col-xs-6">
+                <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
+                <b v-else></b>
+              </div>
+              <div @click="sell(item.id)" class="foot-btn">
+                <i class='font-icon'></i>
+                我要撤单
+              </div>
+            </div>
           </div>
         </li>
       </ul>
@@ -71,7 +64,7 @@
 </template>
 
 <script>
-import { Toast } from 'mint-ui'
+import { Toast, MessageBox } from 'mint-ui'
 import * as api from '@/axios/api'
 
 export default {
@@ -127,8 +120,7 @@ export default {
         pageNum: this.pageNum,
         pageSize: this.pageSize
       }
-      let data
-      data = await api.getOrderList(opt)
+      let data = await api.getOrderListWt(opt)
       if (data.status === 0) {
         data.data.list.forEach(element => {
           this.list.push(element)
@@ -137,6 +129,26 @@ export default {
       } else {
         Toast(data.msg)
       }
+    },
+    sell (val) {
+      // if(!this.canBuyStatus()){
+      //     Toast('不在开盘时间内，暂不能交易！')
+      //     return
+      // }
+      MessageBox.confirm('您确定要撤单吗?').then(async action => {
+        let opt = {
+          id: val
+        }
+        let data = await api.sellWt(opt)
+        if (data.status === 0) {
+          Toast(data.msg)
+          this.hasChangeSell = true
+          this.handleOptions(this.hasChangeSell)
+          this.getListDetail()
+        } else {
+          Toast(data.msg)
+        }
+      })
     }
   }
 }

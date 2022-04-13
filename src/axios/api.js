@@ -169,6 +169,11 @@ export function sell (options) {
   return post('/user/sell.do', options)
 }
 
+// 用户平仓委托单
+export function sellWt (options) {
+  return post('/user/entrustCancel.do', options)
+}
+
 // 指数平仓
 export function sellIndex (options) {
   return post('/user/sellIndex.do', options)
