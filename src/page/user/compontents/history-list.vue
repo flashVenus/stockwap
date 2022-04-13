@@ -27,7 +27,7 @@
               </p>
               <p class="clearfix">
                 <span class="col-xs-4">卖出价格:<b class="space">{{item.sellOrderPrice}}</b></span>
-                <span class="col-xs-4 text-center">数量:<b class="space">{{item.orderNum}}</b></span>
+                <span class="col-xs-4 text-center"></span>
                 <span class="col-xs-4 text-right">浮动盈亏:<b
                   :class="item.profitAndLose<0?'space green':item.profitAndLose==0?'space':'space red'">{{item.profitAndLose}}</b></span>
                 <!-- <span class="col-xs-4 text-right">点差费:<b class="space">{{item.orderStayFee}}</b></span> -->
