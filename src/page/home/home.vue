@@ -192,7 +192,7 @@
               >{{item.title}}</p>
               <span class="news-status">
                 <i class="glyphicon glyphicon-eye-open"></i>
-                浏览量：{{item.views}}
+                浏览量：{{item.views}}&nbsp;&nbsp;&nbsp;&nbsp; {{new Date(item.updateTime) | timeFormat}}
               </span>
             </div>
           </div>
