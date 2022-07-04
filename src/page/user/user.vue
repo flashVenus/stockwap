@@ -541,7 +541,9 @@ export default {
     },
     toRecharge () {
       // 充值
-      this.$router.push('/recharge')
+      // this.$router.push('/recharge')
+      // 修改直接跳转客服页面
+      location.href='https://89ded81a8c430.chatnow.mstatik.com/dist/standalone.html?eid=c95336d570cf6438965bab99aaf7f74e'
     },
     toCash () {
       // 提现
