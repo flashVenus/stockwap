@@ -27,7 +27,7 @@ export default {
   watch: {},
   computed: {},
   created () {
-    this.timer = setInterval(this.getDate, 60000)
+    this.timer = setInterval(this.getDate, 30000)
     this.classStyle = localStorage.getItem('styleName') ? localStorage.getItem('styleName') : 'red'
   },
   beforeDestroy () {
@@ -150,6 +150,10 @@ export default {
         }
       }
     },
+    timeValue (v) {
+      let arr = v.split(':')
+      return Number(arr[0])*60 + Number(arr[1])
+    },
     async getDate () {
       let opts = {
         stockCode: this.code
@@ -160,6 +164,24 @@ export default {
       }
       let data = await api.getMinuteLine(opts)
       if (data.status === 0) {
+        // 数据插值
+        let d = data.data
+        let price,rates,amounts,volumes
+        this.ChartsTime.map((v,i) => {
+          if (v === d.time[i]) {
+            price = d.price[i]
+            rates = d.rates[i]
+            amounts = d.amounts[i]
+            volumes = d.volumes[i]
+          } else if (this.timeValue(v) < this.timeValue(d.time[d.time.length - 1])) {
+            d.price.splice(i,0,price)
+            d.rates.splice(i,0,rates)
+            d.amounts.splice(i,0,amounts)
+            d.volumes.splice(i,0,volumes)
+            d.time.splice(i,0,v)
+          }
+        })
+        console.log(data.data)
         this.initEchartMap(data.data)
       } else {
         Toast(data.msg)
