@@ -164,7 +164,7 @@ export default {
   created () {
     this.detail.code = this.$route.query.code
     this.detail.stockType = this.$route.query.stock_type
-    // this.timer = setInterval(this.refreshList, 5000)
+    this.timer = setInterval(this.refreshList, 5000)
   },
   beforeDestroy () {
     clearInterval(this.timer)
@@ -242,7 +242,7 @@ export default {
       if (this.loading) {
 
       }
-      // this.getDetail()
+      this.getDetail()
     },
     async getOpation () {
       let opts = {
