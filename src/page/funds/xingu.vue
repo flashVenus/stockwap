@@ -210,15 +210,16 @@ export default {
   },
   methods: {
     async shengouclik(i) {
-      this.dialogCommunity = true;
+      this.haoForm.shehao = 0
       this.shenhaoTitle = `${i.names}(${i.code})`;
       this.tijiao = i;
-      console.log(i);
+      this.dialogCommunity = true;
     },
     async shengouclikMax(i) {
-      this.shengouclik(i);
-
+      this.shenhaoTitle = `${i.names}(${i.code})`;
+      this.tijiao = i;
       this.haoForm.shehao = this.tijiao.max_apply_lot;
+      this.dialogCommunity = true;
     },
     async shengouuu() {
       this.aaa = "aaa";
