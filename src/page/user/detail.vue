@@ -16,7 +16,8 @@
         </div>
         <div class="account-panel">
           <div class="col-xs-6">
-            <a href="#/recharge">
+            <!-- <a href="#/recharge"> -->
+            <a @click="showPanel">
               <img src="../../assets/img/recharge_icon.png"><br>
               充值
             </a>
@@ -64,7 +65,20 @@ export default {
         document.body.classList.add('black-bg')
     }
   },
-  methods: {}
+  methods: {
+    showPanel() {
+      this.$store.commit('showMQPanel', true)
+    }
+  },
+  
+  beforeRouteLeave (to, from, next) {
+    if (this.$store.state.mqPanelShow) {
+      this.$store.commit('showMQPanel', false)
+      history.pushState(null, null, location.href)
+    } else {
+      next()
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

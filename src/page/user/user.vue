@@ -543,7 +543,7 @@ export default {
       // 充值
       // this.$router.push('/recharge')
       // 修改直接跳转客服页面
-      location.href='https://89ded81a8c430.chatnow.mstatik.com/dist/standalone.html?eid=c95336d570cf6438965bab99aaf7f74e'
+      this.$store.commit('showMQPanel', true)
     },
     toCash () {
       // 提现
@@ -649,6 +649,14 @@ export default {
           Toast(data.msg)
         }
       }
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.$store.state.mqPanelShow) {
+      this.$store.commit('showMQPanel', false)
+      history.pushState(null, null, location.href)
+    } else {
+      next()
     }
   }
 }

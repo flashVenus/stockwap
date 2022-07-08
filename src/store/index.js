@@ -6,8 +6,29 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const mutations = {
+  showMQPanel (state, v) {
+    console.log(state.userInfo, state.user)
+    if (_MEIQIA) {
+      if (v && !state.mqPanelShow) {
+        _MEIQIA('metadata', {
+          comment: state.userInfo.nickName, // 备注
+          name: state.userInfo.realName, // 名字
+          tel: state.userInfo.phone // 电话
+        });
+        _MEIQIA('showPanel')
+        state.mqPanelShow = true
+      } else {
+        _MEIQIA('hidePanel')
+        state.mqPanelShow = false
+      }
+    }
+  }
+}
+
 const state = {
   className: 'black',
+  mqPanelShow: false,
   userInfo: { // 用户信息
   },
   user: {},
@@ -28,6 +49,6 @@ const state = {
 export default new Vuex.Store({
   state,
   actions: {},
-  mutations: {},
+  mutations,
   getters: {}
 })

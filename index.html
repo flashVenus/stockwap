@@ -41,6 +41,50 @@
         }
       }
     }
+
+    // 在线客服
+    function init() {
+      (function (m, ei, q, i, a, j, s) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        (j = ei.createElement(q)), (s = ei.getElementsByTagName(q)[0]);
+        j.async = true;
+        j.charset = 'UTF-8';
+        j.src = 'https://static.meiqia.com/widget/loader.js';
+        s.parentNode.insertBefore(j, s);
+      })(window, document, 'script', '_MEIQIA');
+      _MEIQIA('entId', 'c95336d570cf6438965bab99aaf7f74e' || entId);
+      _MEIQIA('withoutBtn');
+      _MEIQIA('standalone', function (config) {
+        if (config.color) {
+          document.body.style['background-color'] = '#' + config.color;
+        }
+        if (config.url) {
+          document.body.style['background-image'] = 'url(' + config.url + ')';
+          document.body.style['background-repeat'] = 'no-repeat';
+          document.body.style['background-size'] = '100% 100%';
+        }
+      });
+      if (data.language) {
+        _MEIQIA('language', data.language);
+      }
+      if (data.subsource) {
+        _MEIQIA('subSource', data.subsource);
+      }
+      if (data.fallback) {
+        _MEIQIA('fallback', data.fallback);
+      }
+      if (data.clientid) {
+        _MEIQIA('clientId', data.clientid);
+      }
+      if (data.agentid || data.groupid) {
+        _MEIQIA('assign', { agentToken: data.agentid || null, groupToken: data.groupid || null });
+      }
+    }
+    init();
   </script>
 </head>
 <body style="height: 100%; position: absolute; width: 100%;">
