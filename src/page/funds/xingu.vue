@@ -594,9 +594,9 @@ body {
 </style>
 <style lang="less">
 .black-dialog {
-  background-color: #1d2433;
+  background-color: #1d2433!important;
   color: #fff;
-  border-radius: 6px;
+  border-radius: 6px!important;
   .el-dialog__header {
     background-color: #2c374e;
     border-top-left-radius: 6px;
