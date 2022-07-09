@@ -58,7 +58,7 @@
         <div class="acc-pre-left">
           <img v-show="$state.theme!='red'" src="../../assets/ico/zongzichan.png" alt="">
           <img v-show="$state.theme=='red'" src="../../assets/ico/zongzichan-red.png" alt="">
-          
+
           <span class="ti">总资产</span>
           <span class="de">
             <div>
@@ -80,7 +80,7 @@
         <div class="acc-pre-center">
           <div>余额: <span>￥{{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</span></div>
           <div>持仓: <span>￥{{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</span></div>
-          <div>新股: <span>￥{{$store.state.hide?'****':Number($store.state.userInfo.newStockWaitIpo).toFixed(2)}}</span></div>
+          <div>新股: <span>￥{{$store.state.hide?'****':Number($store.state.userInfo.newStockWaitPay).toFixed(2)}}</span></div>
         </div>
         <div class="acc-pre-right">
           <div class="redbtn btn" @click="toRecharge">银证转入</div>
@@ -214,7 +214,7 @@
           </div>
         </div>
         <!-- 强制平仓线为 ： 可用资金 + 冻结保证金 * 0.6 -->
-        <!-- <div v-show="item.isShow" 
+        <!-- <div v-show="item.isShow"
         class="pcx"
         style="padding: 0.12rem 0.4rem 0.15rem;">
           <div style="background:#1A1E29">
@@ -323,7 +323,7 @@
 
       </ul>
       <ul class="after">
-        
+
         <li @click="goDetail">
               <span>
                   <!-- <i style="font-size:0.28rem" class="iconfont icon-zijinmingxi"></i> -->
@@ -390,7 +390,7 @@
         <span class="text-center btnok loginout" @click="toRegister">注销登录</span>
       </div>
     </div>
-    
+
     <!-- 修改密码 -->
     <mt-popup v-model="changeLoginPsdBox" position="bottom" class="mint-popup-wrap">
       <div class="clearfix">
@@ -1261,7 +1261,7 @@ export default {
         justify-content: space-around;
         .btn {
           color: #fff;
-          padding: 0 10px;
+          padding: 0 9px;
           border-radius: .2rem;
         }
         .redbtn {
@@ -1353,7 +1353,7 @@ export default {
      }
    }
   }
-  
+
   .loginout {
     color: #999;
     border: 0.015rem solid #606060;
