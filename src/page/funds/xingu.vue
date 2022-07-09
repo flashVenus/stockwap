@@ -124,9 +124,18 @@
                   { type: 'number', message: '申购签数必须为数字值' },
                   {
                     validator: (rule, value, callback) => {
-                      value == 0
-                        ? callback(new Error('申购签数必须大于0'))
-                        : callback();
+                      if (value > tijiao.max_apply_lot) {
+                        callback(
+                          new Error(
+                            '该股申购签数必须小于' +
+                              tijiao.max_apply_lot
+                          )
+                        );
+                      } else if (value == 0) {
+                        callback(new Error('申购签数必须大于0'));
+                      } else {
+                        callback();
+                      }
                     },
                   },
                 ]"
@@ -210,7 +219,7 @@ export default {
   },
   methods: {
     async shengouclik(i) {
-      this.haoForm.shehao = 0
+      this.haoForm.shehao = 0;
       this.shenhaoTitle = `${i.names}(${i.code})`;
       this.tijiao = i;
       this.dialogCommunity = true;
@@ -594,9 +603,9 @@ body {
 </style>
 <style lang="less">
 .black-dialog {
-  background-color: #1d2433!important;
+  background-color: #1d2433 !important;
   color: #fff;
-  border-radius: 6px!important;
+  border-radius: 6px !important;
   .el-dialog__header {
     background-color: #2c374e;
     border-top-left-radius: 6px;
