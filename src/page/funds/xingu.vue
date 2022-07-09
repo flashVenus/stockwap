@@ -131,8 +131,8 @@
                               tijiao.max_apply_lot
                           )
                         );
-                      } else if (value == 0) {
-                        callback(new Error('申购签数必须大于0'));
+                      } else if (value < tijiao.min_apply_lot) {
+                        callback(new Error('申购签数必须>='+tijiao.min_apply_lot));
                       } else {
                         callback();
                       }
