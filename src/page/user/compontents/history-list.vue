@@ -146,7 +146,7 @@ export default {
     padding-bottom: 0
   }
   .hisList {
-    margin-top: 0.8rem;
+    // margin-top: 0.8rem;
   }
 
   .order-title {
