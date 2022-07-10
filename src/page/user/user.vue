@@ -154,7 +154,7 @@
               </li>
               <li>
                 <i class="iconfont icon-zijin1"></i>
-                <div class="name">股票持仓价值</div>
+                <div class="name">股票持仓市值</div>
                 <p class="number yellow">
                   {{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</p>
               </li>

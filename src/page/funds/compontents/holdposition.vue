@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <div v-if="list.length<=0 && !getStatus" 
+    <div v-if="list.length<=0 && !getStatus"
     class="empty text-center">
-      暂无订单信息!
+      暂无持仓信息!
     </div>
-    <div v-if="list.length<=0 && getStatus" 
+    <div v-if="list.length<=0 && getStatus"
     class="empty text-center">
       <mt-spinner type="fading-circle"></mt-spinner>
       加载中...
@@ -47,7 +47,7 @@
                     <b v-if="item.status==4" class="green">已结束</b>
                 </span>
               </p>
-              
+
               <p class="clearfix">
                 <span class="col-xs-8">终止时间:<b class="space" v-if="item.endTime">{{new Date(item.endTime) | timeFormat}}</b></span>
                 <span class="col-xs-4 text-right big-font">股票盈亏:

@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <div v-if="list.length<=0 && !getStatus" 
+    <div v-if="list.length<=0 && !getStatus"
     class="empty text-center">
-      暂无订单信息!
+      暂无持仓信息!
     </div>
-    <div v-if="list.length<=0 && getStatus" 
+    <div v-if="list.length<=0 && getStatus"
     class="empty text-center">
       <mt-spinner type="fading-circle"></mt-spinner>
       加载中...
@@ -63,7 +63,7 @@
               </div>
               <div @click="sell(item.positionSn)" class="foot-btn">
                 <i class='font-icon'></i>
-                我要平仓
+                卖出
               </div>
             </div>
           </div>

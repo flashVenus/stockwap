@@ -12,8 +12,8 @@
     <mt-tab-container class="order-list" v-model="selectedNumber">
       <mt-tab-container-item id="1">
         <div class="text-center">
-          <mt-button @click="toSearchName" type="default">根据股票简拼查询订单</mt-button>
-          <mt-button @click="toSearchCode" type="default">根据股票代码查询订单</mt-button>
+          <mt-button @click="toSearchName" type="default">根据股票简拼查询持仓</mt-button>
+          <mt-button @click="toSearchCode" type="default">根据股票代码查询持仓</mt-button>
         </div>
         <holdPosition :selectedNumber='selectedNumber' :handleOptions='handleOptions'/>
       </mt-tab-container-item>
