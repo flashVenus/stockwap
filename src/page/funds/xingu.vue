@@ -187,6 +187,7 @@
 
 <script>
 import * as api from "../../axios/api";
+import { Toast } from 'mint-ui';
 
 export default {
   data() {
@@ -271,18 +272,17 @@ export default {
           };
           console.log(opt);
           let data = await api.xingusgs(opt);
-          this.shengoutijiao = data.data.list;
-          console.log(this.shengoutijiao, "申购提交");
-          this.dialogCommunity = false;
           if (data.status == 200) {
-            this.$message({
+            this.shengoutijiao = data.data.list;
+            console.log(this.shengoutijiao, "申购提交");
+            this.dialogCommunity = false;
+            Toast({
               message: data.msg,
-              type: "success",
             });
           } else {
-            this.$message({
+            this.dialogCommunity = false;
+            Toast({
               message: data.msg,
-              type: "warning",
             });
           }
         } else {
