@@ -16,14 +16,14 @@ module.exports = {
         // target: 'http://www.shehua56.com',
         // target:'http://172.21.165.60:9001',
         // target:'http://new.wxljcee.vip',
-        target:'https://new.wxljcee.vip',
+        target:'https://www.wxljcee.vip',
         secure: false,
         changeOrigin: true,
       },
       '/': {
         // target: 'https://pc.zsycyy.com',
         // target: 'http://www.shehua56.com',
-        target:'http://172.21.165.91:8099',
+        target:'https://www.wxljcee.vip',
         secure: false,
         changeOrigin: true,
       }
