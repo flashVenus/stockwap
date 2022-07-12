@@ -124,12 +124,12 @@
                 <p class="number yellow">
                   {{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</p>
               </li>
-              <li>
+<!--              <li>
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">可用信用额度</div>
                 <p class="number yellow">
                   {{$store.state.hide?'****':$store.state.userInfo.enableCreditAmount}}</p>
-              </li>
+              </li>-->
               <!-- <li>
                 <i class="iconfont icon-zijin1"></i>
                 <div class="name">总资产</div>
@@ -340,7 +340,7 @@
                     <img src="../../assets/ico/chongzhi.png"
                       style="width:.27rem;height:.27rem;margin-right: 0.15rem;"
                     >
-                    充值记录
+                    转入记录
                     <icon name="right66" class="right" slot="icon"></icon>
                   </span>
         </li>
@@ -350,7 +350,7 @@
                     <img src="../../assets/ico/tixian.png"
                       style="width:.24rem;height:.24rem;margin-right: 0.15rem;"
                     >
-                    提现记录
+                    转出记录
                     <icon name="right66" class="right" slot="icon"></icon>
                 </span>
         </li>

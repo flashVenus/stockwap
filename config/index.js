@@ -15,8 +15,7 @@ module.exports = {
         // target: 'https://pc.zsycyy.com',
         // target: 'http://www.shehua56.com',
         // target:'http://localhost:8099',
-        // target:'http://new.wxljcee.vip',
-        target:'https://new.mxkjdmx.vip',
+        target:'https://www.mxkjdmx.vip',
         secure: false,
         changeOrigin: true,
       },
@@ -24,7 +23,7 @@ module.exports = {
         // target: 'https://pc.zsycyy.com',
         // target: 'http://www.shehua56.com',
         // target:'http://localhost:8099',
-        target:'https://new.mxkjdmx.vip',
+        target:'https://www.mxkjdmx.vip',
         secure: false,
         changeOrigin: true,
       }
