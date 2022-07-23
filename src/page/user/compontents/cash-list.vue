@@ -131,7 +131,7 @@ export default {
     },
     async cancle (val) {
       // 取消提现
-      // MessageBox.confirm('您确定要平仓吗?').then(async action => {
+      // MessageBox.confirm('您确定要卖出吗?').then(async action => {
       let opt = {
         withId: val
       }

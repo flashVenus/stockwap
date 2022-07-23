@@ -82,7 +82,7 @@
               </div>
               <div @click="sell(item.positionSn)" class="foot-btn">
                 <i class='font-icon'></i>
-                我要平仓
+                我要卖出
               </div>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default {
         this.$router.push('/authentication')
         return
       }
-      MessageBox.confirm('您确定要平仓吗?').then(async action => {
+      MessageBox.confirm('您确定要卖出吗?').then(async action => {
         let opt = {
           positionSn: val
         }

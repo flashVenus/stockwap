@@ -34,7 +34,7 @@
       <div class="tab-con">
         <ul class="radio-group clearfix">
           <li v-show="!selectNumber" style="width: 70%; white-space:nowrap;border-bottom:1px solid grey;">
-            <input @keyup="changeAutoNumber" v-model="autoNumber" type="text">手
+            <input @keyup="changeAutoNumber"  @input="autoNumber = Number($event.target.value.replace(/\D+/, ''))" v-model="autoNumber" type="text">手
           </li>
         </ul>
         <!-- <p class="clearfix">
@@ -377,7 +377,10 @@ export default {
       //     return
       // }
       // 下单
-
+//  if (this.autoNumber % 100 != 0) {
+//         Toast('请输入100的整倍数')
+//         return
+//       }
       if (!this.$store.state.userInfo.idCard) {
         Toast('您还未实名认证,请先实名认证了再下单')
         this.$router.push('/authentication')
@@ -395,6 +398,7 @@ export default {
         Toast('余额不足')
         return
       }
+     
       this.buying = true
       let opts = {
         stockId: this.detail.id, // 保持原有的值

@@ -16,11 +16,15 @@
     </div> -->
     <div class="account-info">
       <div class="account-info_avatar">
-        <img src="../../assets/ico/wogerenziliao.png" alt="">
+        <img src="../../assets/ico/wogerenziliao.png" alt="" />
       </div>
       <div class="account-info_detail">
-        <div class="account-phone">账户：{{$store.state.userInfo.phone || '未登录'}}</div>
-        <div class="account-name">昵称：{{$store.state.userInfo.nickName || '未登录'}}</div>
+        <div class="account-phone">
+          账户：{{ $store.state.userInfo.phone || "未登录" }}
+        </div>
+        <div class="account-name">
+          昵称：{{ $store.state.userInfo.nickName || "未登录" }}
+        </div>
       </div>
       <div class="account-info_ctl" @click="hideNumber">
         资产状况
@@ -56,13 +60,27 @@
       </div> -->
       <div class="account-preview">
         <div class="acc-pre-left">
-          <img v-show="$state.theme!='red'" src="../../assets/ico/zongzichan.png" alt="">
-          <img v-show="$state.theme=='red'" src="../../assets/ico/zongzichan-red.png" alt="">
+          <img
+            v-show="$state.theme != 'red'"
+            src="../../assets/ico/zongzichan.png"
+            alt=""
+          />
+          <img
+            v-show="$state.theme == 'red'"
+            src="../../assets/ico/zongzichan-red.png"
+            alt=""
+          />
 
           <span class="ti">总资产</span>
           <span class="de">
             <div>
-              <p class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt).toFixed(2)}}</p>
+              <p class="account">
+                ¥{{
+                  $store.state.hide
+                    ? "****"
+                    : Number($store.state.userInfo.userAmt).toFixed(2)
+                }}
+              </p>
               <!-- <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
                 class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt +
                 $store.state.userInfo.userIndexAmt).toFixed(2)}}</p>
@@ -78,9 +96,32 @@
           </span>
         </div>
         <div class="acc-pre-center">
-          <div>余额: <span>￥{{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</span></div>
-          <div>持仓: <span>￥{{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</span></div>
-          <div>新股: <span>￥{{$store.state.hide?'****':Number($store.state.userInfo.newStockWaitPay).toFixed(2)}}</span></div>
+          <div>
+            余额:
+            <span
+              >￥{{
+                $store.state.hide ? "****" : $store.state.userInfo.enableAmt
+              }}</span
+            >
+          </div>
+          <div>
+            持仓:
+            <span
+              >￥{{
+                $store.state.hide ? "****" : $store.state.userInfo.allFreezAmt
+              }}</span
+            >
+          </div>
+          <div>
+            新股:
+            <span
+              >￥{{
+                $store.state.hide
+                  ? "****"
+                  : Number($store.state.userInfo.newStockWaitPay).toFixed(2)
+              }}</span
+            >
+          </div>
         </div>
         <div class="acc-pre-right">
           <div class="redbtn btn" @click="toRecharge">银证转入</div>
@@ -89,28 +130,49 @@
       </div>
       <div v-for="item in account" :key="item.key">
         <div class="account-box" v-if="item.isDisplay">
-          <div class="header" @click="item.isShow = item.isShow?false:true">
+          <div class="header" @click="item.isShow = item.isShow ? false : true">
             <!-- <i v-if="item.isShow" class="iconfont jian"></i>
             <i v-else class="iconfont jia"></i> -->
             <div class="header-left">
-            <img v-if="item.isShow&&$state.theme =='red'" class="iconfont"
-            src="../../assets/ico/jian-red.png"
-            >
-            <img v-else-if="item.isShow&&$state.theme !='red'" class="iconfont"
-            src="../../assets/ico/jian.png"
-            >
-            <img v-else-if="!item.isShow&&$state.theme !='red'" class="iconfont"
-            src="../../assets/ico/jia.png"
-            >
-            <img v-else class="iconfont"
-            src="../../assets/ico/jia-red.png"
-            >
-            <span :style="{color:$state.theme =='red'?'#000':'#fff'}">{{item.name}}</span>
-            <span v-if="item.name == '指数'">(￥{{$store.state.hide?'****':$store.state.userInfo.userIndexAmt}})</span>
-            <span v-if="item.name == '沪深'">(￥{{$store.state.hide?'****':$store.state.userInfo.userAmt}})</span>
-            <span
-              v-if="item.name == '期货'">(￥{{$store.state.hide?'****':Number($store.state.userInfo.userFuturesAmt).toFixed(2)}})
-            </span>
+              <img
+                v-if="item.isShow && $state.theme == 'red'"
+                class="iconfont"
+                src="../../assets/ico/jian-red.png"
+              />
+              <img
+                v-else-if="item.isShow && $state.theme != 'red'"
+                class="iconfont"
+                src="../../assets/ico/jian.png"
+              />
+              <img
+                v-else-if="!item.isShow && $state.theme != 'red'"
+                class="iconfont"
+                src="../../assets/ico/jia.png"
+              />
+              <img v-else class="iconfont" src="../../assets/ico/jia-red.png" />
+              <span
+                :style="{ color: $state.theme == 'red' ? '#000' : '#fff' }"
+                >{{ item.name }}</span
+              >
+              <span v-if="item.name == '指数'"
+                >(￥{{
+                  $store.state.hide
+                    ? "****"
+                    : $store.state.userInfo.userIndexAmt
+                }})</span
+              >
+              <span v-if="item.name == '沪深'"
+                >(￥{{
+                  $store.state.hide ? "****" : $store.state.userInfo.userAmt
+                }})</span
+              >
+              <span v-if="item.name == '期货'"
+                >(￥{{
+                  $store.state.hide
+                    ? "****"
+                    : Number($store.state.userInfo.userFuturesAmt).toFixed(2)
+                }})
+              </span>
             </div>
             <!-- <a class="pull-right" @click="toTransfer(1)">
               <span :style="{color:$state.theme == 'red'?'#000':'#fff'}">资金互转<i class="iconfont icon-you"></i></span>
@@ -122,14 +184,22 @@
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">可用余额</div>
                 <p class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.enableAmt}}</p>
+                  {{
+                    $store.state.hide ? "****" : $store.state.userInfo.enableAmt
+                  }}
+                </p>
               </li>
-<!--              <li>
+              <li>
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">可用信用额度</div>
                 <p class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.enableCreditAmount}}</p>
-              </li>-->
+                  {{
+                    $store.state.hide
+                      ? "****"
+                      : $store.state.userInfo.enableCreditAmount
+                  }}
+                </p>
+              </li>
               <!-- <li>
                 <i class="iconfont icon-zijin1"></i>
                 <div class="name">总资产</div>
@@ -144,26 +214,49 @@
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">新股申购+待上市</div>
                 <p class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.newStockWaitIpo}}</p>
+                  {{
+                    $store.state.hide
+                      ? "****"
+                      : $store.state.userInfo.newStockWaitIpo
+                  }}
+                </p>
               </li>
               <li>
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">新股申购待缴款</div>
                 <p class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.newStockWaitPay}}</p>
+                  {{
+                    $store.state.hide
+                      ? "****"
+                      : $store.state.userInfo.newStockWaitPay
+                  }}
+                </p>
               </li>
               <li>
                 <i class="iconfont icon-zijin1"></i>
-                <div class="name">股票持仓市值</div>
+                <div class="name">股票持仓价值</div>
                 <p class="number yellow">
-                  {{$store.state.hide?'****':$store.state.userInfo.allFreezAmt}}</p>
+                  {{
+                    $store.state.hide
+                      ? "****"
+                      : $store.state.userInfo.allFreezAmt
+                  }}
+                </p>
               </li>
               <li>
                 <i class="iconfont icon-yingkuixuanzhong"></i>
                 <div class="name">股票总盈亏</div>
                 <p class="number yellow">
                   <span v-if="$store.state.hide">****</span>
-                  <span v-else :class="$store.state.userInfo.allProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allProfitAndLose}}</span>
+                  <span
+                    v-else
+                    :class="
+                      $store.state.userInfo.allProfitAndLose > 0
+                        ? 'red'
+                        : 'green'
+                    "
+                    >{{ $store.state.userInfo.allProfitAndLose }}</span
+                  >
                 </p>
               </li>
               <li>
@@ -171,7 +264,15 @@
                 <div class="name">持仓总浮动盈亏</div>
                 <p class="number yellow">
                   <span v-if="$store.state.hide">****</span>
-                  <span v-else :class="$store.state.userInfo.allFloatProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allFloatProfitAndLose}}</span>
+                  <span
+                    v-else
+                    :class="
+                      $store.state.userInfo.allFloatProfitAndLose > 0
+                        ? 'red'
+                        : 'green'
+                    "
+                    >{{ $store.state.userInfo.allFloatProfitAndLose }}</span
+                  >
                 </p>
               </li>
               <li>
@@ -179,7 +280,15 @@
                 <div class="name">账户总盈亏</div>
                 <p class="number yellow">
                   <span v-if="$store.state.hide">****</span>
-                  <span v-else :class="$store.state.userInfo.allProfitAndLose > 0 ? 'red' : 'green'">{{$store.state.userInfo.allProfitAndLose}}</span>
+                  <span
+                    v-else
+                    :class="
+                      $store.state.userInfo.allProfitAndLose > 0
+                        ? 'red'
+                        : 'green'
+                    "
+                    >{{ $store.state.userInfo.allProfitAndLose }}</span
+                  >
                 </p>
               </li>
               <!-- <li>
@@ -255,61 +364,80 @@
     <div class="other">
       <ul class="after">
         <li @click="toAuthentication">
-                  <span>
-                    <!-- <icon name="shoufei" slot="icon"></icon> -->
-                    <!-- <i style="font-size:0.34rem" class="iconfont icon-shenfenrenzheng"></i> -->
-                    <img src="../../assets/ico/shimin.png"
-                    style="width:.28rem;height:.24rem;margin-right: 0.15rem;"
-                    >
-                    实名认证
-                    <span class="renzhen done"
-                    v-if="$store.state.userInfo.isActive == 2"
-                    >
-                      <i class="iconfont el-icon-circle-check" ></i>
-                      审核通过
-                    </span>
-                    <span class="renzhen ing"
-                    v-if="$store.state.userInfo.isActive == 0 || $store.state.userInfo.isActive == 3" style="color:red;font-size: 0.7rem;"
-                    >
-                      <i class="iconfont el-icon-circle-close" ></i>
-                      未审核
-                    </span>
-                    <!-- <i v-if="$store.state.userInfo.isActive == 1" style="color:red;font-size: 0.7rem;"
+          <span>
+            <!-- <icon name="shoufei" slot="icon"></icon> -->
+            <!-- <i style="font-size:0.34rem" class="iconfont icon-shenfenrenzheng"></i> -->
+            <img
+              src="../../assets/ico/shimin.png"
+              style="width: 0.28rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            实名认证
+            <span
+              class="renzhen done"
+              v-if="$store.state.userInfo.isActive == 2"
+            >
+              <i class="iconfont el-icon-circle-check"></i>
+              审核通过
+            </span>
+            <span
+              class="renzhen ing"
+              v-if="
+                $store.state.userInfo.isActive == 0 ||
+                $store.state.userInfo.isActive == 3
+              "
+              style="color: red; font-size: 0.7rem"
+            >
+              <i class="iconfont el-icon-circle-close"></i>
+              未审核
+            </span>
+            <!-- <i v-if="$store.state.userInfo.isActive == 1" style="color:red;font-size: 0.7rem;"
                        class="iconfont icon-shenhezhong"></i>
                     <i v-if="$store.state.userInfo.isActive == 2" style="color:red;font-size: 0.7rem;"
                        class="iconfont icon-tongguo1"></i>
                     <i v-if="$store.state.userInfo.isActive == 0 || $store.state.userInfo.isActive == 3"
                        style="color:red;font-size: 0.75rem;" class="iconfont icon-icon-test"></i> -->
-                    <icon name="right66" class="right" slot="icon"></icon>
-                  </span>
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
         <li @click="goCard">
-                <span>
-                    <!-- <i style="font-size:0.28rem" class="iconfont icon-yinhangqia"></i> -->
-                     <img src="../../assets/ico/yinhangka.png"
-                      style="width:.28rem;height:.24rem;margin-right: 0.15rem;"
-                    >
-                    银行卡
-                    <!-- <i v-if="!$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
+          <span>
+            <!-- <i style="font-size:0.28rem" class="iconfont icon-yinhangqia"></i> -->
+            <img
+              src="../../assets/ico/yinhangka.png"
+              style="width: 0.28rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            银行卡
+            <!-- <i v-if="!$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
                        class="iconfont icon-iconfontweitongguo"></i>
                     <i v-if="$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
                        class="iconfont icon-yanzhengma"></i> -->
-                    <icon name="right66" class="right" slot="icon"></icon>
-                </span>
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
-        <li  @click="changeLogin">
-            <span>
-                <!-- <i style="font-size:0.28rem" class="iconfont icon-yinhangqia"></i> -->
-                 <img src="../../assets/ico/gaimima.png"
-                      style="width:.24rem;height:.24rem;margin-right: 0.15rem;"
-                    >
-                修改密码
-                <!-- <i v-if="!$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
+        <li @click="changeLogin">
+          <span>
+            <!-- <i style="font-size:0.28rem" class="iconfont icon-yinhangqia"></i> -->
+            <img
+              src="../../assets/ico/gaimima.png"
+              style="width: 0.24rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            修改密码
+            <!-- <i v-if="!$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
                     class="iconfont icon-iconfontweitongguo"></i>
                 <i v-if="$store.state.bankInfo.bankNo" style="color:red;font-size: 0.3rem;margin-left: 0.1rem;"
                     class="iconfont icon-yanzhengma"></i> -->
-                <icon name="right66" class="right" slot="icon"></icon>
-            </span>
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
+        </li>
+        <li @click="zijinpassshow = true">
+          <span>
+            <img
+              src="../../assets/ico/gaimima.png"
+              style="width: 0.24rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            资金密码
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
       </ul>
       <ul class="after">
@@ -320,39 +448,40 @@
               <icon name="right66" class="right" slot="icon"></icon>
             </span>
         </li> -->
-
       </ul>
       <ul class="after">
-
         <li @click="goDetail">
-              <span>
-                  <!-- <i style="font-size:0.28rem" class="iconfont icon-zijinmingxi"></i> -->
-                  <img src="../../assets/ico/zijin.png"
-                      style="width:.27rem;height:.24rem;margin-right: 0.15rem;"
-                    >
-                  资金明细
-                  <icon name="right66" class="right" slot="icon"></icon>
-              </span>
+          <span>
+            <!-- <i style="font-size:0.28rem" class="iconfont icon-zijinmingxi"></i> -->
+            <img
+              src="../../assets/ico/zijin.png"
+              style="width: 0.27rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            资金明细
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
         <li @click="toRechargeList">
-                  <span>
-                    <!-- <i style="font-size:0.28rem" class="iconfont icon-dingdanjilu1"></i> -->
-                    <img src="../../assets/ico/chongzhi.png"
-                      style="width:.27rem;height:.27rem;margin-right: 0.15rem;"
-                    >
-                    转入记录
-                    <icon name="right66" class="right" slot="icon"></icon>
-                  </span>
+          <span>
+            <!-- <i style="font-size:0.28rem" class="iconfont icon-dingdanjilu1"></i> -->
+            <img
+              src="../../assets/ico/chongzhi.png"
+              style="width: 0.27rem; height: 0.27rem; margin-right: 0.15rem"
+            />
+            充值记录
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
         <li @click="toCashList">
-                <span>
-                    <!-- <i style="font-size:0.28rem" class="iconfont icon-dingdanjilu1"></i> -->
-                    <img src="../../assets/ico/tixian.png"
-                      style="width:.24rem;height:.24rem;margin-right: 0.15rem;"
-                    >
-                    转出记录
-                    <icon name="right66" class="right" slot="icon"></icon>
-                </span>
+          <span>
+            <!-- <i style="font-size:0.28rem" class="iconfont icon-dingdanjilu1"></i> -->
+            <img
+              src="../../assets/ico/tixian.png"
+              style="width: 0.24rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            提现记录
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
         </li>
       </ul>
       <!-- <ul class="after">
@@ -367,84 +496,197 @@
               </span>
           </li>
       </ul> -->
-      <mt-popup v-model="focePromptPopup" popup-transition="popup-fade" class="mint-popup-white">
+      <mt-popup
+        v-model="focePromptPopup"
+        popup-transition="popup-fade"
+        class="mint-popup-white"
+      >
         <div class="clearfix">
-          <a @click="focePromptPopup = false" class="pull-right"><i class="iconfont icon-weitongguo"></i></a>
+          <a @click="focePromptPopup = false" class="pull-right"
+            ><i class="iconfont icon-weitongguo"></i
+          ></a>
         </div>
         <p class="font-title">什么是强制平仓线？</p>
         <!--  账户可用资金 +  -->
-        <p v-if="$store.state.settingForm.stockDisplay" class="font-bold">(沪深)强制平仓线 = (账户可用资金+冻结保证金) *
-          {{settingInfo.forceStopPercent ? settingInfo.forceStopPercent:0}}</p>
-        <p v-if="$store.state.settingForm.indexDisplay" class="font-bold">(指数)强制平仓线 = (账户可用资金+冻结保证金) *
-          {{indexSettingInfo.forceSellPercent ? indexSettingInfo.forceSellPercent:0}}</p>
-        <p v-if="$store.state.settingForm.futuresDisplay" class="font-bold">(期货)强制平仓线 = (账户可用资金+冻结保证金) *
-          {{futuresSettingInfo.forceSellPercent ? futuresSettingInfo.forceSellPercent:0}}</p>
-        <p v-if="$store.state.settingForm.stockDisplay">当您的沪深账户持仓总盈亏为<span class="green number">-{{Number(($store.state.userInfo.enableAmt + $store.state.userInfo.allFreezAmt) * settingInfo.forceStopPercent).toFixed(2)}}</span>时系统会强制平仓
+        <p v-if="$store.state.settingForm.stockDisplay" class="font-bold">
+          (沪深)强制平仓线 = (账户可用资金+冻结保证金) *
+          {{ settingInfo.forceStopPercent ? settingInfo.forceStopPercent : 0 }}
         </p>
-        <p v-if="$store.state.settingForm.indexDisplay">当您的指数账户持仓总盈亏为<span class="green number">-{{Number(($store.state.userInfo.allIndexFreezAmt + $store.state.userInfo.enableIndexAmt) * indexSettingInfo.forceSellPercent).toFixed(2)}}</span>时系统会强制平仓
+        <p v-if="$store.state.settingForm.indexDisplay" class="font-bold">
+          (指数)强制平仓线 = (账户可用资金+冻结保证金) *
+          {{
+            indexSettingInfo.forceSellPercent
+              ? indexSettingInfo.forceSellPercent
+              : 0
+          }}
         </p>
-        <p v-if="$store.state.settingForm.futuresDisplay">当您的期货账户持仓总盈亏为<span class="green number">-{{Number(($store.state.userInfo.allFuturesFreezAmt + $store.state.userInfo.enableFuturesAmt) * futuresSettingInfo.forceSellPercent).toFixed(2)}}</span>时系统会强制平仓
+        <p v-if="$store.state.settingForm.futuresDisplay" class="font-bold">
+          (期货)强制平仓线 = (账户可用资金+冻结保证金) *
+          {{
+            futuresSettingInfo.forceSellPercent
+              ? futuresSettingInfo.forceSellPercent
+              : 0
+          }}
+        </p>
+        <p v-if="$store.state.settingForm.stockDisplay">
+          当您的沪深账户持仓总盈亏为<span class="green number"
+            >-{{
+              Number(
+                ($store.state.userInfo.enableAmt +
+                  $store.state.userInfo.allFreezAmt) *
+                  settingInfo.forceStopPercent
+              ).toFixed(2)
+            }}</span
+          >时系统会强制平仓
+        </p>
+        <p v-if="$store.state.settingForm.indexDisplay">
+          当您的指数账户持仓总盈亏为<span class="green number"
+            >-{{
+              Number(
+                ($store.state.userInfo.allIndexFreezAmt +
+                  $store.state.userInfo.enableIndexAmt) *
+                  indexSettingInfo.forceSellPercent
+              ).toFixed(2)
+            }}</span
+          >时系统会强制平仓
+        </p>
+        <p v-if="$store.state.settingForm.futuresDisplay">
+          当您的期货账户持仓总盈亏为<span class="green number"
+            >-{{
+              Number(
+                ($store.state.userInfo.allFuturesFreezAmt +
+                  $store.state.userInfo.enableFuturesAmt) *
+                  futuresSettingInfo.forceSellPercent
+              ).toFixed(2)
+            }}</span
+          >时系统会强制平仓
         </p>
       </mt-popup>
       <div class="btnbox">
-        <span class="text-center btnok loginout" @click="toRegister">注销登录</span>
+        <span class="text-center btnok loginout" @click="toRegister"
+          >注销登录</span
+        >
       </div>
     </div>
 
     <!-- 修改密码 -->
-    <mt-popup v-model="changeLoginPsdBox" position="bottom" class="mint-popup-wrap">
+    <mt-popup
+      v-model="changeLoginPsdBox"
+      position="bottom"
+      class="mint-popup-wrap"
+    >
       <div class="clearfix">
-        <a @click="changeLoginPsdBox = false" class="pull-right"><i class="iconfont icon-weitongguo"></i></a>
+        <a @click="changeLoginPsdBox = false" class="pull-right"
+          ><i class="iconfont icon-weitongguo"></i
+        ></a>
       </div>
       <div class="form-block">
-        <mt-field label="旧密码" type="password" placeholder="请输入旧密码" v-model="nextPsd"></mt-field>
-        <mt-field label="新密码" placeholder="密码为6~12位，数字、字母或符号" type="password" v-model="newPsd"></mt-field>
+        <mt-field
+          label="旧密码"
+          type="password"
+          placeholder="请输入旧密码"
+          v-model="nextPsd"
+        ></mt-field>
+        <mt-field
+          label="新密码"
+          placeholder="密码为6~12位，数字、字母或符号"
+          type="password"
+          v-model="newPsd"
+        ></mt-field>
       </div>
       <div class="text-center">
-        <mt-button class="btn-sure" type="default" @click="changeLoginPsd">确定</mt-button>
+        <mt-button
+          class="btn-sure"
+          type="default"
+          @click="changeLoginPsd"
+          style="color: #000"
+          >确定</mt-button
+        >
+      </div>
+    </mt-popup>
+    <!-- 修改资金密码 -->
+    <mt-popup v-model="zijinpassshow" position="bottom" class="mint-popup-wrap">
+      <div class="clearfix">
+        <a @click="zijinpassshow = false" class="pull-right"
+          ><i class="iconfont icon-weitongguo"></i
+        ></a>
+      </div>
+      <div class="form-block">
+        <mt-field
+          label="旧密码"
+          type="password"
+          placeholder="请输入旧密码"
+          v-model="oldzijinpass"
+          v-if="$store.state.userInfo.hasWithdrawPwd == true"
+        ></mt-field>
+        <mt-field
+          label="新密码"
+          placeholder="请输入新密码"
+          type="password"
+          v-model="newzijinpass"
+        ></mt-field>
+        <mt-field
+          label="确认密码"
+          placeholder="请确认新密码"
+          type="password"
+          v-model="quezijinpass"
+        ></mt-field>
+      </div>
+      <div class="text-center">
+        <mt-button
+          class="btn-sure"
+          type="default"
+          @click="geteditzijinpass"
+          style="color: #000"
+          >确定</mt-button
+        >
       </div>
     </mt-popup>
     <foot></foot>
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { Toast } from 'mint-ui'
+import { Toast } from "mint-ui";
 // import '@/assets/style/bg.less'
-import foot from '../../components/foot/foot'
+import foot from "../../components/foot/foot";
 // import { hideNumberTo } from '@/utils/utils'
-import * as api from '@/axios/api'
-import { isNull, pwdReg } from '@/utils/utils'
+import * as api from "@/axios/api";
+import { isNull, pwdReg } from "@/utils/utils";
 
 export default {
   components: {
-    foot
+    foot,
   },
-  data () {
+  data() {
     return {
       user: {
-        img: ''
+        img: "",
       },
       defaultUser: {
-        img: require('../../assets/img/default-head.png')
+        img: require("../../assets/img/default-head.png"),
       },
       changeHideStatus: false,
-      userAmt: '',
+      userAmt: "",
       settingInfo: {}, // 设置信息
       indexSettingInfo: {}, // 设置信息 指数
       futuresSettingInfo: {}, // 设置信息 期货
       focePromptPopup: false, // 强制平仓提示框
       buttonBottom: 0,
       account: [
-        { name: '账户资产统计', link: 'stock', isShow: true, isDisplay: false },
+        { name: "账户资产统计", link: "stock", isShow: true, isDisplay: false },
         // { name: '沪深', link: 'stock', isShow: true, isDisplay: false },
         // { name: '指数', link: 'index', isShow: false, isDisplay: false },
         // { name: '期货', link: 'futures', isShow: false, isDisplay: false }
       ],
       showChangeBtn: false, // 是否显示资金互转按钮
-      styleName: 'black',
-      shengoudj:'',
+      styleName: "black",
+      shengoudj: "",
       changeLoginPsdBox: false,
-    }
+      zijinpassshow: false,
+      oldzijinpass: "",
+      newzijinpass: "",
+      quezijinpass: "",
+    };
   },
   watch: {
     //   changeHideStatus(newval){
@@ -452,22 +694,46 @@ export default {
     //   }
   },
   computed: {},
-  created () {
-    this.getUserInfo()
-    this.styleName = window.localStorage.getItem('styleName') ? window.localStorage.getItem('styleName') : 'red'
+  created() {
+    this.getUserInfo();
+    this.styleName = window.localStorage.getItem("styleName")
+      ? window.localStorage.getItem("styleName")
+      : "red";
   },
-  mounted () {
-    this.getSettingInfo()
-    this.getIndexSettingInfo()
-    this.getFuturesSetting()
-    this.getCardDetail()
-    this.getprice()
-    this.changeHideStatus = this.$store.state.hide
-    if (this.$store.state.settingForm.indexDisplay || this.$store.state.settingForm.futuresDisplay) {
-      this.showChangeBtn = true
+  mounted() {
+    this.getSettingInfo();
+    this.getIndexSettingInfo();
+    this.getFuturesSetting();
+    this.getCardDetail();
+    this.getprice();
+    this.changeHideStatus = this.$store.state.hide;
+    if (
+      this.$store.state.settingForm.indexDisplay ||
+      this.$store.state.settingForm.futuresDisplay
+    ) {
+      this.showChangeBtn = true;
     }
   },
   methods: {
+    async geteditzijinpass() {
+      if (this.newzijinpass !== this.quezijinpass) {
+        this.$message.error("两次密码不一致");
+        return;
+      }
+      let opts = {
+        newPwd: this.newzijinpass,
+      };
+      if (this.$store.state.userInfo.hasWithdrawPwd == true) {
+        opts.oldPwd = this.oldzijinpass;
+      }
+      let data = await api.updateWithdrawPwd(opts);
+      if (data.status === 0) {
+        this.$message.success(data.msg);
+      } else {
+        this.$message.error(data.msg);
+      }
+      this.zijinpassshow = false;
+    },
     async getprice() {
       let opt = {};
       let data = await api.getprice(opt);
@@ -475,905 +741,905 @@ export default {
       console.log(this.shengoudj, "申购");
     },
     goFunds(type) {
-      if (type  == 1) {
-        this.$router.push('/funds')
+      if (type == 1) {
+        this.$router.push("/funds");
       }
       if (type == 2) {
-        this.$router.push('/days')
+        this.$router.push("/days");
       }
-      if (type == 3){
-        this.$router.push('/xingu')
+      if (type == 3) {
+        this.$router.push("/xingu");
       }
     },
-    changeStyle () {
-      if (this.styleName === 'red') {
-        this.styleName = 'black'
-        this.$store.state.className = 'black'
-        window.localStorage.setItem('styleName', 'black')
+    changeStyle() {
+      if (this.styleName === "red") {
+        this.styleName = "black";
+        this.$store.state.className = "black";
+        window.localStorage.setItem("styleName", "black");
       } else {
-        this.styleName = 'red'
-        this.$store.state.className = 'red'
-        window.localStorage.setItem('styleName', 'red')
+        this.styleName = "red";
+        this.$store.state.className = "red";
+        window.localStorage.setItem("styleName", "red");
       }
-      window.location.reload()
+      window.location.reload();
     },
-    async getProductSetting () {
-      let data = await api.getProductSetting()
+    async getProductSetting() {
+      let data = await api.getProductSetting();
       if (data.status === 0) {
-        this.$store.state.settingForm = data.data
+        this.$store.state.settingForm = data.data;
         // if(this.$store.state.userInfo.accountType != 1){
-        this.account[0].isDisplay = data.data.stockDisplay
-        this.account[1].isDisplay = data.data.indexDisplay
-        this.account[2].isDisplay = data.data.futuresDisplay
+        this.account[0].isDisplay = data.data.stockDisplay;
+        this.account[1].isDisplay = data.data.indexDisplay;
+        this.account[2].isDisplay = data.data.futuresDisplay;
         // }else{
         //     this.account[0].isDisplay = true
         //     this.account[1].isDisplay = true
         //     this.account[2].isDisplay = true
         // }
       } else {
-        this.$message.error(data.msg)
+        this.$message.error(data.msg);
       }
     },
-    hideNumber () {
-      this.changeHideStatus = this.$store.state.hide
-      let i = false
-      let j = true
-      this.$store.state.hide = this.$store.state.hide ? i : j
+    hideNumber() {
+      this.changeHideStatus = this.$store.state.hide;
+      let i = false;
+      let j = true;
+      this.$store.state.hide = this.$store.state.hide ? i : j;
     },
     goOrderList: function (val) {
       //   this.$router.push('/orderlist')
-      this.$router.push('/orderlist?index=' + val)
+      this.$router.push("/orderlist?index=" + val);
     },
     goFundsList: function (val) {
-      this.$router.push('/fundslist?index=' + val)
+      this.$router.push("/fundslist?index=" + val);
     },
     goDetail: function () {
-      this.$router.push('/detail')
+      this.$router.push("/detail");
     },
     goCard: function () {
-      this.$router.push('/card')
+      this.$router.push("/card");
     },
     toAggre: function () {
-      this.$router.push('/aggre')
+      this.$router.push("/aggre");
     },
     toAuthentication: function () {
-      this.$router.push('/authentication')
+      this.$router.push("/authentication");
     },
-    toRecharge () {
+    toRecharge() {
       // 充值
       // this.$router.push('/recharge')
       // 修改直接跳转客服页面
-      this.$store.commit('showMQPanel', true)
+      this.$store.commit("showMQPanel", true);
     },
-    toCash () {
+    toCash() {
       // 提现
-      this.$router.push('/cash')
-    },
-    async toRegister () {
-      // 注销登陆
-      this.clearCookie()
-      let data = await api.logout()
-      if (data.status === 0) {
-        // Toast(data.msg)
-        this.$router.push('/login')
-      } else {
-        Toast(data.msg)
-      }
-    },
-    tosetting () {
-      this.$router.push('/setting')
-    },
-    toCashList () {
-      this.$router.push('/Cashlist')
-    },
-    toRechargeList () {
-      this.$router.push('/rechargelist')
-    },
-    toTransfer (val) {
-      this.$router.push({
-        path: '/transfer',
-        query: {
-          type: val
+      if (this.$store.state.userInfo.hasWithdrawPwd == false){
+          this.$message.error("请先设置提现密码");
+          return;
         }
-      })
+      this.$router.push("/cash");
     },
-    async getCardDetail () {
-      // 获取银行卡信息
-      let data = await api.getBankCard()
+    async toRegister() {
+      // 注销登陆
+      this.clearCookie();
+      let data = await api.logout();
       if (data.status === 0) {
-        this.$store.state.bankInfo = data.data
+        // Toast(data.msg)
+        this.$router.push("/login");
+      } else {
+        Toast(data.msg);
+      }
+    },
+    tosetting() {
+      this.$router.push("/setting");
+    },
+    toCashList() {
+      this.$router.push("/Cashlist");
+    },
+    toRechargeList() {
+      this.$router.push("/rechargelist");
+    },
+    toTransfer(val) {
+      this.$router.push({
+        path: "/transfer",
+        query: {
+          type: val,
+        },
+      });
+    },
+    async getCardDetail() {
+      // 获取银行卡信息
+      let data = await api.getBankCard();
+      if (data.status === 0) {
+        this.$store.state.bankInfo = data.data;
       } else {
         // Toast(data.msg)
       }
     },
-    async getSettingInfo () {
-      let data = await api.getSetting()
+    async getSettingInfo() {
+      let data = await api.getSetting();
       if (data.status === 0) {
         // 成功
-        this.settingInfo = data.data
+        this.settingInfo = data.data;
       } else {
-        Toast(data.msg)
+        Toast(data.msg);
       }
     },
-    async getIndexSettingInfo () {
+    async getIndexSettingInfo() {
       // 网站设置信息 指数
-      let data = await api.getIndexSetting()
+      let data = await api.getIndexSetting();
       if (data.status === 0) {
         // 成功
-        this.indexSettingInfo = data.data
+        this.indexSettingInfo = data.data;
       } else {
-        Toast(data.msg)
+        Toast(data.msg);
       }
     },
-    async getFuturesSetting () {
+    async getFuturesSetting() {
       // 网站设置信息 期货
-      let data = await api.getFuturesSetting()
+      let data = await api.getFuturesSetting();
       if (data.status === 0) {
         // 成功
-        this.futuresSettingInfo = data.data
+        this.futuresSettingInfo = data.data;
       } else {
-        Toast(data.msg)
+        Toast(data.msg);
       }
     },
-    async getUserInfo () {
+    async getUserInfo() {
       // 获取用户信息
       //   let showcookie = this.getCookie('USER_TOKEN');
-      let data = await api.getUserInfo()
+      let data = await api.getUserInfo();
       if (data.status === 0) {
-        this.getProductSetting()
-        this.$store.state.userInfo = data.data
+        this.getProductSetting();
+        this.$store.state.userInfo = data.data;
       } else {
-        Toast(data.msg)
+        Toast(data.msg);
       }
-      this.$store.state.user = this.user
+      this.$store.state.user = this.user;
     },
-    changeLogin () {
-      this.changeLoginPsdBox = true
+    changeLogin() {
+      this.changeLoginPsdBox = true;
     },
-    async changeLoginPsd () {
+    async changeLoginPsd() {
       if (isNull(this.nextPsd) || isNull(this.newPsd)) {
-        Toast('请输入新旧密码')
+        Toast("请输入新旧密码");
       } else if (!pwdReg(this.newPsd)) {
-        Toast('密码为6~12位，数字、字母或符号')
+        Toast("密码为6~12位，数字、字母或符号");
       } else {
         // 修改密码
         let opts = {
           oldPwd: this.nextPsd,
-          newPwd: this.newPsd
-        }
-        let data = await api.changePassword(opts)
+          newPwd: this.newPsd,
+        };
+        let data = await api.changePassword(opts);
         if (data.status === 0) {
-          this.changeLoginPsdBox = false
-          Toast(data.msg)
+          this.changeLoginPsdBox = false;
+          Toast(data.msg);
         } else {
-          Toast(data.msg)
+          Toast(data.msg);
         }
       }
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.$store.state.mqPanelShow) {
+      this.$store.commit("showMQPanel", false);
+      history.pushState(null, null, location.href);
+    } else {
+      next();
     }
   },
-  beforeRouteLeave (to, from, next) {
-    if (this.$store.state.mqPanelShow) {
-      this.$store.commit('showMQPanel', false)
-      history.pushState(null, null, location.href)
-    } else {
-      next()
-    }
-  }
-}
+};
 </script>
 
 <style lang="less" scoped>
-  // @bgColor: #fff;
-  @bgColor: #16171d;
-  @fontColor: #fff;
-  @borderColor: #676b6f;
-  body {
-    background: #000
-  }
+// @bgColor: #fff;
+@bgColor: #16171d;
+@fontColor: #fff;
+@borderColor: #676b6f;
+body {
+  background: #000;
+}
 
-  .page .head {
-    width: 100%;
-    // height: 0;
-    // padding-top: 44%;
-    height: 2.8rem;
-    background-image: url('../../assets/img/header.png');
-    background-size: 100% 100%;
-
-  }
-  .wrapper {
-    background-color: @bgColor;
-  }
-  .after {
-    .iconfont {
-      vertical-align: middle;
-      margin-right: 0.15rem;
-    }
-  }
-
-  .setting {
-    margin-right: 0.2rem;
-  }
-
-  .status {
-    font-size: 0.24rem;
-    // margin-left: 0.2rem;
-    .iconfont {
-      margin-left: 0.2rem;
-      font-size: 0.24rem;
-    }
-  }
-
-  .user {
-    .user-top {
-      padding: 0 0.4rem;
-      // width: 96%;
-      // height: 1.96rem;
-      margin: 0 auto;
-      background: #2e3237;
-      // border-radius: 0.11rem;
-      box-shadow: 0.014rem 0.014rem 0.014rem rgba(103, 107, 111, 0.38);
-      // margin-top: -0.945rem;
-      position: relative;
-      margin-bottom: .16rem;
-      padding-bottom: 0.2rem;
-      margin-top: 0.1rem;
-
-      .user-header {
-        width: 1.4rem;
-        height: 1.4rem;
-        border-radius: 100%;
-        background: #000;
-        position: absolute;
-        left: 50%;
-        top: -0.68rem;
-        margin-left: -0.68rem;
-
-        .green {
-          color: green;
-        }
-      }
-
-      .user-img {
-        width: 1.3rem;
-        height: 1.3rem;
-        background-color: @bgColor;
-        border-radius: 100%;
-        margin: 0 auto;
-        margin-top: 0.014rem;
-
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .user-box {
-        // padding-top: 1.08rem;
-        font-size: 0.33rem;
-        color: @fontColor;
-        font-weight: 700;
-        height: 0.68rem;
-        line-height: 0.695rem;
-
-        .btn-red {
-          // width: 1.418rem;
-          width: 2.418rem;
-          height: 0.68rem;
-          font-size: 0.29rem;
-          line-height: 0.68rem;
-          padding: 0;
-          border-radius: 0.028rem;
-          background: #b60c0d;
-        }
-      }
-    }
-  }
-
-  .other {
-    margin: 0.12rem .28rem;
-
-    ul {
-      position: relative;
-      background-color: #1F2636;
-      border-radius: 4px;
-      overflow: hidden;
-        padding: 0 0.2rem ;
-      li {
-        position: relative;
-        height: 0.92rem;
-        line-height: 0.92rem;
-        // padding: 0 0.4rem;
-        font-size: 0.26rem;
-        background-color: #1F2636;
-        position: relative;
-        border-bottom: 1px solid #3f444a;
-      }
-      li:last-child {
-        border-bottom: none;
-      }
-    }
-
-    .after {
-      margin-bottom: 0.125rem;
-    }
-
-  }
-  .renzhen{
-    position: relative;
-    padding: 0 .1rem;
-    font-size: .18rem;
-    height: .35rem;
-    line-height: .35rem;
-    display: inline-block;
+.page .head {
+  width: 100%;
+  // height: 0;
+  // padding-top: 44%;
+  height: 2.8rem;
+  background-image: url("../../assets/img/header.png");
+  background-size: 100% 100%;
+}
+.wrapper {
+  background-color: @bgColor;
+}
+.after {
+  .iconfont {
     vertical-align: middle;
-    padding-left: .3rem;
-    .iconfont{
-      font-size: .18rem;
-      vertical-align: middle;
+    margin-right: 0.15rem;
+  }
+}
+
+.setting {
+  margin-right: 0.2rem;
+}
+
+.status {
+  font-size: 0.24rem;
+  // margin-left: 0.2rem;
+  .iconfont {
+    margin-left: 0.2rem;
+    font-size: 0.24rem;
+  }
+}
+
+.user {
+  .user-top {
+    padding: 0 0.4rem;
+    // width: 96%;
+    // height: 1.96rem;
+    margin: 0 auto;
+    background: #2e3237;
+    // border-radius: 0.11rem;
+    box-shadow: 0.014rem 0.014rem 0.014rem rgba(103, 107, 111, 0.38);
+    // margin-top: -0.945rem;
+    position: relative;
+    margin-bottom: 0.16rem;
+    padding-bottom: 0.2rem;
+    margin-top: 0.1rem;
+
+    .user-header {
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 100%;
+      background: #000;
       position: absolute;
-      left: 0.05rem ;
-      top: .05rem;
-    }
-    &.ing {
-      background-color: #E6003E;
-    }
-    &.done {
-      background-color: #04823E;
-    }
-  }
-  .other ul li svg {
-    width: 16px;
-    height: 15px;
-    line-height: 25px;
-    margin-top: .28rem;
-    color: #ccc;
-  }
+      left: 50%;
+      top: -0.68rem;
+      margin-left: -0.68rem;
 
-  .other ul li svg:first {
-    float: left;
-    margin-right: 0.39rem;
-  }
+      .green {
+        color: green;
+      }
+    }
 
-  .my-Assets {
-    .img-box {
+    .user-img {
       width: 1.3rem;
       height: 1.3rem;
-    }
+      background-color: @bgColor;
+      border-radius: 100%;
+      margin: 0 auto;
+      margin-top: 0.014rem;
 
-    .assets-box {
-      line-height: 0.5rem;
-      margin-top: 0.2rem;
-
-      .iconfont {
-        margin-right: 0.2rem;
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
 
-    font-size: 0.25rem;
-    padding: 0.2rem 0 0.3rem;
-  }
-
-  .user-header {
-    padding: 0rem 0.3rem 0;
-    background: #2e3237;
-    margin-bottom: 0.15rem;
-
-    .box:nth-child(1) {
-      margin-right: 6%;
-    }
-
-    .box {
-      padding: 0.26rem 0.25rem 0.3rem;
-      padding: 0.26rem 0.25rem 0.2rem;
-      background-color: #c6c8d4;
-      width: 47%;
-      float: left;
-      color: #2f2f2f;
-      border-radius: 0.2rem 0.2rem 0.1rem 0.1rem;
-
-      .name {
-        font-size: 0.26rem;
-        font-weight: bold;
-        margin-bottom: 0.2rem;
-      }
-
-      .account {
-        font-size: 0.3rem;
-        font-weight: bold;
-      }
-
-      .name2 {
-        font-size: 0.23rem;
-        margin-top: 0.2rem;
-
-        span {
-          padding-left: 0.1rem;
-        }
-      }
-    }
-  }
-
-  .loginout {
-    color: #999;
-    font-size: 0.3rem;
-    background: none;
-  }
-
-  .btnbox .btnok {
-    background: none;
-    font-size: 0.28rem;
-    height: 0.6rem;
-    line-height: 0.6rem;
-    color: #606060;
-  }
-
-  .btnbox {
-    width: 100%;
-    padding: 0 0.3rem;
-  }
-
-  .mint-popup-1 {
-    color: #333;
-    width: 200px;
-    border-radius: 8px;
-    padding: 10px;
-    transform: translate(-50%, 0);
-
-    h1 {
-      font-size: 20px;
-      color: #26a2ff;
-    }
-
-    p {
-      margin-bottom: 10px;
-    }
-
-    top: 3.2rem;
-  }
-
-  .mint-popup-1::before {
-    triangle: 10px top #fff;
-    content: '';
-    position: absolute;
-    top: -20px;
-    right: 50px;
-  }
-
-  .mint-popup-white {
-    padding: 0.3rem 0.28rem;
-
-    .font-title {
-      font-size: 0.26rem;
-      margin-bottom: 0.12rem;
-    }
-
-    .font-bold {
-      font-weight: bold;
-    }
-
-    .number {
-      margin: 0 0.1rem;
-      font-weight: bold;
-      font-size: 0.26rem;
-    }
-
-    p {
-      line-height: 0.4rem;
-    }
-  }
-
-  // 总资产
-  .account-header {
-    padding: 0.2rem 0.2rem 0;
-    position: relative;
-    background-color: #1F2636;
-
-    .iconfont {
-      position: absolute;
-      right: 0.2rem;
-      // top: 50%;
-      top: 1.1rem;
-      font-size: 0.8rem;
-      color: #FF5722;
-      margin-top: -0.4rem;
+    .user-box {
+      // padding-top: 1.08rem;
+      font-size: 0.33rem;
+      color: @fontColor;
+      font-weight: 700;
+      height: 0.68rem;
+      line-height: 0.695rem;
 
       .btn-red {
-        margin-left: 0.2rem;
-        padding: 0.08rem 0.2rem;
-        background: #FF5722;
+        // width: 1.418rem;
+        width: 2.418rem;
+        height: 0.68rem;
+        font-size: 0.29rem;
+        line-height: 0.68rem;
+        padding: 0;
+        border-radius: 0.028rem;
+        background: #b60c0d;
       }
     }
+  }
+}
 
-    .title {
-      font-size: 0.28rem;
-      margin-bottom: 0.26rem;
+.other {
+  margin: 0.12rem 0.28rem;
+
+  ul {
+    position: relative;
+    background-color: #1f2636;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 0 0.2rem;
+    li {
+      position: relative;
+      height: 0.92rem;
+      line-height: 0.92rem;
+      // padding: 0 0.4rem;
+      font-size: 0.26rem;
+      background-color: #1f2636;
+      position: relative;
+      border-bottom: 1px solid #3f444a;
     }
+    li:last-child {
+      border-bottom: none;
+    }
+  }
 
-    .sub-title {
-      color: #7e8c8d;
-      font-size: 0.2rem;
+  .after {
+    margin-bottom: 0.125rem;
+  }
+}
+.renzhen {
+  position: relative;
+  padding: 0 0.1rem;
+  font-size: 0.18rem;
+  height: 0.35rem;
+  line-height: 0.35rem;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 0.3rem;
+  .iconfont {
+    font-size: 0.18rem;
+    vertical-align: middle;
+    position: absolute;
+    left: 0.05rem;
+    top: 0.05rem;
+  }
+  &.ing {
+    background-color: #e6003e;
+  }
+  &.done {
+    background-color: #04823e;
+  }
+}
+.other ul li svg {
+  width: 16px;
+  height: 15px;
+  line-height: 25px;
+  margin-top: 0.28rem;
+  color: #ccc;
+}
 
-      i {
-        font-style: normal;
-      }
+.other ul li svg:first {
+  float: left;
+  margin-right: 0.39rem;
+}
+
+.my-Assets {
+  .img-box {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .assets-box {
+    line-height: 0.5rem;
+    margin-top: 0.2rem;
+
+    .iconfont {
+      margin-right: 0.2rem;
+    }
+  }
+
+  font-size: 0.25rem;
+  padding: 0.2rem 0 0.3rem;
+}
+
+.user-header {
+  padding: 0rem 0.3rem 0;
+  background: #2e3237;
+  margin-bottom: 0.15rem;
+
+  .box:nth-child(1) {
+    margin-right: 6%;
+  }
+
+  .box {
+    padding: 0.26rem 0.25rem 0.3rem;
+    padding: 0.26rem 0.25rem 0.2rem;
+    background-color: #c6c8d4;
+    width: 47%;
+    float: left;
+    color: #2f2f2f;
+    border-radius: 0.2rem 0.2rem 0.1rem 0.1rem;
+
+    .name {
+      font-size: 0.26rem;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
     }
 
     .account {
-      color: #b60c0d;
-      font-size: 0.4rem;
-      font-weight: 600;
-      font-family: lightnumber;
-    }
-  }
-
-  .account-box {
-    // margin-bottom: 0.12rem;
-    padding: 0 0.2rem;
-    // padding: 0 0.35rem;
-    background-color: #1F2636;
-    .header {
-      font-size: 0.22rem;
-      line-height: 0.7rem;
-      height: .7rem;
-      display: flex;
-      justify-content: space-between;
-      .header-left{
-        display: flex;
-        align-items: center;
-      }
-      img.iconfont {
-        color: #f5ca07;
-        width: .3rem;
-        height: .3rem;
-        display: inline-block;
-        margin-right: .2rem;
-        &.jian {
-          background-image: url(../../assets/ico/jian.png);
-        }
-      }
-
-      .iconfont {
-        font-size: 0.24rem;
-        vertical-align: middle;
-        margin: 0 0.05rem;
-      }
-    }
-
-    .content {
-      padding: 0 0.2rem 0.18rem;
-
-      li {
-        width: 50%;
-        float: left;
-        padding: 0.2rem 0.2rem 0.04rem 0.56rem;
-        line-height: 0.36rem;
-        position: relative;
-
-        &:nth-child(2) {
-          .iconfont {
-            color: #2f97fc;
-          }
-        }
-
-        &:nth-child(3) {
-          .iconfont {
-            color: #17b780;
-          }
-        }
-
-        &:nth-child(3) {
-          .iconfont {
-            color: #ff7602;
-          }
-        }
-
-        .iconfont {
-          position: absolute;
-          top: 0.38rem;
-          left: 0;
-          font-size: 0.42rem;
-          color: #fd4256;
-
-        }
-
-        .name {
-          color: #888;
-          font-size: 0.22rem;
-        }
-
-        .number {
-          font-size: 0.27rem;
-        }
-
-      }
-    }
-  }
-
-  .mt-progress {
-    height: 5px;
-    line-height: 5px;
-    margin-top: 0.3rem;
-    border-radius: 0.2rem;
-    // padding: 0 0.2rem;
-    /deep/ .mt-progress-runway {
-      border-radius: 0.2rem;
-      background-color: #ff7602;
-    }
-
-    /deep/ .mt-progress-progress {
-      border-radius: 0.2rem;
-      background-color: #bb3d4c;
-    }
-  }
-
-  .panel {
-    margin: 0.2rem .28rem;
-    padding: 0 0.2rem;
-    background-color: #1F2636;
-
-    .panel-head {
-      height: 0.88rem;
-      line-height: 0.88rem;
-      padding-top: .1rem;
-      text-align: center;
+      font-size: 0.3rem;
       font-weight: bold;
-      .font-w {
-        font-size: 0.28rem;
-        // font-weight: 600;
-        // color: #000;
-      }
     }
 
-    .panel-body {
-      padding: 0 0.2rem;
-      text-align: center;
+    .name2 {
+      font-size: 0.23rem;
+      margin-top: 0.2rem;
 
-      .iconfont {
-        display: block;
-        font-size: 20px;
-        margin-bottom: 0.1rem;
-        color: #138DB2;
-      }
-
-      .font {
-        font-size: 0.3rem;
-        color: #000;
-        font-weight: 600;
-        line-height: 0.5rem;
-      }
-
-      .col-xs-3 {
-        padding: 0.2rem 0;
+      span {
+        padding-left: 0.1rem;
       }
     }
   }
+}
 
-  .account-info {
-    padding: .28rem;
+.loginout {
+  color: #999;
+  font-size: 0.3rem;
+  background: none;
+}
+
+.btnbox .btnok {
+  background: none;
+  font-size: 0.28rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  color: #606060;
+}
+
+.btnbox {
+  width: 100%;
+  padding: 0 0.3rem;
+}
+
+.mint-popup-1 {
+  color: #333;
+  width: 200px;
+  border-radius: 8px;
+  padding: 10px;
+  transform: translate(-50%, 0);
+
+  h1 {
+    font-size: 20px;
+    color: #26a2ff;
+  }
+
+  p {
+    margin-bottom: 10px;
+  }
+
+  top: 3.2rem;
+}
+
+.mint-popup-1::before {
+  triangle: 10px top #fff;
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: 50px;
+}
+
+.mint-popup-white {
+  padding: 0.3rem 0.28rem;
+
+  .font-title {
+    font-size: 0.26rem;
+    margin-bottom: 0.12rem;
+  }
+
+  .font-bold {
+    font-weight: bold;
+  }
+
+  .number {
+    margin: 0 0.1rem;
+    font-weight: bold;
+    font-size: 0.26rem;
+  }
+
+  p {
+    line-height: 0.4rem;
+  }
+}
+
+// 总资产
+.account-header {
+  padding: 0.2rem 0.2rem 0;
+  position: relative;
+  background-color: #1f2636;
+
+  .iconfont {
+    position: absolute;
+    right: 0.2rem;
+    // top: 50%;
+    top: 1.1rem;
+    font-size: 0.8rem;
+    color: #ff5722;
+    margin-top: -0.4rem;
+
+    .btn-red {
+      margin-left: 0.2rem;
+      padding: 0.08rem 0.2rem;
+      background: #ff5722;
+    }
+  }
+
+  .title {
+    font-size: 0.28rem;
+    margin-bottom: 0.26rem;
+  }
+
+  .sub-title {
+    color: #7e8c8d;
+    font-size: 0.2rem;
+
+    i {
+      font-style: normal;
+    }
+  }
+
+  .account {
+    color: #b60c0d;
+    font-size: 0.4rem;
+    font-weight: 600;
+    font-family: lightnumber;
+  }
+}
+
+.account-box {
+  // margin-bottom: 0.12rem;
+  padding: 0 0.2rem;
+  // padding: 0 0.35rem;
+  background-color: #1f2636;
+  .header {
+    font-size: 0.22rem;
+    line-height: 0.7rem;
+    height: 0.7rem;
     display: flex;
     justify-content: space-between;
-    &_avatar {
-      width: 1.13rem;
-      height: 1.13rem;
-      line-height: 1.13rem;
-      border-radius: 50%;
-      background-color: #444656;
+    .header-left {
       display: flex;
       align-items: center;
-      justify-content: center;
-      img {
-        width: .55rem;
-        height: .58rem;
+    }
+    img.iconfont {
+      color: #f5ca07;
+      width: 0.3rem;
+      height: 0.3rem;
+      display: inline-block;
+      margin-right: 0.2rem;
+      &.jian {
+        background-image: url(../../assets/ico/jian.png);
       }
     }
-    &_detail {
-      padding-left: .22rem;
+
+    .iconfont {
+      font-size: 0.24rem;
+      vertical-align: middle;
+      margin: 0 0.05rem;
+    }
+  }
+
+  .content {
+    padding: 0 0.2rem 0.18rem;
+
+    li {
+      width: 50%;
+      float: left;
+      padding: 0.2rem 0.2rem 0.04rem 0.56rem;
+      line-height: 0.36rem;
+      position: relative;
+
+      &:nth-child(2) {
+        .iconfont {
+          color: #2f97fc;
+        }
+      }
+
+      &:nth-child(3) {
+        .iconfont {
+          color: #17b780;
+        }
+      }
+
+      &:nth-child(3) {
+        .iconfont {
+          color: #ff7602;
+        }
+      }
+
+      .iconfont {
+        position: absolute;
+        top: 0.38rem;
+        left: 0;
+        font-size: 0.42rem;
+        color: #fd4256;
+      }
+
+      .name {
+        color: #888;
+        font-size: 0.22rem;
+      }
+
+      .number {
+        font-size: 0.27rem;
+      }
+    }
+  }
+}
+
+.mt-progress {
+  height: 5px;
+  line-height: 5px;
+  margin-top: 0.3rem;
+  border-radius: 0.2rem;
+  // padding: 0 0.2rem;
+  /deep/ .mt-progress-runway {
+    border-radius: 0.2rem;
+    background-color: #ff7602;
+  }
+
+  /deep/ .mt-progress-progress {
+    border-radius: 0.2rem;
+    background-color: #bb3d4c;
+  }
+}
+
+.panel {
+  margin: 0.2rem 0.28rem;
+  padding: 0 0.2rem;
+  background-color: #1f2636;
+
+  .panel-head {
+    height: 0.88rem;
+    line-height: 0.88rem;
+    padding-top: 0.1rem;
+    text-align: center;
+    font-weight: bold;
+    .font-w {
+      font-size: 0.28rem;
+      // font-weight: 600;
+      // color: #000;
+    }
+  }
+
+  .panel-body {
+    padding: 0 0.2rem;
+    text-align: center;
+
+    .iconfont {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 0.1rem;
+      color: #138db2;
+    }
+
+    .font {
+      font-size: 0.3rem;
+      color: #000;
+      font-weight: 600;
+      line-height: 0.5rem;
+    }
+
+    .col-xs-3 {
+      padding: 0.2rem 0;
+    }
+  }
+}
+
+.account-info {
+  padding: 0.28rem;
+  display: flex;
+  justify-content: space-between;
+  &_avatar {
+    width: 1.13rem;
+    height: 1.13rem;
+    line-height: 1.13rem;
+    border-radius: 50%;
+    background-color: #444656;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 0.55rem;
+      height: 0.58rem;
+    }
+  }
+  &_detail {
+    padding-left: 0.22rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1;
+    .account-phone {
+      font-size: 0.3rem;
+      color: #fff;
+    }
+    .account-name {
+      color: #636a93;
+    }
+  }
+  &_ctl {
+    margin-top: 0.1rem;
+  }
+}
+.account-container {
+  // margin: .28rem;
+  width: 6.9rem;
+  margin: 0.28rem auto;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #1f2636;
+  .pcx {
+    margin: 0.2rem;
+    // background-color: #1F2636;
+    background: #1a1e29;
+  }
+  .account-preview {
+    display: flex;
+    padding: 0.3rem 0.2rem 0.28rem;
+    .acc-pre-left {
+      width: 1.92rem;
+      height: 1.92rem;
+      background-image: url(../../assets/ico/round.png);
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      position: relative;
+      img {
+        width: 0.36rem;
+        height: 0.36rem;
+        margin-bottom: 0.1rem;
+      }
+      span.ti {
+        font-size: 0.24rem;
+        color: #ccc;
+        margin-bottom: 0.1rem;
+      }
+      span.de {
+        font-size: 0.24rem;
+        color: #009c46;
+        font-family: lightnumber;
+        .account {
+          font-family: lightnumber;
+        }
+      }
+      &::after {
+        display: block;
+        content: "";
+        width: 0.67rem;
+        height: 2.21rem;
+        position: absolute;
+        top: -0.16rem;
+        right: -0.44rem;
+        background-image: url(../../assets/ico/round-r.png);
+        background-size: cover;
+      }
+    }
+    .acc-pre-center {
+      margin-left: 0.45rem;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      flex: 1;
-      .account-phone{
-        font-size: .3rem;
+      font-family: lightnumber;
+      color: #ccc;
+      span {
         color: #fff;
-      }
-      .account-name {
-        color: #636A93;
+        font-family: lightnumber;
+        font-weight: 300;
       }
     }
-    &_ctl {
-      margin-top: .1rem;
+    .acc-pre-right {
+      flex: 1;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      .btn {
+        color: #fff;
+        padding: 0 9px;
+        border-radius: 0.2rem;
+      }
+      .redbtn {
+        background-color: #e6003e;
+      }
+      .bluebtn {
+        background-color: #024da1;
+      }
     }
+  }
+}
+
+.red-theme {
+  .wrapper {
+    background-color: #e9e9e9;
+  }
+  .account-info_avatar {
+    background-color: #b5b5b5;
+  }
+  .account-phone {
+    color: #000;
+  }
+  .account-name {
+    color: #999999;
+  }
+  .account-info_ctl {
+    color: #858585;
   }
   .account-container {
-    // margin: .28rem;
-    width: 6.9rem;
-    margin: .28rem auto;
-    border-radius: 5px;
-    overflow: hidden;
-    background-color: #1F2636;
-    .pcx {
-      margin: .2rem;
-      // background-color: #1F2636;
-      background:#1A1E29
-    }
-    .account-preview {
-      display: flex;
-      padding: .3rem .2rem .28rem;
-      .acc-pre-left {
-        width: 1.92rem;
-        height: 1.92rem;
-        background-image: url(../../assets/ico/round.png);
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        position: relative;
-        img {
-          width:.36rem;
-          height: .36rem;
-          margin-bottom: .1rem;
-        }
-        span.ti {
-          font-size: .24rem;
-          color: #ccc;
-          margin-bottom: .1rem;
-        }
-        span.de {
-          font-size: .24rem;
-          color: #009C46;
-          font-family: lightnumber;
-          .account {
-            font-family: lightnumber;
-          }
-        }
-        &::after {
-          display: block;
-          content : "";
-          width: .67rem;
-          height: 2.21rem;
-          position: absolute;
-          top: -.16rem;
-          right: -.44rem;
-          background-image: url(../../assets/ico/round-r.png);
-          background-size: cover;
-        }
-      }
-      .acc-pre-center {
-        margin-left: .45rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        font-family: lightnumber;
-        color: #ccc;
-        span {
-          color: #fff;
-          font-family: lightnumber;
-          font-weight: 300;
-        }
-      }
-      .acc-pre-right {
-        flex: 1;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        .btn {
-          color: #fff;
-          padding: 0 9px;
-          border-radius: .2rem;
-        }
-        .redbtn {
-          background-color: #E6003E;
-        }
-        .bluebtn {
-          background-color: #024DA1;
-        }
-      }
+    background-color: #fff;
+    span.ti {
+      color: #000 !important;
     }
   }
-
-  .red-theme {
-    .wrapper {
-      background-color: #E9E9E9;
-    }
-    .account-info_avatar{
-      background-color: #B5B5B5;
-    }
-    .account-phone{
-      color: #000;
-    }
-    .account-name {
-      color: #999999;
-    }
-    .account-info_ctl{
-      color: #858585;
-    }
-    .account-container{
-      background-color: #fff;
-      span.ti{
-        color: #000 !important;
-      }
-    }
-   .acc-pre-center{
-     color: #333 !important;
-     span {
+  .acc-pre-center {
+    color: #333 !important;
+    span {
       color: #333 !important;
-     }
-   }
-   .acc-pre-right {
-     .bluebtn {
-       background-color: #222 !important;
-     }
-   }
-   .account-box{
-     background-color: #fff;
-   }
-   .name {
-     color : #12354E !important;
-   }
-   .number {
-     color: #E6003E !important;
-   }
-   .pcx {
-     background-color: #E7E7E8;
-     div {
+    }
+  }
+  .acc-pre-right {
+    .bluebtn {
+      background-color: #222 !important;
+    }
+  }
+  .account-box {
+    background-color: #fff;
+  }
+  .name {
+    color: #12354e !important;
+  }
+  .number {
+    color: #e6003e !important;
+  }
+  .pcx {
+    background-color: #e7e7e8;
+    div {
       background-color: transparent !important;
       color: #000;
-     }
-   }
-   .panel {
-     background-color: #fff;
-     color: #000;
-     .panel-head {
-       border-bottom-color: #cbcbcb;
-     }
-     .iconfont {
-       color: #E6003E;
-     }
-     .font-w {
-       color: #000;
-     }
-   }
-   .other {
-     .after{
+    }
+  }
+  .panel {
+    background-color: #fff;
+    color: #000;
+    .panel-head {
+      border-bottom-color: #cbcbcb;
+    }
+    .iconfont {
+      color: #e6003e;
+    }
+    .font-w {
+      color: #000;
+    }
+  }
+  .other {
+    .after {
       background-color: #fff;
-      li{
+      li {
         background-color: #fff;
         color: #000;
-       border-bottom-color: #cbcbcb;
+        border-bottom-color: #cbcbcb;
         .renzhen {
           color: #fff;
         }
-        svg{
+        svg {
           color: #222;
         }
       }
-     }
-   }
-  }
-
-  .loginout {
-    color: #999;
-    border: 0.015rem solid #606060;
-    font-size: 0.3rem;
-    background: none;
-  }
-
-  .mint-popup-wrap {
-    width: 100%;
-    padding: 0.3rem 0.3rem 0.6rem;
-
-    .btn-sure {
-      margin-top: 0.5rem;
-      width: 80%;
-      color: #fff;
-      border: none;
     }
   }
+}
 
-  .btnbox .btnok {
-    background: none;
+.loginout {
+  color: #999;
+  border: 0.015rem solid #606060;
+  font-size: 0.3rem;
+  background: none;
+}
+
+.mint-popup-wrap {
+  width: 100%;
+  padding: 0.3rem 0.3rem 0.6rem;
+
+  .btn-sure {
+    margin-top: 0.5rem;
+    width: 80%;
+    color: #fff;
+    border: none;
   }
+}
+
+.btnbox .btnok {
+  background: none;
+}
 </style>
