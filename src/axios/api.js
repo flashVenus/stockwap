@@ -4,6 +4,10 @@ import { post, get } from '@/axios/index'
 // var img_url = APIUrl.util.image // 这个就是图片上传的api url
 
 // 就可以使用 post 和 get 了
+// 修改资金密码
+export function updateWithdrawPwd (options) {
+  return post('/user/updateWithdrawPwd.do', options)
+}
 // 获取产品配置信息
 export function getProductSetting (options) {
   return post('/api/admin/getProductSetting.do', options)

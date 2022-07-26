@@ -311,6 +311,16 @@
                 <icon name="right66" class="right" slot="icon"></icon>
             </span>
         </li>
+         <li @click="zijinpassshow = true">
+          <span>
+            <img
+              src="../../assets/ico/gaimima.png"
+              style="width: 0.24rem; height: 0.24rem; margin-right: 0.15rem"
+            />
+            支付密码
+            <icon name="right66" class="right" slot="icon"></icon>
+          </span>
+        </li>
       </ul>
       <ul class="after">
         <!-- <li  @click="goOrderList">
@@ -404,6 +414,44 @@
         <mt-button class="btn-sure" type="default" @click="changeLoginPsd">确定</mt-button>
       </div>
     </mt-popup>
+    <!-- 修改资金密码 -->
+    <mt-popup v-model="zijinpassshow" position="bottom" class="mint-popup-wrap">
+      <div class="clearfix">
+        <a @click="zijinpassshow = false" class="pull-right"
+          ><i class="iconfont icon-weitongguo"></i
+        ></a>
+      </div>
+      <div class="form-block">
+        <mt-field
+          label="旧密码"
+          type="password"
+          placeholder="请输入旧密码"
+          v-model="oldzijinpass"
+          v-if="$store.state.userInfo.hasWithdrawPwd == true"
+        ></mt-field>
+        <mt-field
+          label="新密码"
+          placeholder="请输入新密码"
+          type="password"
+          v-model="newzijinpass"
+        ></mt-field>
+        <mt-field
+          label="确认密码"
+          placeholder="请确认新密码"
+          type="password"
+          v-model="quezijinpass"
+        ></mt-field>
+      </div>
+      <div class="text-center">
+        <mt-button
+          class="btn-sure"
+          type="default"
+          @click="geteditzijinpass"
+          style="color: #000"
+          >确定</mt-button
+        >
+      </div>
+    </mt-popup>
     <foot></foot>
   </div>
 </template>
@@ -444,6 +492,10 @@ export default {
       styleName: 'black',
       shengoudj:'',
       changeLoginPsdBox: false,
+      zijinpassshow: false,
+      oldzijinpass: "",
+      newzijinpass: "",
+      quezijinpass: "",
     }
   },
   watch: {
@@ -468,6 +520,26 @@ export default {
     }
   },
   methods: {
+     async geteditzijinpass() {
+      if (this.newzijinpass !== this.quezijinpass) {
+        this.$message.error("两次密码不一致");
+        return;
+      }
+      let opts = {
+        newPwd: this.newzijinpass,
+      };
+      if (this.$store.state.userInfo.hasWithdrawPwd == true) {
+        opts.oldPwd = this.oldzijinpass;
+      }
+      let data = await api.updateWithdrawPwd(opts);
+      if (data.status === 0) {
+        this.$message.success(data.msg);
+        this.getUserInfo()
+      } else {
+        this.$message.error(data.msg);
+      }
+      this.zijinpassshow = false;
+    },
     async getprice() {
       let opt = {};
       let data = await api.getprice(opt);
@@ -644,6 +716,7 @@ export default {
         let data = await api.changePassword(opts)
         if (data.status === 0) {
           this.changeLoginPsdBox = false
+          
           Toast(data.msg)
         } else {
           Toast(data.msg)

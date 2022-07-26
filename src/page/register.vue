@@ -73,14 +73,14 @@
         v-model="invitecode"
         >
       </div>
-      <div
+      <!-- <div
        class="register-form-item agree-model"
       >
         <i @click="isAgree"
          :class="agree?'glyphicon glyphicon glyphicon-ok-sign red':'glyphicon glyphicon-ok-circle'"></i>
       我已阅读并同意
       <a @click="toagreeUrl" style="color:#fff">《注册协议》</a>
-      </div>
+      </div> -->
       <div
       class="register-form-item submit-model"
       @click="gook"
@@ -325,9 +325,10 @@ export default {
     },
     async gook () {
       // 注册
-      if (!this.agree) {
-        Toast('需同意注册协议才能注册!')
-      } else if (isNull(this.phone) || !isPhone(this.phone)) {
+      // if (!this.agree) {
+      //   Toast('需同意注册协议才能注册!')
+      // } else 
+      if (isNull(this.phone) || !isPhone(this.phone)) {
         Toast('请输入正确的手机号码')
       } else if (isNull(this.psd)) {
         Toast('请输入密码')
