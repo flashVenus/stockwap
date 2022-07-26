@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <div v-if="list.length<=0 && !getStatus"
+    <div v-if="list.length<=0 && !getStatus" 
     class="empty text-center">
       暂无订单信息!
     </div>
-    <div v-if="list.length<=0 && getStatus"
+    <div v-if="list.length<=0 && getStatus" 
     class="empty text-center">
       <mt-spinner type="fading-circle"></mt-spinner>
       加载中...
@@ -235,7 +235,7 @@ export default {
       return true
     },
     toSell (val) {
-        MessageBox.confirm('您确定要卖出吗?').then(async action => {
+        MessageBox.confirm('您确定要平仓吗?').then(async action => {
         let opt = {
           positionSn: val.positionSn
         }

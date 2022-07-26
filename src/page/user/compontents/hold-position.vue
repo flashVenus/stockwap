@@ -1,39 +1,34 @@
 <template>
   <div class="wrapper">
-    <div v-if="list.length<=0 && !getStatus"
-    class="empty text-center">
+    <div v-if="list.length <= 0 && !getStatus" class="empty text-center">
       暂无订单信息!
     </div>
-    <div v-if="list.length<=0 && getStatus"
-    class="empty text-center">
+    <div v-if="list.length <= 0 && getStatus" class="empty text-center">
       <mt-spinner type="fading-circle"></mt-spinner>
       加载中...
     </div>
-    <div v-if="list.length>0">
-      <ul
-        class="order-info-box-wrap"
-        v-infinite-scroll="loadMore"
-        :infinite-scroll-disabled="loading"
+    <div v-if="list.length > 0">
+      <ul class="order-info-box-wrap" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading"
         infinite-scroll-distance="0">
         <li v-for="(item) in list" :key="item.key">
           <div class="order-info-box">
             <div class="order-title">
-              <span @click="toDetail(item.stockCode)" class="main">{{item.stockName}}</span>
-              <span class="secondary">({{item.stockCode}})</span>
+              <span @click="toDetail(item.stockCode)" class="main">{{ item.stockName }}</span>
+              <span class="secondary">({{ item.stockCode }})</span>
               <!-- <span :class="item.orderDirection=='买涨'?'type type-up':'type type-down'">{{item.orderDirection=='买涨'?'买涨':'买跌'}}</span> -->
-              <span v-if="item.stockPlate=='科创'" :class="item.stockPlate=='科创'?'type':''">科创</span>
+              <span v-if="item.stockPlate == '科创'" :class="item.stockPlate == '科创' ? 'type' : ''">科创</span>
               <span class="direction pull-right big-font">
-                        最新:
-                        <b v-if="item.now_price == 0">-</b>
-                        <b v-else
-                           :class="item.now_price-item.buyOrderPrice<0?'space green':item.now_price-item.buyOrderPrice==0?'space':'space red'">{{item.now_price}}</b>
-                    </span>
+                最新:
+                <b v-if="item.now_price == 0">-</b>
+                <b v-else
+                  :class="item.now_price - item.buyOrderPrice < 0 ? 'space green' : item.now_price - item.buyOrderPrice == 0 ? 'space' : 'space red'">{{ item.now_price }}</b>
+              </span>
             </div>
             <div class="order-info">
               <p class="clearfix">
-                <span class="col-xs-4">买入价格:<b class="space">{{item.buyOrderPrice}}</b></span>
+                <span class="col-xs-4">买入价格:<b class="space">{{ item.buyOrderPrice }}</b></span>
                 <span class="col-xs-4 text-center"></span>
-                <span class="col-xs-4 text-right">市值:<b class="space">{{item.orderTotalPrice}}</b></span>
+                <span class="col-xs-4 text-right">市值:<b class="space">{{ item.orderTotalPrice }}</b></span>
               </p>
               <!-- <p class="clearfix">
                 <span class="col-xs-4">手续费:<b class="space">{{item.orderFee}}</b></span>
@@ -42,13 +37,13 @@
               </p> -->
               <p class="clearfix" style="white-space:nowrap">
                 <!-- <span class="col-xs-4">点差费:<b class="space">{{item.spreadRatePrice}}</b></span> -->
-                        <span class="col-xs-4">浮动盈亏:
-                            <b v-if="item.now_price == 0">-</b>
-                            <b v-else
-                               :class="item.profitAndLose<0?'space red':item.profitAndLose>=0?'space':'space green'">{{item.profitAndLose}}</b>
-                        </span>
-                        <span class="col-xs-4 text-center"></span>
-                <span class="col-xs-4 text-right">数量:<b class="space">{{item.orderNum}}</b></span>
+                <span class="col-xs-4">浮动盈亏:
+                  <b v-if="item.now_price == 0">-</b>
+                  <b v-else
+                    :class="item.profitAndLose < 0 ? 'space red' : item.profitAndLose >= 0 ? 'space' : 'space green'">{{ item.profitAndLose }}</b>
+                </span>
+                <span class="col-xs-4 text-center"></span>
+                <span class="col-xs-4 text-right">数量:<b class="space">{{ item.orderNum }}</b></span>
                 <!-- <span class="col-xs-4 text-right big-font">总盈亏:
                     <b v-if="item.now_price == 0">-</b>
                     <b v-else
@@ -58,10 +53,12 @@
             </div>
             <div class="order-foot clearfix">
               <div style="text-align: left;color: #666;padding: 0;" class="col-xs-6">
-                <b v-if="item.buyOrderTime">{{new Date(item.buyOrderTime) | timeFormat}}</b>
+                <b v-if="item.buyOrderTime">{{ new Date(item.buyOrderTime) | timeFormat }}</b>
                 <b v-else></b>
               </div>
-              <div @click="sell(item.positionSn)" class="foot-btn">
+              <div @click="sellitem = item;
+              pldialogVisible = true;" class="foot-btn">
+                <!-- sell(item.positionSn) -->
                 <i class='font-icon'></i>
                 我要卖出
               </div>
@@ -77,6 +74,23 @@
         已全部加载
       </div>
     </div>
+    <el-dialog :title="'卖出数量:' + sellitem.orderNum" :visible.sync="pldialogVisible" width="90%">
+      <div>
+        <el-form>
+          <!-- <el-form-item label="卖出总数" style="color:#000">
+            <span>{{sellitem.orderNum}}</span>
+          </el-form-item> -->
+          <el-form-item label="数量">
+            <el-input v-model.number="sellNum" οninput="value=value.replace(/[^0-9]/g,'')" placeholder="请填写卖出数量">
+            </el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="pldialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sell">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -105,13 +119,13 @@ export default {
     // },
     handleOptions: {
       type: Function,
-      default: function () {}
+      default: function () { }
     },
     selectedNumber: {
       type: String
     }
   },
-  data () {
+  data() {
     return {
       loading: false, // 是否正在加载更多
       isRefresh: false, // 是否正在刷新
@@ -121,11 +135,14 @@ export default {
       currentNum: 10,
       list: [],
       total: 0, // 记录总值
-      hasChangeSell: false // 平仓状态改变
+      hasChangeSell: false, // 平仓状态改变
+      pldialogVisible: false,
+      sellitem: '',
+      sellNum: "",
     }
   },
   watch: {
-    selectedNumber (val) {
+    selectedNumber(val) {
       if (val === '1') {
         if (!this.$store.state.userInfo.idCard) {
           this.getUserInfo()
@@ -139,20 +156,20 @@ export default {
     }
   },
   computed: {},
-  created () {
+  created() {
     this.timer = setInterval(this.refreshList, 5000)
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.timer)
   },
-  mounted () {
+  mounted() {
     if (!this.$store.state.userInfo.idCard) {
       this.getUserInfo()
     }
     this.getListDetail()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // 获取用户信息
       let data = await api.getUserInfo()
       if (data.status === 0) {
@@ -161,7 +178,7 @@ export default {
         Toast(data.msg)
       }
     },
-    async loadMore () {
+    async loadMore() {
       // 1、总数小于 该次查询的总页数 不进行加载更多 （无下一页）
       // 2、当页加载数据还未加载完 不进行下一个加载
       if (this.list.length < this.pageSize || this.loading || this.total <= this.currentNum) {
@@ -174,7 +191,7 @@ export default {
       this.currentNum = this.pageNum * this.pageSize
       this.loading = false
     },
-    async getListDetail () {
+    async getListDetail() {
       let opt = {
         state: 0,
         stockCode: '', // 代码
@@ -183,7 +200,7 @@ export default {
         pageSize: this.pageSize
       }
       this.getStatus = true
-      if(this.pageNum == 1){
+      if (this.pageNum == 1) {
         this.list = []
       }
       let data = await api.getOrderList(opt)
@@ -197,7 +214,7 @@ export default {
         Toast(data.msg)
       }
     },
-    async refreshList () {
+    async refreshList() {
       // 判断是不是已经查询 或者是否正在加载下一页 是则退出，不进行刷新
       if (this.loading) {
         return
@@ -215,7 +232,7 @@ export default {
       this.total = data.data.total
       this.list = data.data.list
     },
-    canBuyStatus () {
+    canBuyStatus() {
       let dataTime = new Date()
       let day = dataTime.getDay() // 星期几
       let hour = dataTime.getHours() // 小时
@@ -237,28 +254,41 @@ export default {
       }
       return true
     },
-    sell (val) {
+    async sell(val) {
       // if(!this.canBuyStatus()){
       //     Toast('不在开盘时间内，暂不能交易！')
       //     return
       // }
 
-      MessageBox.confirm('您确定要卖出吗?').then(async action => {
-        let opt = {
-          positionSn: val
-        }
-        let data = await api.sell(opt)
-        if (data.status === 0) {
-          Toast(data.msg)
-          this.hasChangeSell = true
-          this.handleOptions(this.hasChangeSell)
-          this.getListDetail()
-        } else {
-          Toast(data.msg)
-        }
-      })
+      // MessageBox.confirm('您确定要平仓吗?').then(async action => {
+      if (this.sellNum > this.sellitem.orderNum) {
+        Toast('卖出数量不可大于总量')
+        this.pldialogVisible = false
+        return false
+      }
+      if (this.sellNum % 100 != 0) {
+        Toast('请输入100的整倍数')
+        this.pldialogVisible = false
+        return false
+      }
+      let opt = {
+        positionSn: this.sellitem.positionSn,
+        sellNum: this.sellNum,
+      }
+      let data = await api.sell(opt)
+      if (data.status === 0) {
+        Toast(data.msg)
+        this.hasChangeSell = true
+        this.handleOptions(this.hasChangeSell)
+        this.getListDetail()
+      } else {
+        Toast(data.msg)
+      }
+      this.sellNum = ''
+      this.pldialogVisible = false
+      // })
     },
-    toDetail (code) {
+    toDetail(code) {
       this.$router.push({
         path: '/listdetail',
         query: {
@@ -270,35 +300,41 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .wrapper {
-    padding-bottom: 0
-  }
+.wrapper {
+  padding-bottom: 0
+}
 
-  .col-xs-3 .iconfont {
-    font-size: 0.22rem;
-  }
-  #app.red-theme{
-    .order-info-box{
-      background-color: #fff;
-      .order-title{
-        .main {
-          color: #000;
-        }
-      }
-      .order-info{
+.col-xs-3 .iconfont {
+  font-size: 0.22rem;
+}
+
+#app.red-theme {
+  .order-info-box {
+    background-color: #fff;
+
+    .order-title {
+      .main {
         color: #000;
       }
     }
-    .order-foot {
-      border-top-color: #ccc;
-    }
-    .load-all{
-      background-color: #BB1815;
-      color: #fff;
-    }
-      .empty{
-      background-color: #E9E9E9;
+
+    .order-info {
       color: #000;
     }
   }
+
+  .order-foot {
+    border-top-color: #ccc;
+  }
+
+  .load-all {
+    background-color: #BB1815;
+    color: #fff;
+  }
+
+  .empty {
+    background-color: #E9E9E9;
+    color: #000;
+  }
+}
 </style>

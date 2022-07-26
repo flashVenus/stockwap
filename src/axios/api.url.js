@@ -3,14 +3,13 @@ const ENV = process.env.NODE_ENV
 export default {
   // DOMAIN: 'http://www.wxljcee.vip',
   DOMAIN: 'https://www.mxkjdmx.vip',
-  // DOMAIN: 'http://localhost:8099',
   // DOMAIN: 'http://localhost',
-  // baseURL: ENV == 'development'?'http://sr.nqsoft.net':'http://sr.nqsoft.net',
+  baseURL: ENV == 'development'?'https://www.mxkjdmx.vip':'https://www.mxkjdmx.vip',
   // baseURL: 'http://localhost:8070',
   /* Util API */
   // baseURL: 'http://www.wxljcee.vip',
   baseURL: 'https://www.mxkjdmx.vip',
-  // baseURL: 'http://localhost:8099',
+  // baseURL: 'http://localhost',
   util: {
     image: '/util/image.html' // 图片上传
   }
