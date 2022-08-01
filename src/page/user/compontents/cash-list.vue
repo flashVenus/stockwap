@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div v-if="list.length<=0" class="empty text-center">
-      暂无提现信息!
+      暂无转出信息!
     </div>
     <div v-else>
       <ul
@@ -13,11 +13,11 @@
           <div class="order-info-box">
             <div class="order-title">
                     <span class="main">
-                        提现至银行卡
+                        转出至银行卡
                     </span>
               <span class="payNumber">¥{{item.withAmt}}</span>
               <span class="red pull-right">
-                        {{item.withStatus == 1?'提现成功':item.withStatus == 2?'提现失败':item.withStatus == 3?'订单取消':'审核中'}}
+                        {{item.withStatus == 1?'转出成功':item.withStatus == 2?'转出失败':item.withStatus == 3?'订单取消':'审核中'}}
                         <i v-if="item.withStatus == 1" class="iconfont icon-tongguo4 animated bounceIn"></i>
                         <i v-if="item.withStatus==0" class="iconfont icon-dengdai animated bounceInDown"></i>
                         <i v-if="item.withStatus == 2" class="iconfont icon-failure animated bounceInDown"></i>
@@ -53,7 +53,7 @@
             <div v-if="item.withStatus == 0" class="order-foot clearfix">
               <div @click="cancle(item.id)" class="foot-btn">
                 <i class='font-icon'></i>
-                取消提现
+                取消转出
               </div>
             </div>
 
@@ -106,7 +106,7 @@ export default {
   methods: {
     async getListDetail () {
       let opt = {
-        withStatus: '', // 提现状态 0已提交，1转账成功，2转账失败
+        withStatus: '', // 转出状态 0已提交，1转账成功，2转账失败
         pageNum: this.pageNum,
         pageSize: 15
       }
@@ -130,7 +130,7 @@ export default {
       this.loading = false
     },
     async cancle (val) {
-      // 取消提现
+      // 取消转出
       // MessageBox.confirm('您确定要平仓吗?').then(async action => {
       let opt = {
         withId: val

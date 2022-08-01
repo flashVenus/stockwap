@@ -321,7 +321,7 @@ export default new Router({
       path: '/recharge',
       name: 'recharge',
       meta: {
-        title: '充值',
+        title: '转入',
         requireAuth: true,
         hasHeader: true
 
@@ -331,7 +331,7 @@ export default new Router({
       path: '/rechargeSure',
       name: 'rechargeSure',
       meta: {
-        title: '确认充值',
+        title: '确认转入',
         requireAuth: true,
         hasHeader: true
 
@@ -341,7 +341,7 @@ export default new Router({
       path: '/rechargelist',
       name: 'rechargelist',
       meta: {
-        title: '充值记录',
+        title: '转入记录',
         requireAuth: true,
         hasHeader: true
       },
@@ -350,7 +350,7 @@ export default new Router({
       path: '/cash',
       name: 'cash',
       meta: {
-        title: '提现',
+        title: '转出',
         requireAuth: true,
         hasHeader:true
       },
@@ -369,7 +369,7 @@ export default new Router({
       path: '/cashlist',
       name: 'cashlist',
       meta: {
-        title: '提现记录',
+        title: '转出记录',
         requireAuth: true,
         hasHeader:true
 

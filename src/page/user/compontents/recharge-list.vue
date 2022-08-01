@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="list.length<=0" class="empty text-center">
-      暂无充值信息!
+      暂无转入信息!
     </div>
     <div v-else>
       <ul
@@ -20,7 +20,7 @@
                            class="iconfont icon-yinlian"></i> -->
                         {{item.payChannel == 0?'支付宝':item.payChannel == 1?'对公转账':item.payChannel}}
                     </span>
-              <span class="payNumber">充值：<span :style="{color:$state.theme =='red'?'#BB1815':''}">￥{{item.payAmt}}</span></span>
+              <span class="payNumber">转入：<span :style="{color:$state.theme =='red'?'#BB1815':''}">￥{{item.payAmt}}</span></span>
               <span
                 :class="item.orderStatus == 1?'green pull-right':item.orderStatus == 2?'red pull-right':'red pull-right'">
                         <i v-if="item.orderStatus == 1" class="iconfont icon-tongguo4 animated bounceIn"></i>
@@ -29,7 +29,7 @@
                         <i v-if="item.orderStatus == 3"
                            class="iconfont icon-iconfontweitongguo animated bounceInDown"></i>
                         <!-- 1 => 成功 2 失败 3取消 4 等待 -->
-                        {{item.orderStatus == 1?'充值成功':item.orderStatus == 2?'充值失败':item.orderStatus == 3?'取消充值':'审核中'}}
+                        {{item.orderStatus == 1?'转入成功':item.orderStatus == 2?'转入失败':item.orderStatus == 3?'取消转入':'审核中'}}
                         
                     </span>
               <!-- <span class="secondary ">123456789</span> -->

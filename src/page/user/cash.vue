@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <!-- <div class="header">
-      <mt-header title="提现">
+      <mt-header title="转出">
         <router-link to="" slot="left">
           <mt-button @click="goBack" icon="back">返回</mt-button>
         </router-link>
@@ -9,7 +9,7 @@
     </div> -->
     <!-- <div class="text-center">
         <div class="btn-group">
-            <a href="javascript:;" class="with-draw-btn on">提现</a>
+            <a href="javascript:;" class="with-draw-btn on">转出</a>
             <a href="#/cashlist" class="with-draw-detai-btn ">记录</a>
         </div>
     </div> -->
@@ -17,18 +17,18 @@
       <div class="box">
         <div class="box-contain clearfix">
           <div class="account text-center">
-            <p class="title">可提现金额（元）</p>
+            <p class="title">可转出金额（元）</p>
             <p class="red number">{{$store.state.userInfo.enableAmt}}</p>
           </div>
         </div>
       </div>
       <div class="form-block page-part">
-        <mt-field label="提现金额" placeholder="请输入提现金额" type="number" v-model="number">
+        <mt-field label="转出金额" placeholder="请输入转出金额" type="number" v-model="number">
           <span @click="changeAllNumber">全部</span>
         </mt-field>
-        <mt-field label="提现密码" placeholder="请输入提现密码" type="number" v-model="withdrawPwd">
+        <mt-field label="转出密码" placeholder="请输入转出密码" type="number" v-model="withdrawPwd">
         </mt-field>
-        <!-- <mt-field label="到账银行" placeholder="请输入提现金额" type="number" v-model="card"></mt-field> -->
+        <!-- <mt-field label="到账银行" placeholder="请输入转出金额" type="number" v-model="card"></mt-field> -->
         <!-- <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="phone"></mt-field> -->
       </div>
       <div class="btnbox">
@@ -37,20 +37,20 @@
       <!-- <div v-if="!$store.state.bankInfo.bankNo" class="addcard back text-center">
       没有银行卡？<a href="#/addCard">点击添加</a> -->
       <!-- </div> -->
-      <div class="attention" style="margin-bottom:10px;">
-        <p>注意: 提现默认提取沪深账户中的可用资金。</p>
-      </div>
+      <!-- <div class="attention" style="margin-bottom:10px;">
+        <p>注意: 转出默认提取沪深账户中的可用资金。</p>
+      </div> -->
       <div class="attention">
-        <p>1、当前有持仓订单不能出金 。</p>
-        <p>2、出金请先在官网通过实名认证和绑定银行卡 。</p>
-        <p>3、出金时间工作日 {{settingInfo.withTimeBegin}} : 00 到 {{settingInfo.withTimeEnd}} : 00 之间。</p>
-        <p>4、每笔出金扣除 {{settingInfo.withFeeSingle}} 元手续费<span v-if="settingInfo.withFeePercent != 0">，加上出金金额 * {{settingInfo.withFeePercent}}</span>。
+        <!-- <p>1、当前有持仓订单不能出金 。</p> -->
+        <!-- <p>2、出金请先在官网通过实名认证和绑定银行卡 。</p> -->
+        <p>1、出金时间工作日 {{settingInfo.withTimeBegin}} : 00 到 {{settingInfo.withTimeEnd}} : 00 之间。</p>
+        <p>2、每笔出金扣除 {{settingInfo.withFeeSingle}} 元手续费<span v-if="settingInfo.withFeePercent != 0">，加上出金金额 * {{settingInfo.withFeePercent}}</span>。
         </p>
-        <p>5、每笔提现金额最小 {{settingInfo.withMinAmt}} 元。</p>
-        <p>6、<span class="red">出金时段内出金一般2小时到账，出金时间受银行间清算时间影响，各家银行到账时间不同，最迟T+1次日24点前到账</span></p>
+        <p>3、每笔转出金额最小 {{settingInfo.withMinAmt}} 元。</p>
+        <p>4、<span class="red">出金时段内出金一般2小时到账，出金时间受银行间清算时间影响，各家银行到账时间不同，最迟T+1次日24点前到账</span></p>
       </div>
       <!-- <div @click="toCashList">
-          查看提现记录
+          查看转出记录
       </div> -->
     </div>
 
@@ -71,10 +71,10 @@ export default {
       phone: '',
       settingInfo: {
         withMinAmt: 1000,
-        withTimeBegin: 13, // 提现开始时间
-        withTimeEnd: 15, // 提现结束时间
-        withFeeSingle: 3, // 提现单笔手续费
-        withFeePercent: 0.008 // 提现单笔手续费
+        withTimeBegin: 13, // 转出开始时间
+        withTimeEnd: 15, // 转出结束时间
+        withFeeSingle: 3, // 转出单笔手续费
+        withFeePercent: 0.008 // 转出单笔手续费
       },
       withdrawPwd:''
     }
@@ -109,8 +109,8 @@ export default {
       }
     },
     async toSure () {
-      // 确定提现
-      //   未实名认证和添加银行卡不能提现
+      // 确定转出
+      //   未实名认证和添加银行卡不能转出
       if (!this.$store.state.userInfo.idCard) {
         Toast('请先实名认证')
         this.$router.push('/authentication')
@@ -122,11 +122,11 @@ export default {
         return
       }
       if (!this.number || this.number <= 0) {
-        Toast('请输入正确的提现金额')
+        Toast('请输入正确的转出金额')
       } else if (this.number - this.settingInfo.withMinAmt < 0) {
-        Toast('提现金额不得小于' + this.settingInfo.withMinAmt)
+        Toast('转出金额不得小于' + this.settingInfo.withMinAmt)
       } else if (!this.withdrawPwd) {
-        this.$message.error("请输入提现密码");
+        this.$message.error("请输入转出密码");
         return;
       }else {
         let opts = {
@@ -139,12 +139,12 @@ export default {
           Toast('申请成功，请等待审核!')
           this.$router.push('/cashlist')
         } else {
-          Toast(data.msg ? data.msg : '提现失败,请重新提现或者联系管理员')
+          Toast(data.msg ? data.msg : '转出失败,请重新转出或者联系管理员')
         }
       }
     },
     toCashList () {
-      // 查看提现记录
+      // 查看转出记录
       this.$router.push('/cashlist')
     },
     goBack () {

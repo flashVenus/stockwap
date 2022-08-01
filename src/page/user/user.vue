@@ -51,8 +51,8 @@
             $store.state.userInfo.userIndexAmt + $store.state.userInfo.userFuturesAmt).toFixed(2)}}</p>
         </div>
         <div class="iconfont">
-          <mt-button class="btn-red pull-right" size="small" type="danger" @click="toCash">提现</mt-button>
-          <mt-button class="btn-red pull-right" size="small" type="danger" @click="toRecharge">充值</mt-button>
+          <mt-button class="btn-red pull-right" size="small" type="danger" @click="toCash">转出</mt-button>
+          <mt-button class="btn-red pull-right" size="small" type="danger" @click="toRecharge">转入</mt-button>
         </div>
         <mt-progress
           :value="$store.state.userInfo.userAmt/($store.state.userInfo.userAmt + $store.state.userInfo.userIndexAmt)*100"
@@ -468,7 +468,7 @@
               src="../../assets/ico/chongzhi.png"
               style="width: 0.27rem; height: 0.27rem; margin-right: 0.15rem"
             />
-            充值记录
+            转入记录
             <icon name="right66" class="right" slot="icon"></icon>
           </span>
         </li>
@@ -479,7 +479,7 @@
               src="../../assets/ico/tixian.png"
               style="width: 0.24rem; height: 0.24rem; margin-right: 0.15rem"
             />
-            提现记录
+            转出记录
             <icon name="right66" class="right" slot="icon"></icon>
           </span>
         </li>
@@ -806,15 +806,15 @@ export default {
       this.$router.push("/authentication");
     },
     toRecharge() {
-      // 充值
+      // 转入
       // this.$router.push('/recharge')
       // 修改直接跳转客服页面
       this.$store.commit("showMQPanel", true);
     },
     toCash() {
-      // 提现
+      // 转出
       if (this.$store.state.userInfo.hasWithdrawPwd == false){
-          this.$message.error("请先设置提现密码");
+          this.$message.error("请先设置转出密码");
           return;
         }
       this.$router.push("/cash");

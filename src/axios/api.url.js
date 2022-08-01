@@ -8,7 +8,7 @@ export default {
   // baseURL: 'http://localhost:8070',
   /* Util API */
   // baseURL: 'http://www.wxljcee.vip',
-  baseURL: 'https://www.mxkjdmx.vip',
+  baseURL: 'https://www.mxkjdmx.vip',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
   // baseURL: 'http://localhost',
   util: {
     image: '/util/image.html' // 图片上传

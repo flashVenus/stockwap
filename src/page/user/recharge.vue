@@ -12,7 +12,7 @@
       <input type="hidden" name="sign"  v-model="formDate.sign">
     </form>
     <!-- <div class="header">
-      <mt-header title="充值">
+      <mt-header title="转入">
         <router-link to="/user" slot="left">
           <mt-button icon="back">我的</mt-button>
         </router-link>
@@ -49,13 +49,13 @@
                 </li> -->
               </ul>
             </div>
-            <p style="padding-bottom:0.3rem">最小充值金额为{{settingInfo.chargeMinAmt}}元</p>
+            <p style="padding-bottom:0.3rem">最小转入金额为{{settingInfo.chargeMinAmt}}元</p>
           </div>
         </div>
         <div class="back-info">
           <!-- 银行卡信息 -->
           <p class="title">
-            充值方式
+            转入方式
           </p>
           <div class="box-tab">
             <div v-for="i in optionsPay" :key="i.key" class="pay-radio">
@@ -90,7 +90,7 @@
       </div>
       <div class="btnbox">
             <span v-if="!dialogShow" class="text-center btnok" @click="toSure">
-                立即充值
+                立即转入
                 <i v-show="isloading" style="color:#fff;" class="iconfont icon-jiazaizhong"></i>
                 <i v-show="isloading"></i>
             </span>
@@ -110,12 +110,12 @@
             <!--<input type="hidden" name="pay_producturl" v-model="formDate.pay_producturl"/>-->
           </form>
           <button class="submitBtn" type="submit" @click="onsubmit()">
-            立即充值
+            立即转入
           </button>
         </div>
       </div>
       <div class="attention">
-        <p>注意:充值默认充值在融资账户中。</p>
+        <p>注意:转入默认转入在融资账户中。</p>
       </div>
     </div>
 
@@ -303,7 +303,7 @@ export default {
       }
     },
     selectTypeFun (value) {
-      // 选择充值金额
+      // 选择转入金额
       this.selectNumber = value
     },
     async changeType (value) {
@@ -346,7 +346,7 @@ export default {
       }
     },
     toSure () {
-      // 充值 先判断是否实名认证
+      // 转入 先判断是否实名认证
       if (!this.$store.state.userInfo.idCard) {
         Toast('您还未实名认证,请先实名认证')
         this.$router.push('/authentication')
@@ -359,7 +359,7 @@ export default {
         this.recharge()
       }
       // if(this.selectNumber > 20000 || this.selectNumber <500){
-      //     Toast('一次最高充值20000,最低充值500')
+      //     Toast('一次最高转入20000,最低转入500')
       // }else{
       //     this.popupVisible = true
       //     this.minutes = 10
@@ -376,7 +376,7 @@ export default {
         // 成功
         this.settingInfo = data.data
         // this.selectNumber = this.settingInfo.chargeMinAmt // 设置默认金额为最小金额
-        // 充值金额快捷选择
+        // 转入金额快捷选择
         // this.numberList = []
         // for(var i = 0;i<10;i++){
         //     let item = {
@@ -433,7 +433,7 @@ export default {
         let data = await api.inMoney(opts)
         if (data.status === 0) {
           // 成功
-          // Toast(data.msg?data.msg:'充值成功!')
+          // Toast(data.msg?data.msg:'转入成功!')
           this.$router.push({
             path: '/rechargeSure',
             query: {
@@ -443,7 +443,7 @@ export default {
             }
           })
         } else {
-          Toast(data.msg ? data.msg : '充值失败,请重新充值')
+          Toast(data.msg ? data.msg : '转入失败,请重新转入')
         }
       }
       this.isloading = false

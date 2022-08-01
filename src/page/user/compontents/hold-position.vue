@@ -57,7 +57,7 @@
                 <b v-else></b>
               </div>
               <div @click="sellitem = item;
-              pldialogVisible = true;" class="foot-btn">
+              pldialogVisible = true;" class="foot-btn" v-if="item.auditStatus == 2 || !item.auditStatus">
                 <!-- sell(item.positionSn) -->
                 <i class='font-icon'></i>
                 我要卖出
