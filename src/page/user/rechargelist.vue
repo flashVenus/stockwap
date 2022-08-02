@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="header">
-      <!-- <mt-header fixed title="充值记录">
+      <!-- <mt-header fixed title="转入记录">
         <router-link to="/user" slot="left">
           <mt-button icon="back">我的</mt-button>
         </router-link>
@@ -9,7 +9,7 @@
     </div>
     <!-- <div class="text-center">
       <div class="btn-group">
-        <a href="#/recharge" class="with-draw-btn">充值</a>
+        <a href="#/recharge" class="with-draw-btn">转入</a>
         <a href="javascript:;" class="with-draw-detai-btn on">记录</a>
       </div>
     </div> -->

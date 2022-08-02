@@ -1,5 +1,8 @@
 <template>
-  <div :class="`wrapper ${$state.theme === 'red' ? 'red-theme' : 'black-theme'}`">
+  <div :class="`wrapper ${$state.theme === 'red' ? 'red-theme' : 'black-theme'}`" v-loading="loadings"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
     <!-- <div class="header">
       <mt-header :title="detail.name+' ('+detail.code+')'">
         <router-link to="/list" slot="left">
@@ -108,10 +111,10 @@ export default {
         stockType: 'sh',
         spell: 'qhhd',
         gid: 'sh600243',
-        nowPrice: '4.290',
+        nowPrice: '0.00',
         hcrate: 1.18,
-        today_max: '4.300',
-        today_min: '4.240',
+        today_max: '0.00',
+        today_min: '0.00',
         business_balance: '4151985.000',
         business_amount: '973005',
         preclose_px: '4.240',
@@ -156,7 +159,8 @@ export default {
       newsContent2: [], // 经济数据
       newsContent3: [], // 全球股市
       newsContent4: [], // 7*24全球
-      newsContent5: [] // 商品资讯
+      newsContent5: [], // 商品资讯
+      loadings:true,
     }
   },
   watch: {},
@@ -265,8 +269,10 @@ export default {
       this.loading = false
       if (data.status === 0) {
         this.detail = {...data.data, diff: floor(data.data.nowPrice - data.data.preclose_px, 3)}
+        this.loadings = false
       } else {
         Toast(data.msg)
+        this.loadings = false
       }
     },
     async addOptions () {

@@ -1,5 +1,8 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" v-loading="loadings"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
         <!-- <div class="header">
             <mt-header :title="detail.name+' ('+detail.code+')'">
                 <router-link to="/list" slot="left">
@@ -191,7 +194,8 @@
         timer: null,
         loading: false,
         qhinfo: {},
-        zsinfo: {}
+        zsinfo: {},
+        loadings:true,
       }
     },
     watch: {},
@@ -256,8 +260,10 @@
         this.loading = false
         if (data.status === 0) {
           this.detail = data.data
+          this.loadings = false
         } else {
           Toast(data.msg)
+          this.loadings = false
         }
       },
       async addOptions () {

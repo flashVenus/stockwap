@@ -19,13 +19,13 @@
             <!-- <a href="#/recharge"> -->
             <a @click="showPanel">
               <img src="../../assets/img/recharge_icon.png"><br>
-              充值
+               转入
             </a>
           </div>
           <div class="col-xs-6">
             <a href="#/cash">
               <img src="../../assets/img/withdrew_icon.png"><br>
-              提现
+              转出
             </a>
           </div>
         </div>

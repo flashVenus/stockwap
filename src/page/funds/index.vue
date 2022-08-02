@@ -18,8 +18,8 @@
                 </div>
             </div>
             <div class="money-info_right">
-                <div class="money-info_botton redBtn" @click="toRecharge">充值</div>
-                <div class="money-info_botton blueBtn" @click="toCash">提现</div>
+                <div class="money-info_botton redBtn" @click="toRecharge">转入</div>
+                <div class="money-info_botton blueBtn" @click="toCash">转出</div>
             </div>
           </div>
           <div class="money-detail">
@@ -160,11 +160,11 @@ export default {
     },
     methods:{
         toRecharge () {
-      // 充值
+      // 转入
         this.$router.push('/recharge')
         },
         toCash () {
-        // 提现
+        // 转出
         this.$router.push('/cash')
         },
         async getlist () {

@@ -1,15 +1,15 @@
 <template>
   <div class="wrapper">
     <!-- <div class="header">
-      <mt-header title="充值说明">
+      <mt-header title="转入说明">
         <router-link to="/recharge" slot="left">
-          <mt-button icon="back">充值</mt-button>
+          <mt-button icon="back">转入</mt-button>
         </router-link>
       </mt-header>
     </div> -->
     <div class="box1">
       <div class="form-block page-part">
-        <mt-field label="充值金额" placeholder="充值金额" disabled type="number" v-model="selectNumber"></mt-field>
+        <mt-field label="转入金额" placeholder="转入金额" disabled type="number" v-model="selectNumber"></mt-field>
         <div v-if="type == 0">
           <mt-field label="支付宝名称" placeholder="支付宝名称" disabled type="text" v-model="payInfo.channelName">
           </mt-field>
@@ -78,11 +78,11 @@
       <div v-if="type == 0">
         <div class="tips-group">
           <p><i class="iconfont icon-jinggao1"></i>注意事项：</p>
-          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou"></i>由于支付收款上限限制，每次收款公户可能不一样，<span class="red">请每次充值前获取最新的二维码完成支付</span>
+          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou"></i>由于支付收款上限限制，每次收款公户可能不一样，<span class="red">请每次转入前获取最新的二维码完成支付</span>
           </p>
           <p class="tip-text"><i class="iconfont icon-jingpaibuzhou3"></i>如果您的网络环境不稳定，或由于设备、环境、偏好、行为、关系、账户、身份等维度问题，<span
             class="red">可能导致支付宝风控系统提示风险，请您在安全的环境下发起支付</span></p>
-          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou2"></i>为确保入金及时到账，<span class="red">请确认您输入的金额和提交的充值金额一致</span>.
+          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou2"></i>为确保入金及时到账，<span class="red">请确认您输入的金额和提交的转入金额一致</span>.
           </p>
           <p class="tip-text"><i class="iconfont icon-jingpaibuzhou1"></i>受支付宝到账通知时间影响,入金时间到账时间可能会延迟，请耐心等待.</p>
         </div>
@@ -90,7 +90,7 @@
           <span class="text-center btnok" @click="toSure">点击获取二维码</span>
         </div>
         <div v-if="false" class="tips-group">
-          <p><i class="iconfont icon-liucheng"></i>充值方式：</p>
+          <p><i class="iconfont icon-liucheng"></i>转入方式：</p>
           <p class="tip-text"><i class="iconfont icon-buzhou"></i>将二维码保存到本地，打开支付宝扫描二维码，转账到平台指定对公账户</p>
           <p class="tip-text"><i class="iconfont icon-buzhou2"></i>点击“复制”，复制支付宝账号，打开支付宝点击转账，转账到平台指定对公账户</p>
         </div>
@@ -103,7 +103,7 @@
         </div>
         <div class="tips-group red">
           <p><i class="iconfont icon-jinggao1"></i>注意事项：</p>
-          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou"></i>为确保入金及时到账，请确认您输入的金额和提交的充值金额一致.</p>
+          <p class="tip-text"><i class="iconfont icon-jingpaibuzhou"></i>为确保入金及时到账，请确认您输入的金额和提交的转入金额一致.</p>
         </div>
       </div>
       <div v-else>
@@ -217,9 +217,9 @@ export default {
       Toast('复制失败，请重试！')
     },
     toSure () {
-      // 充值
+      // 转入
       if (this.selectNumber > this.payInfo.channelMaxLimit || this.selectNumber < this.payInfo.channelMinLimit) {
-        Toast('一次最高充值' + this.payInfo.channelMaxLimit + ',最低充值' + this.payInfo.channelMinLimit)
+        Toast('一次最高转入' + this.payInfo.channelMaxLimit + ',最低转入' + this.payInfo.channelMinLimit)
       } else {
         this.popupVisible = true
         this.minutes = 5
@@ -239,9 +239,9 @@ export default {
       let data = await api.inMoney(opts)
       if (data.status === 0) {
         // 成功
-        Toast(data.msg ? data.msg : '充值成功!')
+        Toast(data.msg ? data.msg : '转入成功!')
       } else {
-        Toast(data.msg ? data.msg : '充值失败,请重新充值')
+        Toast(data.msg ? data.msg : '转入失败,请重新转入')
       }
     },
     closePopup () {

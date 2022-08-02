@@ -189,7 +189,7 @@
                   }}
                 </p>
               </li>
-              <li>
+              <!-- <li>
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">可用信用额度</div>
                 <p class="number yellow">
@@ -199,7 +199,7 @@
                       : $store.state.userInfo.enableCreditAmount
                   }}
                 </p>
-              </li>
+              </li> -->
               <!-- <li>
                 <i class="iconfont icon-zijin1"></i>
                 <div class="name">总资产</div>
@@ -243,7 +243,7 @@
                   }}
                 </p>
               </li>
-              <li>
+              <!-- <li>
                 <i class="iconfont icon-yingkuixuanzhong"></i>
                 <div class="name">股票总盈亏</div>
                 <p class="number yellow">
@@ -258,7 +258,7 @@
                     >{{ $store.state.userInfo.allProfitAndLose }}</span
                   >
                 </p>
-              </li>
+              </li> -->
               <li>
                 <i class="iconfont icon-jiaoyi"></i>
                 <div class="name">持仓总浮动盈亏</div>
@@ -429,7 +429,7 @@
             <icon name="right66" class="right" slot="icon"></icon>
           </span>
         </li>
-        <li @click="zijinpassshow = true">
+        <!-- <li @click="zijinpassshow = true">
           <span>
             <img
               src="../../assets/ico/gaimima.png"
@@ -438,7 +438,7 @@
             资金密码
             <icon name="right66" class="right" slot="icon"></icon>
           </span>
-        </li>
+        </li> -->
       </ul>
       <ul class="after">
         <!-- <li  @click="goOrderList">

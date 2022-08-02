@@ -259,6 +259,20 @@ export default {
       console.log(this.shengou, "申购");
     },
     async shengData() {
+        if (this.haoForm.shehao < this.tijiao.min_apply_lot) {
+        this.$message({
+          message: '申购数量不可小于' + this.tijiao.min_apply_lot,
+          type: 'warning'
+        });
+        return false
+      }
+      if (this.haoForm.shehao > this.tijiao.min_apply_lot) {
+        this.$message({
+          message: '申购数量不可大于' + this.tijiao.max_apply_lot,
+          type: 'warning'
+        });
+        return false
+      }
       this.$refs["haoForm"].validate(async (valid) => {
         if (valid) {
           // 获取持仓列表

@@ -26,8 +26,8 @@
         <mt-field label="转出金额" placeholder="请输入转出金额" type="number" v-model="number">
           <span @click="changeAllNumber">全部</span>
         </mt-field>
-        <mt-field label="转出密码" placeholder="请输入转出密码" type="number" v-model="withdrawPwd">
-        </mt-field>
+        <!-- <mt-field label="转出密码" placeholder="请输入转出密码" type="number" v-model="withdrawPwd">
+        </mt-field> -->
         <!-- <mt-field label="到账银行" placeholder="请输入转出金额" type="number" v-model="card"></mt-field> -->
         <!-- <mt-field label="手机号" placeholder="请输入手机号" type="number" v-model="phone"></mt-field> -->
       </div>
@@ -125,13 +125,15 @@ export default {
         Toast('请输入正确的转出金额')
       } else if (this.number - this.settingInfo.withMinAmt < 0) {
         Toast('转出金额不得小于' + this.settingInfo.withMinAmt)
-      } else if (!this.withdrawPwd) {
-        this.$message.error("请输入转出密码");
-        return;
-      }else {
+      } 
+      // else if (!this.withdrawPwd) {
+      //   this.$message.error("请输入转出密码");
+      //   return;
+      // }
+      else {
         let opts = {
           amt: this.number,
-          withdrawPwd: this.withdrawPwd,
+          // withdrawPwd: this.withdrawPwd,
         }
         let data = await api.outMoney(opts)
         if (data.status === 0) {

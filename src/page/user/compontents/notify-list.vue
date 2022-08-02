@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="list.length<=0" class="empty text-center">
-      暂无充值信息!
+      暂无转入信息!
     </div>
     <div v-else>
       <ul
@@ -128,7 +128,7 @@ export default {
       return (dateStr+timeStr)
     },
     async getlist () {
-      // 获取 提现记录
+      // 获取 转出记录
       let opts = {
         pageNum: this.pageNum,
         pageSize: 10,
