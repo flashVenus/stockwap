@@ -1,53 +1,49 @@
 <template>
   <div class="wrapper">
-    <div v-if="list.length<=0" class="empty text-center">
+    <div v-if="list.length <= 0" class="empty text-center">
       暂无转出信息!
     </div>
     <div v-else>
-      <ul
-        class="table-list"
-        v-infinite-scroll="loadMore"
-        infinite-scroll-disabled="loading"
+      <ul class="table-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"
         infinite-scroll-distance="10">
         <li class="list-body" v-for="(item) in list" :key="item.key">
           <div class="order-info-box">
             <div class="order-title">
-                    <span class="main">
-                        转出至银行卡
-                    </span>
-              <span class="payNumber">¥{{item.withAmt}}</span>
+              <span class="main">
+                转出至银行卡
+              </span>
+              <span class="payNumber">¥{{ item.withAmt }}</span>
               <span class="red pull-right">
-                        {{item.withStatus == 1?'转出成功':item.withStatus == 2?'转出失败':item.withStatus == 3?'订单取消':'审核中'}}
-                        <i v-if="item.withStatus == 1" class="iconfont icon-tongguo4 animated bounceIn"></i>
-                        <i v-if="item.withStatus==0" class="iconfont icon-dengdai animated bounceInDown"></i>
-                        <i v-if="item.withStatus == 2" class="iconfont icon-failure animated bounceInDown"></i>
-                        <i v-if="item.withStatus == 3"
-                           class="iconfont icon-iconfontweitongguo animated bounceInDown"></i>
-                    </span>
+                {{ item.withStatus == 1 ? '转出成功' : item.withStatus == 2 ? '转出失败' : item.withStatus == 3 ? '订单取消' : '审核中' }}
+                <i v-if="item.withStatus == 1" class="iconfont icon-tongguo4 animated bounceIn"></i>
+                <i v-if="item.withStatus == 0" class="iconfont icon-dengdai animated bounceInDown"></i>
+                <i v-if="item.withStatus == 2" class="iconfont icon-failure animated bounceInDown"></i>
+                <i v-if="item.withStatus == 3" class="iconfont icon-iconfontweitongguo animated bounceInDown"></i>
+              </span>
               <!-- <span class="secondary ">123456789</span> -->
             </div>
             <div class="order-info">
               <p class="clearfix">
-                <span class="col-xs-6">手续费:<b class="space">￥{{item.withFee}}</b></span>
+                <span class="col-xs-6">手续费:<b class="space">￥{{ item.withFee }}</b></span>
                 <!-- <span class="col-xs-6">实际到账金额:<b class="space" style="font-size:0.26rem">{{item.withAmt - item.withFee}}</b>元</span>                         -->
               </p>
               <p class="clearfix">
-                <span class="col-xs-12">银行卡:<b class="space">{{item.bankName}}-{{item.bankAddress}}</b></span>
+                <span class="col-xs-12">银行卡:<b class="space">{{ item.bankName }}-{{ item.bankAddress }}</b></span>
               </p>
               <p class="clearfix">
-                <span class="col-xs-12">卡号:<b class="space">{{item.bankNo}}</b></span>
+                <span class="col-xs-12">卡号:<b class="space">{{ item.bankNo }}</b></span>
               </p>
               <p v-if="item.withStatus == 3" class="clearfix">
-                <span class="col-xs-12">取消原因:<b class="space">{{item.withMsg}}</b></span>
+                <span class="col-xs-12">取消原因:<b class="space">{{ item.withMsg }}</b></span>
               </p>
               <p v-if="item.withStatus == 2" class="clearfix">
-                <span class="col-xs-12">失败原因:<b class="space">{{item.withMsg}}</b></span>
+                <span class="col-xs-12">失败原因:<b class="space">{{ item.withMsg }}</b></span>
               </p>
               <p class="clearfix">
-                        <span class="secondary col-xs-6">时间:
-                            <b v-if="item.applyTime">{{new Date(item.applyTime) | timeFormat}}</b>
-                            <b v-else></b>
-                        </span>
+                <span class="secondary col-xs-6">时间:
+                  <b v-if="item.applyTime">{{ new Date(item.applyTime) | timeFormat }}</b>
+                  <b v-else></b>
+                </span>
               </p>
             </div>
             <div v-if="item.withStatus == 0" class="order-foot clearfix">
@@ -89,7 +85,7 @@ import * as api from '@/axios/api'
 export default {
   components: {},
   props: {},
-  data () {
+  data() {
     return {
       loading: false,
       list: [],
@@ -99,12 +95,12 @@ export default {
   },
   watch: {},
   computed: {},
-  created () {},
-  mounted () {
+  created() { },
+  mounted() {
     this.getListDetail()
   },
   methods: {
-    async getListDetail () {
+    async getListDetail() {
       let opt = {
         withStatus: '', // 转出状态 0已提交，1转账成功，2转账失败
         pageNum: this.pageNum,
@@ -119,7 +115,7 @@ export default {
         Toast(data.msg)
       }
     },
-    async loadMore () {
+    async loadMore() {
       if (this.list.length < 10) {
         return
       }
@@ -129,7 +125,7 @@ export default {
       await this.getListDetail()
       this.loading = false
     },
-    async cancle (val) {
+    async cancle(val) {
       // 取消转出
       // MessageBox.confirm('您确定要平仓吗?').then(async action => {
       let opt = {
@@ -149,43 +145,43 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .wrapper {
-    // padding-top: 0.9rem;
-  }
+.wrapper {
+  // padding-top: 0.9rem;
+}
 
-  .payNumber {
-    font-size: 0.3rem;
-    color: #ff8000;
-  }
+.payNumber {
+  font-size: 0.3rem;
+  color: #ff8000;
+}
 
-  .table-list {
-    padding: 0.2rem 0;
+.table-list {
+  padding: 0.2rem 0;
 
-    .list-body {
-      padding: 0.1rem 0.2rem;
+  .list-body {
+    padding: 0.1rem 0.2rem;
 
-      .capital:nth-child(1) {
-        border-top: 0.01rem solid #3f444a;
+    .capital:nth-child(1) {
+      border-top: 0.01rem solid #3f444a;
+    }
+
+    .capital {
+      padding: 0.2rem;
+      // border-radius: 0.2rem;
+      border-bottom: 0.01rem solid #3f444a;
+
+      div {
+        line-height: 0.4rem;
       }
 
-      .capital {
-        padding: 0.2rem;
-        // border-radius: 0.2rem;
-        border-bottom: 0.01rem solid #3f444a;
+      .col-xs-4 {
+        padding-left: 0;
+        padding-right: 0;
+      }
 
-        div {
-          line-height: 0.4rem;
-        }
-
-        .col-xs-4 {
-          padding-left: 0;
-          padding-right: 0;
-        }
-
-        .pro {
-          color: #999;
-        }
+      .pro {
+        color: #999;
       }
     }
   }
+}
 </style>

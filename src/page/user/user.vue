@@ -813,10 +813,10 @@ export default {
     },
     toCash() {
       // 转出
-      if (this.$store.state.userInfo.hasWithdrawPwd == false){
-          this.$message.error("请先设置转出密码");
-          return;
-        }
+      // if (this.$store.state.userInfo.hasWithdrawPwd == false){
+      //     this.$message.error("请先设置转出密码");
+      //     return;
+      //   }
       this.$router.push("/cash");
     },
     async toRegister() {
