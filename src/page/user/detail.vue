@@ -67,7 +67,8 @@ export default {
   },
   methods: {
     showPanel() {
-      this.$store.commit('showMQPanel', true)
+      this.$router.push('/recharge')
+      // this.$store.commit('showMQPanel', true)
     }
   },
   

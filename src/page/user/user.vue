@@ -807,9 +807,9 @@ export default {
     },
     toRecharge() {
       // 转入
-      // this.$router.push('/recharge')
+      this.$router.push('/recharge')
       // 修改直接跳转客服页面
-      this.$store.commit("showMQPanel", true);
+      // this.$store.commit("showMQPanel", true);
     },
     toCash() {
       // 转出

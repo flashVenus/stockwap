@@ -61,7 +61,7 @@
             <div v-for="i in optionsPay" :key="i.key" class="pay-radio">
               <!-- 1 ==> 支付宝 2 ==> 微信 3 ==> 对公转账-->
               <div @click="changeType(i)" :class="i.id == id?'pay-list on':'pay-list'" style="display: flex;">
-                          <span class="col-md-4 pay-icon">
+                          <span class="col-md-12 pay-icon">
                               <!-- <img class="pay-miniimg" :src="i.channelImg" > -->
                              <i v-if="i.ctype == 0" style="color:#1296db;" class="iconfont icon-zhifubao"></i>
                              <i v-else-if="i.ctype == 1" style="color:#36ae55;" class="iconfont icon-yinlian"></i>
@@ -69,7 +69,7 @@
                             <!-- <i v-if="i.value == 3" style="color:#009688;" class="iconfont icon-weixin"></i> -->
                              {{i.channelType}}
                           </span>
-                <span class="col-md-4 pull-right" style="text-align: right;">
+                <span class="col-md-2 pull-right" style="text-align: right;width: auto;">
                               <i :class="id == i.id?'icon-on iconfont icon-xuanzhong':'iconfont icon-weixuanze'"></i>
                           </span>
               </div>
@@ -240,6 +240,7 @@ export default {
     this.getPayInfo()
   },
   beforeDestroy () {
+    this.$store.commit("showMQPanel", false);
     if (this.$state.theme =='red') {
       document.body.classList.remove('red-bg')
         document.body.classList.add('black-bg')
@@ -249,6 +250,8 @@ export default {
   watch: {},
   methods: {
     async onsubmit () {
+      this.$store.commit("showMQPanel", true);
+      return
       // 解决金额不变的问题
       if (this.type === 2) {
         let data2 = await api.getjuhe1({ payType: this.formCode, payAmt: this.selectNumber })
@@ -346,6 +349,8 @@ export default {
       }
     },
     toSure () {
+      this.$store.commit("showMQPanel", true);
+      return
       // 转入 先判断是否实名认证
       if (!this.$store.state.userInfo.idCard) {
         Toast('您还未实名认证,请先实名认证')
