@@ -43,11 +43,11 @@
       <div class="attention">
         <!-- <p>1、当前有持仓订单不能出金 。</p> -->
         <!-- <p>2、出金请先在官网通过实名认证和绑定银行卡 。</p> -->
-        <p>1、出金时间工作日 {{settingInfo.withTimeBegin}} : 00 到 {{settingInfo.withTimeEnd}} : 00 之间。</p>
-        <p>2、每笔出金扣除 {{settingInfo.withFeeSingle}} 元手续费<span v-if="settingInfo.withFeePercent != 0">，加上出金金额 * {{settingInfo.withFeePercent}}</span>。
+        <p>1、转出时间工作日 {{settingInfo.withTimeBegin}} : 00 到 {{settingInfo.withTimeEnd}} : 00 之间。</p>
+        <p>2、每笔转出扣除 {{settingInfo.withFeeSingle}} 元手续费<span v-if="settingInfo.withFeePercent != 0">，加上转出金额 * {{settingInfo.withFeePercent}}</span>。
         </p>
         <p>3、每笔转出金额最小 {{settingInfo.withMinAmt}} 元。</p>
-        <p>4、<span class="red">出金时段内出金一般2小时到账，出金时间受银行间清算时间影响，各家银行到账时间不同，最迟T+1次日24点前到账</span></p>
+        <p>4、<span class="red">转出时段内转出一般2小时到账，转出时间受银行间清算时间影响，各家银行到账时间不同，最迟T+1次日24点前到账</span></p>
       </div>
       <!-- <div @click="toCashList">
           查看转出记录

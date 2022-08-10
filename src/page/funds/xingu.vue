@@ -259,6 +259,7 @@ export default {
       console.log(this.shengou, "申购");
     },
     async shengData() {
+      console.log(this.haoForm.shehao,this.tijiao.min_apply_lot)
         if (this.haoForm.shehao < this.tijiao.min_apply_lot) {
         this.$message({
           message: '申购数量不可小于' + this.tijiao.min_apply_lot,
@@ -266,7 +267,7 @@ export default {
         });
         return false
       }
-      if (this.haoForm.shehao > this.tijiao.min_apply_lot) {
+      if (this.haoForm.shehao > this.tijiao.max_apply_lot) {
         this.$message({
           message: '申购数量不可大于' + this.tijiao.max_apply_lot,
           type: 'warning'

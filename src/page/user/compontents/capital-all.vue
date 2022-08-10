@@ -11,7 +11,7 @@
             <span :class="item.deAmt<0?'pull-right green':'pull-right red'">{{item.deAmt}}</span>
           </div>
           <div class="pro clearfix">
-            {{item.deSummary}}
+            {{item.deSummary | guolv}}
             <!-- 股票:300092/开山股份 <span class="pull-right">金额:50.241</span> -->
           </div>
           <!-- <div class="clearfix">
@@ -58,6 +58,11 @@ export default {
   created () {},
   mounted () {
     this.getcashDetail()
+  },
+  filters:{
+    guolv(val){
+      return val.replace('递延费：0.00,', '');
+    }
   },
   methods: {
     async getcashDetail () {
