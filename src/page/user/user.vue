@@ -74,11 +74,18 @@
           <span class="ti">总资产</span>
           <span class="de">
             <div>
-              <p class="account">
+              <!-- <p class="account">
                 ¥{{
                   $store.state.hide
                     ? "****"
                     : Number($store.state.userInfo.userAmt).toFixed(2)
+                }}
+              </p> -->
+               <p class="account">
+                ¥{{
+                  $store.state.hide
+                    ? "****"
+                    : (Number($store.state.userInfo.enableAmt) + Number($store.state.userInfo.allFreezAmt) + Number($store.state.userInfo.newStockWaitPay)).toFixed(2)
                 }}
               </p>
               <!-- <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
@@ -98,11 +105,14 @@
         <div class="acc-pre-center">
           <div>
             余额:
-            <span
+            <!-- <span
               >￥{{
                 $store.state.hide ? "****" : $store.state.userInfo.enableAmt
               }}</span
-            >
+            > -->
+            <span>￥{{
+                $store.state.hide ? "****" : $store.state.userInfo.enableAmt
+              }}</span>
           </div>
           <div>
             持仓:
@@ -261,7 +271,7 @@
               </li> -->
               <li>
                 <i class="iconfont icon-jiaoyi"></i>
-                <div class="name">持仓总浮动盈亏</div>
+                <div class="name">今日浮动盈亏</div>
                 <p class="number yellow">
                   <span v-if="$store.state.hide">****</span>
                   <span

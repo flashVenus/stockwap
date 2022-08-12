@@ -104,7 +104,7 @@
                 >
                 </el-input>
               </el-form-item>
-              <el-form-item label="可用余额">
+              <!-- <el-form-item label="可用余额">
                 <el-input
                   readonly
                   class="width-auto"
@@ -115,7 +115,7 @@
                   oninput="value=value.replace(/[^\d]/g,'')"
                 >
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item
                 label="申购签数"
                 prop="shehao"
@@ -150,7 +150,7 @@
                 >
                 </el-input>
               </el-form-item>
-              <el-form-item label="买入金额">
+              <!-- <el-form-item label="买入金额">
                 <el-input
                   readonly
                   class="width-auto"
@@ -165,7 +165,7 @@
                   oninput="value=value.replace(/[^\d]/g,'')"
                 >
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
             </div>
             <el-form-item style="text-align: center">
               <el-button

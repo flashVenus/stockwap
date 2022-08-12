@@ -14,3 +14,4 @@ export default {
     image: '/util/image.html' // 图片上传
   }
 }
+ 
