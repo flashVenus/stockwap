@@ -85,7 +85,7 @@
                 ¥{{
                   $store.state.hide
                     ? "****"
-                    : (Number($store.state.userInfo.enableAmt) + Number($store.state.userInfo.allFreezAmt) + Number($store.state.userInfo.newStockWaitPay)).toFixed(2)
+                    : (Number($store.state.userInfo.enableAmt) + Number($store.state.userInfo.allFreezAmt) + Number($store.state.userInfo.newStockPayed)).toFixed(2)
                 }}
               </p>
               <!-- <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
@@ -128,7 +128,7 @@
               >￥{{
                 $store.state.hide
                   ? "****"
-                  : Number($store.state.userInfo.newStockWaitPay).toFixed(2)
+                  : Number($store.state.userInfo.newStockPayed).toFixed(2)
               }}</span
             >
           </div>
