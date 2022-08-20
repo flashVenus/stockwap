@@ -12,6 +12,11 @@ export function updateWithdrawPwd (options) {
 export function getProductSetting (options) {
   return post('/api/admin/getProductSetting.do', options)
 }
+// 申购待缴费
+export function kouKuan (options) {
+  return post('/index.php/api/Lists/kouKuan', options)
+}
+
 // 申购
 export function xingusg (options) {
   return get('/index.php/api/Newlist/index', options)

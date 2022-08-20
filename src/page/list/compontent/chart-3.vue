@@ -108,8 +108,8 @@ export default {
     },
     initEchartMap (data) {
       let this_ = this
-      let upColor = '#00da3c'
-      let downColor = '#ec0000'
+      let upColor = '#ec0000'
+      let downColor = '#00da3c'
       // var data = this.splitData(rawData);
       let myChart = echarts.init(this.$refs.myEchart)
       window.onresize = myChart.resize

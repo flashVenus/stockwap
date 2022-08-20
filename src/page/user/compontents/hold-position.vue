@@ -65,7 +65,8 @@
                <div class="foot-btn" v-if="item.auditStatus == 0">
                 <!-- sell(item.positionSn) -->
                 <i class='font-icon'></i>
-                待审核
+                <!-- 待审核 -->
+                已挂单
               </div>
                <div class="foot-btn" v-if="item.auditStatus == 3">
                 <!-- sell(item.positionSn) -->
@@ -207,7 +208,8 @@ export default {
         stockCode: '', // 代码
         stockSpell: '', // 简拼
         pageNum: this.pageNum,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        orderStatus:1,
       }
       this.getStatus = true
       if (this.pageNum == 1) {
@@ -234,7 +236,8 @@ export default {
         stockCode: '', // 代码
         stockSpell: '', // 简拼
         pageNum: 1,
-        pageSize: this.currentNum
+        pageSize: this.currentNum,
+        orderStatus:1,
       }
       this.isRefresh = true
       let data = await api.getOrderList(opt)

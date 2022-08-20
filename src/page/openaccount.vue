@@ -11,7 +11,7 @@
         <el-steps :active="0" class="steps-box" align-center>
           <el-step title="注册"></el-step>
           <el-step title="认证"></el-step>
-          <el-step title="入金"></el-step>
+          <el-step title="激活"></el-step>
           <el-step title="交易"></el-step>
         </el-steps>
         <ul class="list">
@@ -33,7 +33,7 @@
               <p>灵活投资、实现收益最大化</p>
             </div>
           </li>
-          <li class="list-item animated fadeInLeft">
+          <!-- <li class="list-item animated fadeInLeft">
             <div class="icon">
               <img :src="openIcon3" alt="">
             </div>
@@ -41,7 +41,7 @@
               <h3>极速开户,超高配额</h3>
               <p>0资金门槛,无需线下见证</p>
             </div>
-          </li>
+          </li> -->
         </ul>
       </div>
       <div class="btnbox animated fadeInUp text-center">

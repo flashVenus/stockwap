@@ -1,27 +1,18 @@
 <template>
   <div class="wrapper">
     <div class="funds-list">
-      <div
-        style="
+      <div style="
           display: flex;
           width: 80%;
           justify-content: space-between;
           margin: 0 auto;
-        "
-      >
+        ">
         <div class="funds-list-title" @click="shengouuu">申购</div>
-        <div class="funds-list-title" @click="shengoulist">申购列表</div>
+        <div class="funds-list-title" @click="getjiaofei">缴费记录</div>
+        <div class="funds-list-title" @click="shengouList">已申购列表</div>
       </div>
-      <div
-        class="funds-list-item"
-        v-for="(i, k) in shengou"
-        :key="k"
-        v-if="aaa == 'aaa' && i.zt == 1"
-      >
-        <div
-          class="funds-list-item__account clearfix"
-          style="display: flex; align-items: center"
-        >
+      <div class="funds-list-item" v-for="(i, k) in shengou" :key="k" v-if="aaa == 'aaa' && i.zt == 1">
+        <div class="funds-list-item__account clearfix" style="display: flex; align-items: center">
           <div class="col-xs-3 account">
             <!-- 配资资金：17.63 股票可用金额：17.63 配资管理费：已结束 -->
             <div class="order-title">新股名称</div>
@@ -47,30 +38,35 @@
           </div>
         </div>
       </div>
-      <div
-        class="funds-list-item"
-        v-for="(item, index) in sgList"
-        :key="index"
-        v-if="aaa == 'bbb'"
-      >
+      <div class="funds-list-item" v-for="(item, index) in sgList" :key="index" v-if="aaa == 'bbb'">
         <div class="funds-list-item__account clearfix">
-          <div class="col-xs-4 account">
+          <div class="col-xs-3 account">
             <!-- 配资资金：17.63 股票可用金额：17.63 配资管理费：已结束 -->
             <div class="order-title">新股名称</div>
             <div class="order-money">{{ item.xgname || 0 }}</div>
-            <div class="order-title">保证金</div>
-            <div class="order-money">{{ item.bzj || 0 }}</div>
+            <!-- <div class="order-title">保证金</div>
+            <div class="order-money">{{ item.bzj || 0 }}</div> -->
           </div>
-          <div class="col-xs-4 account">
+          <div class="col-xs-3 account">
             <!-- 保证金：100 股票市值：0 股票盈亏：0  -->
             <div class="order-title">申购代码</div>
             <div class="order-money">{{ item.codes || 0 }}</div>
-            <div class="order-title">买入数量</div>
-            <div class="order-money">{{ item.nums || 0 }}</div>
+            <!-- <div class="order-title">买入数量</div>
+            <div class="order-money">{{ item.nums || 0 }}</div>  -->
           </div>
-          <div class="col-xs-4 account">
+          <div class="col-xs-3 account" v-if="idx == 2">
+            <div class="order-title">配售申购</div>
+            <div class="order-money">{{ item.nums }}</div>
+          </div>
+          <div class="col-xs-3 account" v-if="idx == 1">
+            <div class="order-title">缴费金额</div>
+            <div class="order-money">{{ item.bzj }}</div>
+          </div>
+          <div class="col-xs-3 account" v-if="item.zts != 3">
             <div class="order-title">状态</div>
             <div class="order-money">
+              <span v-if="item.zts == 4 && idx == 2">已中签</span>
+              <span v-if="item.zts == 4 && idx == 1">已缴款</span>
               <span v-if="item.zts == 3">未审核</span>
               <span v-if="item.zts == 1">已中签</span>
               <span v-if="item.zts == 2">未中签</span>
@@ -81,30 +77,17 @@
       <!-- <div class="funds-list-loadmore">
                 点击加载更多内容
             </div> -->
-      <el-dialog
-        :title="shenhaoTitle"
-        show-close
-        :visible.sync="dialogCommunity"
-        custom-class="black-dialog"
-        width="80%"
-        class="storeinformation_popup_wapper"
-      >
+      <el-dialog :title="shenhaoTitle" show-close :visible.sync="dialogCommunity" custom-class="black-dialog"
+        width="80%" class="storeinformation_popup_wapper">
         <div class="storeinformation_popup">
           <el-form :model="haoForm" ref="haoForm" class="demo-form" size="mini">
             <div class="storeinformation_popup_top">
               <el-form-item label="申请价格">
-                <el-input
-                  readonly
-                  class="width-auto"
-                  type="text"
-                  v-model="tijiao.price"
-                  placeholder="请填写申请价格"
-                  show-word-limit
-                  oninput="value=value.replace(/[^\d]/g,'')"
-                >
+                <el-input readonly class="width-auto" type="text" v-model="tijiao.price" placeholder="请填写申请价格"
+                  show-word-limit oninput="value=value.replace(/[^\d]/g,'')">
                 </el-input>
               </el-form-item>
-              <el-form-item label="可用余额">
+              <!-- <el-form-item label="可用余额">
                 <el-input
                   readonly
                   class="width-auto"
@@ -115,42 +98,32 @@
                   oninput="value=value.replace(/[^\d]/g,'')"
                 >
                 </el-input>
-              </el-form-item>
-              <el-form-item
-                label="申购签数"
-                prop="shehao"
-                :rules="[
-                  { required: true, message: '申购签数不能为空' },
-                  { type: 'number', message: '申购签数必须为数字值' },
-                  {
-                    validator: (rule, value, callback) => {
-                      if (value > tijiao.max_apply_lot) {
-                        callback(
-                          new Error(
-                            '该股申购签数必须小于' +
-                              tijiao.max_apply_lot
-                          )
-                        );
-                      } else if (value < tijiao.min_apply_lot) {
-                        callback(new Error('申购签数必须>='+tijiao.min_apply_lot));
-                      } else {
-                        callback();
-                      }
-                    },
+              </el-form-item> -->
+              <el-form-item label="申购签数" prop="shehao" :rules="[
+                { required: true, message: '申购签数不能为空' },
+                { type: 'number', message: '申购签数必须为数字值' },
+                {
+                  validator: (rule, value, callback) => {
+                    if (value > tijiao.max_apply_lot) {
+                      callback(
+                        new Error(
+                          '该股申购签数必须小于' +
+                          tijiao.max_apply_lot
+                        )
+                      );
+                    } else if (value < tijiao.min_apply_lot) {
+                      callback(new Error('申购签数必须>=' + tijiao.min_apply_lot));
+                    } else {
+                      callback();
+                    }
                   },
-                ]"
-              >
-                <el-input
-                  class="width-auto"
-                  type="text"
-                  v-model.number="haoForm.shehao"
-                  placeholder="请填写申购签数"
-                  show-word-limit
-                  oninput="value=value.replace(/[^\d]/g,'')"
-                >
+                },
+              ]">
+                <el-input class="width-auto" type="text" v-model.number="haoForm.shehao" placeholder="请填写申购签数"
+                  show-word-limit oninput="value=value.replace(/[^\d]/g,'')">
                 </el-input>
               </el-form-item>
-              <el-form-item label="买入金额">
+              <!-- <el-form-item label="买入金额">
                 <el-input
                   readonly
                   class="width-auto"
@@ -165,15 +138,10 @@
                   oninput="value=value.replace(/[^\d]/g,'')"
                 >
                 </el-input>
-              </el-form-item>
+              </el-form-item> -->
             </div>
             <el-form-item style="text-align: center">
-              <el-button
-                class="big-btn"
-                type="primary"
-                @click="dialogCommunity = false"
-                >取 消</el-button
-              >
+              <el-button class="big-btn" type="primary" @click="dialogCommunity = false">取 消</el-button>
               <el-button class="big-btn" type="danger" @click="shengData()">
                 确 定
               </el-button>
@@ -204,6 +172,7 @@ export default {
       tijiao: "",
       sgList: "",
       shenhaoTitle: "",
+      idx: 1,
       Error,
     };
   },
@@ -219,6 +188,22 @@ export default {
     this.xxxx();
   },
   methods: {
+
+    async getjiaofei() {
+      this.aaa = "bbb";
+      this.idx = 1;
+      let opt = {
+        zts: 4
+      };
+      let data = await api.xingusgsList(opt);
+      this.sgList = data.data.list;
+      // this.timestampToTime()
+      console.log(this.sgList);
+      for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+
+      }
+    },
     async shengouclik(i) {
       this.haoForm.shehao = 0;
       this.shenhaoTitle = `${i.names}(${i.code})`;
@@ -233,10 +218,6 @@ export default {
     },
     async shengouuu() {
       this.aaa = "aaa";
-    },
-    async shengoulist() {
-      this.aaa = "bbb";
-      this.shengouList();
     },
     async getlist() {
       // 获取持仓列表
@@ -259,8 +240,8 @@ export default {
       console.log(this.shengou, "申购");
     },
     async shengData() {
-      console.log(this.haoForm.shehao,this.tijiao.min_apply_lot)
-        if (this.haoForm.shehao < this.tijiao.min_apply_lot) {
+      console.log(this.haoForm.shehao, this.tijiao.min_apply_lot)
+      if (this.haoForm.shehao < this.tijiao.min_apply_lot) {
         this.$message({
           message: '申购数量不可小于' + this.tijiao.min_apply_lot,
           type: 'warning'
@@ -306,7 +287,10 @@ export default {
       });
     },
     async shengouList() {
-      let opt = {};
+      this.aaa = "bbb";
+      this.idx = 2;
+      let opt = {
+      };
       let data = await api.xingusgsList(opt);
       this.sgList = data.data.list;
       // this.timestampToTime()
@@ -599,18 +583,21 @@ body {
 }
 
 .storeinformation_popup_wrapper {
-  .el-dialog {
-  }
+  .el-dialog {}
+
   .storeinformation_popup {
     background-color: #10141e;
+
     .el-input {
       width: auto;
     }
   }
 }
+
 .width-auto {
   width: auto;
 }
+
 .big-btn {
   width: 120px;
   border-radius: 14px;
@@ -621,22 +608,27 @@ body {
   background-color: #1d2433 !important;
   color: #fff;
   border-radius: 6px !important;
+
   .el-dialog__header {
     background-color: #2c374e;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     color: #fff;
   }
+
   .el-dialog__title {
     color: #fff;
   }
+
   .el-form-item {
     display: flex;
     justify-content: space-around;
   }
+
   .el-form-item__label {
     color: white;
   }
+
   .el-input {
     .el-input__inner {
       background-color: #2c374e;
@@ -644,8 +636,10 @@ body {
       border-radius: 14px;
       color: #eee;
     }
+
     color: #eee;
   }
+
   .el-dialog__body {
     padding-bottom: 12px;
   }

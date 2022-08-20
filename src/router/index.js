@@ -443,6 +443,28 @@ export default new Router({
       component: () => import('../page/funds/xingu')
     },
     {
+      path: '/newPayment',
+      name:'newPayment',
+      meta: {
+        title: '新股待缴费',
+        requireAuth: true,
+        hasHeader: true,
+        iconRight: 'setting'
+      },
+      component: () => import('../page/funds/newPayment')
+    },
+    {
+      path: '/Tobelisted',
+      name:'Tobelisted',
+      meta: {
+        title: '新股待上市',
+        requireAuth: true,
+        hasHeader: true,
+        iconRight: 'setting'
+      },
+      component: () => import('../page/funds/Tobelisted')
+    },
+    {
       path: '/searchStock',
       name: 'searchStock',
       meta: {

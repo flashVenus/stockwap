@@ -525,15 +525,16 @@ export default {
       this.newsVisible = true
     }
   },
-  mounted () {
+  created () {
+    this.getMarket() // 获取大盘指数
+    this.getBanner() // 获取banner
+    this.getArtList() // 获取公告
     this.getNewsList(1)
     this.getNewsList(2)
     this.getNewsList(3)
     this.getNewsList(4)
     this.getNewsList(5)
-    this.getMarket() // 获取大盘指数
-    this.getBanner() // 获取banner
-    this.getArtList() // 获取公告
+   
     // let header = document.querySelector('.header-box')
     let body = document.querySelector('.wrapper')
     // header.style.display = 'none'

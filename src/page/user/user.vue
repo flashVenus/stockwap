@@ -15,15 +15,15 @@
       </mt-header>
     </div> -->
     <div class="account-info">
-      <div class="account-info_avatar">
+      <!-- <div class="account-info_avatar">
         <img src="../../assets/ico/wogerenziliao.png" alt="" />
-      </div>
+      </div> -->
       <div class="account-info_detail">
         <div class="account-phone">
           账户：{{ $store.state.userInfo.phone || "未登录" }}
         </div>
-        <div class="account-name">
-          昵称：{{ $store.state.userInfo.nickName || "未登录" }}
+        <div class="account-name" style="margin-top:10px;">
+          姓名：{{ $store.state.userInfo.nickName || "未登录" }}
         </div>
       </div>
       <div class="account-info_ctl" @click="hideNumber">
@@ -71,16 +71,24 @@
             alt=""
           />
 
-          <span class="ti">总资产</span>
+          <span class="ti">人民币总资产（元）</span>
           <span class="de">
             <div>
-              <p class="account">
+              <!-- <p class="account">
                 ¥{{
                   $store.state.hide
                     ? "****"
                     : Number($store.state.userInfo.userAmt).toFixed(2)
                 }}
+              </p> -->
+               <p class="account">
+                ¥{{
+                  $store.state.hide
+                    ? "****"
+                    : (Number($store.state.userInfo.enableAmt) + Number($store.state.userInfo.allFreezAmt) + Number($store.state.userInfo.newStockPayed)).toFixed(2)
+                }}
               </p>
+               <!-- + Number($store.state.userInfo.newStockPayed) -->
               <!-- <p v-if="this.$store.state.settingForm.indexDisplay && !this.$store.state.settingForm.futuresDisplay "
                 class="account">¥{{$store.state.hide?'****':Number($store.state.userInfo.userAmt +
                 $store.state.userInfo.userIndexAmt).toFixed(2)}}</p>
@@ -96,15 +104,18 @@
           </span>
         </div>
         <div class="acc-pre-center">
-          <div>
+          <div v-if="false">
             余额:
-            <span
+            <!-- <span
               >￥{{
                 $store.state.hide ? "****" : $store.state.userInfo.enableAmt
               }}</span
-            >
+            > -->
+            <span>￥{{
+                $store.state.hide ? "****" : $store.state.userInfo.enableAmt
+              }}</span>
           </div>
-          <div>
+          <div  v-if="false">
             持仓:
             <span
               >￥{{
@@ -112,13 +123,13 @@
               }}</span
             >
           </div>
-          <div>
-            新股:
+          <div v-if="false">
+            新股市值:
             <span
               >￥{{
                 $store.state.hide
                   ? "****"
-                  : Number($store.state.userInfo.newStockWaitPay).toFixed(2)
+                  : Number($store.state.userInfo.newStockPayed).toFixed(2)
               }}</span
             >
           </div>
@@ -182,7 +193,7 @@
             <ul class="clearfix">
               <li>
                 <i class="iconfont icon-keyongzijin"></i>
-                <div class="name">可用余额</div>
+                <div class="name">可用余额（元）</div>
                 <p class="number yellow">
                   {{
                     $store.state.hide ? "****" : $store.state.userInfo.enableAmt
@@ -210,9 +221,9 @@
                 <p v-if="item.name == '期货'" class="number yellow">
                   {{$store.state.hide?'****':Number($store.state.userInfo.userFuturesAmt).toFixed(2)}}</p>
               </li> -->
-              <li>
+              <li @click.stop="getshangshi">
                 <i class="iconfont icon-keyongzijin"></i>
-                <div class="name">新股申购+待上市</div>
+                <div class="name">新股待上市</div>
                 <p class="number yellow">
                   {{
                     $store.state.hide
@@ -221,7 +232,7 @@
                   }}
                 </p>
               </li>
-              <li>
+              <li @click="getnewpay">
                 <i class="iconfont icon-keyongzijin"></i>
                 <div class="name">新股申购待缴款</div>
                 <p class="number yellow">
@@ -234,7 +245,7 @@
               </li>
               <li>
                 <i class="iconfont icon-zijin1"></i>
-                <div class="name">股票持仓价值</div>
+                <div class="name">股票持仓市值</div>
                 <p class="number yellow">
                   {{
                     $store.state.hide
@@ -261,7 +272,7 @@
               </li> -->
               <li>
                 <i class="iconfont icon-jiaoyi"></i>
-                <div class="name">持仓总浮动盈亏</div>
+                <div class="name">今日浮动盈亏</div>
                 <p class="number yellow">
                   <span v-if="$store.state.hide">****</span>
                   <span
@@ -686,6 +697,8 @@ export default {
       oldzijinpass: "",
       newzijinpass: "",
       quezijinpass: "",
+      nextPsd:"",
+      newPsd:""
     };
   },
   watch: {
@@ -715,6 +728,12 @@ export default {
     }
   },
   methods: {
+    getshangshi(){
+      this.$router.push("/Tobelisted");
+    },
+    getnewpay(){
+      this.$router.push("/newPayment");
+    },
     async geteditzijinpass() {
       if (this.newzijinpass !== this.quezijinpass) {
         this.$message.error("两次密码不一致");

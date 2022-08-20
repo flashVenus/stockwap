@@ -117,14 +117,16 @@ export default {
   watch: {},
   computed: {},
   created () {
+    this.getStock()
+    this.getMarket()
+    this.refreshList()
     this.timer = setInterval(this.refreshList, 5000)
   },
   beforeDestroy () {
     clearInterval(this.timer)
   },
   mounted () {
-    this.getStock()
-    this.getMarket()
+    
   },
   methods: {
     async getMarket () {
