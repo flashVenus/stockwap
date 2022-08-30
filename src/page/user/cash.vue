@@ -44,7 +44,7 @@
         <!-- <p>1、当前有持仓订单不能出金 。</p> -->
         <!-- <p>2、出金请先在官网通过实名认证和绑定银行卡 。</p> -->
         <!-- <p>1、转出时间工作日 {{settingInfo.withTimeBegin}} : 00 到 {{settingInfo.withTimeEnd}} : 00 之间。</p> -->
-        <p>1、银证转出交易日上午9.30到11.30下午13.00到15.00之间</p>
+        <p>1、银证转出交易日上午{{settingInfo.withTimeAmBegin}}到{{settingInfo.withTimeAmEnd}}下午{{settingInfo.withTimePmBegin}}到{{settingInfo.withTimePmEnd}}之间</p>
         <!-- <p>2、每笔转出扣除 {{settingInfo.withFeeSingle}} 元手续费<span v-if="settingInfo.withFeePercent != 0">，加上转出金额 * {{settingInfo.withFeePercent}}</span>。
         </p> -->
         <p>2、每笔转出金额最小 {{settingInfo.withMinAmt}} 元。</p>

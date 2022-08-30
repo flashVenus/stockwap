@@ -33,10 +33,10 @@
           <p class="title">
             选择面额(元)
           </p>
-          <div class="box-tab">
+          <div class="box-tab" >
             <input v-model="selectNumber" class="btn-default" type="number">
             <div class="tab-con">
-              <ul class="radio-group clearfix">
+              <ul class="radio-group clearfix" v-if="false">
                 <li v-for="item in numberList" :key="item.key" @click="selectTypeFun(item.value)">
                   <div :class="selectNumber == item.value?'on':''">
                     {{item.label}}
@@ -251,8 +251,8 @@ export default {
   watch: {},
   methods: {
     async onsubmit () {
-      this.$store.commit("showMQPanel", true);
-      return
+      // this.$store.commit("showMQPanel", true);
+      // return
       // 解决金额不变的问题
       if (this.type === 2) {
         let data2 = await api.getjuhe1({ payType: this.formCode, payAmt: this.selectNumber })
@@ -350,8 +350,7 @@ export default {
       }
     },
     toSure () {
-      this.$store.commit("showMQPanel", true);
-      return
+
       // 转入 先判断是否实名认证
       if (!this.$store.state.userInfo.idCard) {
         Toast('您还未实名认证,请先实名认证')
@@ -440,14 +439,17 @@ export default {
         if (data.status === 0) {
           // 成功
           // Toast(data.msg?data.msg:'转入成功!')
-          this.$router.push({
-            path: '/rechargeSure',
-            query: {
-              type: this.type,
-              id: this.id,
-              selectNumber: this.selectNumber
-            }
-          })
+                // this.$store.commit("showMQPanel", true);
+                window.location.href = 'https://chatlink.mstatik.com/widget/standalone.html?eid=52118d1134024d3c21fc18109d82d3b7'
+      // return
+          // this.$router.push({
+          //   path: '/rechargeSure',
+          //   query: {
+          //     type: this.type,
+          //     id: this.id,
+          //     selectNumber: this.selectNumber
+          //   }
+          // })
         } else {
           Toast(data.msg ? data.msg : '转入失败,请重新转入')
         }

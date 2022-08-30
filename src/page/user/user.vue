@@ -386,6 +386,7 @@
             <span
               class="renzhen done"
               v-if="$store.state.userInfo.isActive == 2"
+              style="font-size: 12px; color:#fff"
             >
               <i class="iconfont el-icon-circle-check"></i>
               审核通过
@@ -396,10 +397,10 @@
                 $store.state.userInfo.isActive == 0 ||
                 $store.state.userInfo.isActive == 3
               "
-              style="color: red; font-size: 0.7rem"
+              style="font-size: 12px; color:#fff"
             >
               <i class="iconfont el-icon-circle-close"></i>
-              未审核
+              未实名
             </span>
             <!-- <i v-if="$store.state.userInfo.isActive == 1" style="color:red;font-size: 0.7rem;"
                        class="iconfont icon-shenhezhong"></i>

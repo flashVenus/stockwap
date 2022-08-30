@@ -43,6 +43,7 @@
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :on-error='handleError'
+          :accept="'image/*'"
           :before-upload="beforeAvatarUpload">
           <img v-if="form.img1key" :src="form.img1key" class="id-img avatar">
           <i v-else class="iconfont icon-zhaopian"></i>
@@ -61,6 +62,7 @@
           :action="admin+'/user/upload.do'"
           list-type="picture-card"
           name="upload_file"
+          :accept="'image/*'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess2"
           :on-error='handleError2'
@@ -157,6 +159,7 @@ export default {
         document.body.classList.add('red-bg')
     }
     this.admin = process.env.API_HOST
+    // this.admin = 'https://www.htzjzryxgs.vip'
     if (this.admin === undefined) {
       this.admin = ''
     }

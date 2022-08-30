@@ -102,6 +102,9 @@ export default {
     this.getInfoSite()
     this.phone = this.$store.state.userInfo.phone
   },
+  beforeDestroy () {
+    this.$store.commit("showMQPanel", false);
+  },
   methods: {
     async getInfoSite () {
       // 获取 logo
@@ -168,6 +171,9 @@ export default {
     },
     toForget () {
       // 忘记密码
+      // this.$store.commit("showMQPanel", true);
+      window.location.href = 'https://chatlink.mstatik.com/widget/standalone.html?eid=52118d1134024d3c21fc18109d82d3b7'
+      return
       this.$router.push('/forget')
     },
     toRegister () {
